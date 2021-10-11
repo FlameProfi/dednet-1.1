@@ -3,6 +3,7 @@ let methods = require('../modules/methods');
 let enums = require('../enums');
 let user = require('../user');
 let inventory = require('../inventory');
+let mysql = require('../modules/mysql');
 
 let cloth = require('../business/cloth');
 let tattoo = require('../business/tattoo');
@@ -231,7 +232,7 @@ pickups.CartelArsenalPos = new mp.Vector3(5011.41455078125, -5742.89453125, 14.4
 
 /*Keys*/
 pickups.GovKeyPos = new mp.Vector3(-1312.9268798828125, -550.072265625, 19.802770614624023);
-pickups.SapdKeyPos = new mp.Vector3(-1078.491943359375, -856.7177734375, 4.042818546295166);
+pickups.SapdKeyPos = new mp.Vector3(457.8383483886719, -1007.8056030273438, 27.287372589111328);
 pickups.SheriffKeyPos = new mp.Vector3(-453.48065185546875, 6031.2314453125, 30.340538024902344);
 pickups.InvaderKeyPos = new mp.Vector3(-1095.8746337890625, -254.6504669189453, 36.68137741088867);
 pickups.EmsKeyPos = new mp.Vector3(319.167236328125, -559.7047119140625, 27.743427276611328);
@@ -584,7 +585,7 @@ pickups.checkPressLAlt = function(player) {
     methods.checkTeleport(player, new mp.Vector3(486.0731, -1075.497, 28.00087), new mp.Vector3(486.0519, -1078.475, 28.19953));
 };
 
-pickups.checkPressE = function(player) {
+pickups.checkPressE = async function (player) {
     methods.debug('pickups.checkPressE');
     if (!user.isLogin(player))
         return;
@@ -706,13 +707,13 @@ pickups.checkPressE = function(player) {
         if (user.get(player, 'fraction_id2') > 0 && !user.isMafia(player) && !user.isGang(player))
             inventory.getItemListGunColor(player);
         else
-            player.notify('~r~Доступно только для неофициальных организаций');
+            player.notify('~r~Galimybe naudotis tik neoficialioms organizacijoms');
     }
 
     if (methods.distanceToPos(pickups.StockLab, playerPos) < distanceCheck) {
         try {
             if (user.get(player, 'fraction_id2') === 0) {
-                player.notify('~r~Доступно только для крайм организаций');
+                player.notify('~r~Galima naudotis tik nusikalteliu organizacijoms');
                 return;
             }
             let houseData = stocks.getData(player.dimension - enums.offsets.stock);
@@ -723,7 +724,7 @@ pickups.checkPressE = function(player) {
     if (methods.distanceToPos(pickups.StockBunk, playerPos) < distanceCheck) {
         try {
             if (user.get(player, 'fraction_id2') === 0) {
-                player.notify('~r~Доступно только для крайм организаций');
+                player.notify('~r~Galima naudotis tik nusikalteliu organizacijoms');
                 return;
             }
             let houseData = stocks.getData(player.dimension - enums.offsets.stock);
@@ -807,10 +808,47 @@ pickups.checkPressE = function(player) {
     else if (methods.distanceToPos(pickups.InvaderKeyPos, playerPos) < distanceCheck && user.isNews(player))
         player.call('client:menuList:showFractionKeyMenu', [vehicles.getFractionAllowCarList(7, user.isLeader(player) || user.isSubLeader(player) || user.isDepLeader(player) || user.isSubLeader(player) ? -1 : user.get(player, 'rank_type1'))]);
 
-    if (player.dimension > 0) {
-        if (methods.distanceToPos(business.BusinessBotPos, playerPos) < distanceCheck)
-            player.call('client:menuList:showBusinessMenu', [Array.from(business.getData(player.dimension))]);
-    }
+        if (player.dimension > 0) {
+            if (methods.distanceToPos(business.BusinessBotPos, playerPos) < distanceCheck) {
+                let log_list = [];
+                mysql.executeQuery(`SELECT * FROM log_business WHERE business_id=? ORDER BY id DESC LIMIT 70`, [business.get(player.dimension, 'id')], function (err, rows) {
+                    if (err) methods.debug(err);
+                    if (rows) {
+                        for (let i = 0; i < rows.length; i++) {
+                            let price = rows[i].price;
+                            log_list.push({ product: rows[i].product, price: price, timestamp: rows[i].timestamp });
+                        }
+                    }
+                });
+                let monthStats = 0;
+                let weekStats = 0;
+                let dailyStats = 0;
+        
+                let timestamp = methods.getTimeStamp();
+                mysql.executeQuery('SELECT SUM(price) as sum FROM `log_business` WHERE `business_id`=? AND `price`>0 AND `timestamp`>? AND product NOT LIKE \'%Зачиление со счета%\'', [player.dimension, (timestamp - 86400 * 30)], (err, result) => {
+                    if (err) return console.log(err);
+                    if (result) {
+                        monthStats = result[0].sum;
+                    }
+                });
+                mysql.executeQuery('SELECT SUM(price) as sum FROM `log_business` WHERE `business_id`=? AND `price`>0 AND `timestamp`>? AND product NOT LIKE \'%Зачиление со счета%\'', [player.dimension, (timestamp - 86400 * 7)], (err, result) => {
+                    if (err) return console.log(err);
+                    if (result) {
+                        weekStats = result[0].sum;
+                    }
+                });
+                mysql.executeQuery('SELECT SUM(price) as sum FROM `log_business` WHERE `business_id`=? AND `price`>0 AND `timestamp`>? AND product NOT LIKE \'%Зачиление со счета%\'', [player.dimension, (timestamp - 86400)], (err, result) => {
+                    if (err) return console.log(err);
+                    if (result) {
+                        
+                        dailyStats = result[0].sum;
+                    }
+                });
+                await methods.sleep(100);
+                console.log(JSON.stringify(log_list));
+                player.call('client:cef:showBusinessBuyMenu', [Array.from(business.getData(player.dimension)), JSON.stringify(log_list), monthStats, weekStats, dailyStats]);
+            }
+        }    
     if (user.isGov(player)) {
         if (methods.distanceToPos(pickups.MeriaGarderobPos, playerPos) < distanceCheck)
             player.call('client:menuList:showGovGarderobMenu');
@@ -940,37 +978,37 @@ pickups.checkPressE = function(player) {
             if (user.isJobMail(player))
                 player.call('client:menuList:showSpawnJobCarMailMenu');
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать почтальоном, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti pastininku, pirmiausia turite isidarbinti valstybiniame pastate.');
         }
         if (methods.distanceToPos(pickups.Gr6Pos, playerPos) < distanceCheck) {
             if (user.isJobGr6(player))
                 player.call('client:menuList:showSpawnJobGr6Menu');
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать инкассатором, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti inkasatoriuose, pirmiausia turite isidarbinti valstybiniame pastate.');
         }
         if (methods.distanceToPos(pickups.Mech3Pos, playerPos) < distanceCheck) {
             if (user.isJobMech(player))
                 player.call('client:menuList:showSpawnJobCarMenu', [150, 534.3485107421875, -170.06861877441406, 54.39955139160156, 180.3535614013672, 'Sadler', 5]);
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать механиком, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti mechaniku, pirmiausia turite isidarbinti valstybiniame pastate.');
         }
         if (methods.distanceToPos(pickups.Bus1Pos, playerPos) < distanceCheck) {
             if (user.isJobBus1(player))
                 player.call('client:menuList:showSpawnJobCarMenu', [150, 459.72247314453125, -582.0006103515625, 28.495769500732422, 170.3814697265625, 'Bus', 6]);
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать водителем автобуса #1, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti autobuso #1 vairuotoju, pirmiausia turite isidarbinti vyriausybes pastate.');
         }
         if (methods.distanceToPos(pickups.Bus2Pos, playerPos) < distanceCheck) {
             if (user.isJobBus2(player))
                 player.call('client:menuList:showSpawnJobCarMenu', [100, 471.0755920410156, -583.989501953125, 28.49574089050293, 173.3385009765625, 'Airbus', 7]);
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать водителем автобуса #2, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti autobuso #2 vairuotoju, pirmiausia turite isidarbinti vyriausybes pastate.');
         }
         if (methods.distanceToPos(pickups.Bus3Pos, playerPos) < distanceCheck) {
             if (user.isJobBus3(player))
                 player.call('client:menuList:showSpawnJobCarMenu', [200, 465.9425048828125, -582.1303100585938, 29.325841903686523, 173.46160888671875, 'Coach', 8]);
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать водителем автобуса #3, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti autobuso #3 vairuotoju, pirmiausia turite isidarbinti vyriausybes pastate.');
         }
         if (methods.distanceToPos(pickups.TreePos, playerPos) < distanceCheck) {
             if (user.isJobTree(player)) {
@@ -987,7 +1025,7 @@ pickups.checkPressE = function(player) {
                 player.call('client:menuList:showSpawnJobCarMenu', [100, posList[posIdx][1], posList[posIdx][2], posList[posIdx][3], posList[posIdx][4], posList[posIdx][0], 1]);
             }
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать садовником, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti sodininku, pirmiausia turite isidarbinti valstybiniame pastate.');
         }
         if (methods.distanceToPos(pickups.Tree1Pos, playerPos) < distanceCheck) {
             if (user.isJobTree(player)) {
@@ -1003,7 +1041,7 @@ pickups.checkPressE = function(player) {
                 player.call('client:menuList:showSpawnJobCarMenu', [100, posList[posIdx][1], posList[posIdx][2], posList[posIdx][3], posList[posIdx][4], posList[posIdx][0], 1]);
             }
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать садовником, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti sodininku, pirmiausia turite isidarbinti valstybiniame pastate.');
         }
         if (methods.distanceToPos(pickups.BuilderPos, playerPos) < distanceCheck) {
             if (user.isJobBuilder(player)) {
@@ -1020,7 +1058,7 @@ pickups.checkPressE = function(player) {
                 player.call('client:menuList:showSpawnJobCarMenu', [100, posList[posIdx][1], posList[posIdx][2], posList[posIdx][3], posList[posIdx][4], posList[posIdx][0], 2]);
             }
             else
-                user.showCustomNotify(player, 'Для того, чтобы работать строителем, для начала необходимо устроиться в здании правительства');
+                user.showCustomNotify(player, 'Noredami dirbti statybininku, pirmiausia turite isidarbinti valstybiniame pastate.');
         }
 
         if (methods.distanceToPos(pickups.AvePos, playerPos) < distanceCheck)
@@ -1035,268 +1073,268 @@ pickups.checkPressE = function(player) {
 pickups.createAll = function() {
     methods.debug('pickups.createPickups');
 
-    methods.createCpVector(pickups.EmsGarderobPos1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsGarderobPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsGarderobPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsGarderobPos4, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsGarderobPos5, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsGarderobPos1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsGarderobPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsGarderobPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsGarderobPos4, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsGarderobPos5, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.EmsFreePos1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsFreePos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsFreePos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsFreePos1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsFreePos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsFreePos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
     //methods.createStaticCheckpointV(pickups.TheLostPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
     //methods.createStaticCheckpointV(pickups.TheLostPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.BahamaPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.BahamaPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.BahamaPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.BahamaPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.SapdToInterrogationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdFromInterrogationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdToVespucci1Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdToVespucci2Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdToVespucci21Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdToVespucci22Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdToBalconPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdFromBalconPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdToBalcon2Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.SapdFromBalcon2Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToInterrogationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdFromInterrogationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToVespucci1Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToVespucci2Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToVespucci21Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToVespucci22Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToBalconPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdFromBalconPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdToBalcon2Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.SapdFromBalcon2Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.Builder1Pos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder1Pos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder1Pos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder1Pos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.Builder2Pos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder2Pos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder2Pos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder2Pos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.EmsRoofPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.EmsRoofPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsRoofPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsRoofPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.EmsKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.GovKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.UsmcKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.CartelKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.GovKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.UsmcKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.CartelKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.FibInfoPos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.UsmcInfoPos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.GovInfoPos1, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.GovInfoPos2, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.GovInfoPos3, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdInfoPos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdInfoPos2, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdInfoPos3, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffInfo1Pos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffInfo2Pos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.InvaderInfoPos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsInfo1Pos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsInfo2Pos, 'Нажмите ~g~E~s~ чтобы открыть меню руководства', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.FibInfoPos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.UsmcInfoPos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.GovInfoPos1, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.GovInfoPos2, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.GovInfoPos3, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdInfoPos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdInfoPos2, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdInfoPos3, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffInfo1Pos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffInfo2Pos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.InvaderInfoPos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsInfo1Pos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsInfo2Pos, 'Paspauskite ~g~E~s~, kad atidarytumete vadovo meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.InvaderWorkPos1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.InvaderWorkPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.InvaderWorkPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.InvaderWorkPos4, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.InvaderWorkPos1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.InvaderWorkPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.InvaderWorkPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.InvaderWorkPos4, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.BotSellGun, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotSellCloth, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotSellGun1, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotSellCloth1, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotRole0, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotRoleAll, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotRoleAll1, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.QuestBotGang, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotJail, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotSellGun, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotSellCloth, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotSellGun1, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotSellCloth1, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotRole0, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotRoleAll, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotRoleAll1, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.QuestBotGang, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotJail, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
 
-    methods.createCpVector(pickups.BotLspd1, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspd2, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspd3, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspd4, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspd1, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspd2, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspd3, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspd4, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
 
-    methods.createCpVector(pickups.BotLspdCar1, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdCar2, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdCar3, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdCar4, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdCar5, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdCar6, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdVans, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdBoat, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdHeli, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.BotLspdPlane, 'Нажмите ~g~E~s~ чтобы взаимодействовать с NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdCar1, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdCar2, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdCar3, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdCar4, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdCar5, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdCar6, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdVans, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdBoat, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdHeli, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.BotLspdPlane, 'Paspauskite ~g~E~s~, jog bendrautumete su NPC', 1, -1, pickups.Yellow);
 
-    methods.createCpVector(pickups.MazeBankLobby, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.WheelLuckyPos, 'Нажмите ~g~E~s~ чтобы крутить колесо', 1, -1, [33, 150, 243, 0]);
+    methods.createCpVector(pickups.MazeBankLobby, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.WheelLuckyPos, 'Paspauskite ~g~E~s~, kad pasuktumete rata', 1, -1, [33, 150, 243, 0]);
 
-    methods.createCpVector(pickups.LifeInvaderShopPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.EmsBotPos1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.EmsBotPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.EmsBotPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.UsmcBotPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Yellow);
-    methods.createCpVector(pickups.SellVehicle, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.LifeInvaderShopPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.EmsBotPos1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.EmsBotPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.EmsBotPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.UsmcBotPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.SellVehicle, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.ColorWeapon1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.FixWeapon1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.FixWeapon2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.FixWeapon3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.StockLab, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.StockBunk, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.ColorWeapon1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.FixWeapon1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.FixWeapon2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.FixWeapon3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.StockLab, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.StockBunk, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.EmsElevatorPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.EmsElevatorParkPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.EmsElevatorRoofPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsElevatorPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsElevatorParkPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsElevatorRoofPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.BankMazeLiftOfficePos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.BankMazeLiftStreetPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.BankMazeLiftRoofPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.BankMazeLiftGaragePos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.BankMazeOfficePos1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.BankMazeOfficePos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.BankMazeLiftOfficePos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.BankMazeLiftStreetPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.BankMazeLiftRoofPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.BankMazeLiftGaragePos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.BankMazeOfficePos1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.BankMazeOfficePos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.Gov1LiftPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov1LiftPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov1LiftPos3, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov1LiftPos4, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov1LiftPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov1LiftPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov1LiftPos3, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov1LiftPos4, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.Gov2LiftPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov2LiftPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov2LiftPos3, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov2LiftPos4, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Gov2LiftPos5, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov2LiftPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov2LiftPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov2LiftPos3, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov2LiftPos4, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Gov2LiftPos5, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.CasinoLiftStreetPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.CasinoLiftBalconPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.CasinoLiftRoofPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.CasinoLiftCondoPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.CasinoLiftInPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CasinoLiftStreetPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CasinoLiftBalconPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CasinoLiftRoofPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CasinoLiftCondoPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CasinoLiftInPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.Builder4Pos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder4Pos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder4Pos3, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder3Pos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder3Pos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.Builder3Pos3, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder4Pos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder4Pos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder4Pos3, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder3Pos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder3Pos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.Builder3Pos3, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.UsmcPickupPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.UsmcPickupPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.UsmcPickupPos11, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.UsmcPickupPos12, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.EmsPickupPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.EmsPickupPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.UsmcPickupPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.UsmcPickupPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.UsmcPickupPos11, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.UsmcPickupPos12, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsPickupPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.EmsPickupPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.CartelPickupPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.CartelPickupPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CartelPickupPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.CartelPickupPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.Garage11Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться лифтом', 3, -1, pickups.Tranparent);
-    methods.createCpVector(pickups.Garage12Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться лифтом', 3, -1, pickups.Tranparent);
-    methods.createCpVector(pickups.Garage13Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться лифтом', 3, -1, pickups.Tranparent);
+    methods.createCpVector(pickups.Garage11Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete lifta', 3, -1, pickups.Tranparent);
+    methods.createCpVector(pickups.Garage12Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete lifta', 3, -1, pickups.Tranparent);
+    methods.createCpVector(pickups.Garage13Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete lifta', 3, -1, pickups.Tranparent);
 
-    methods.createCpVector(pickups.Garage21Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться лифтом', 3, -1, pickups.Tranparent);
-    methods.createCpVector(pickups.Garage22Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться лифтом', 3, -1, pickups.Tranparent);
-    methods.createCpVector(pickups.Garage23Pos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться лифтом', 3, -1, pickups.Tranparent);
+    methods.createCpVector(pickups.Garage21Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete lifta', 3, -1, pickups.Tranparent);
+    methods.createCpVector(pickups.Garage22Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete lifta', 3, -1, pickups.Tranparent);
+    methods.createCpVector(pickups.Garage23Pos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete lifta', 3, -1, pickups.Tranparent);
 
-    methods.createCpVector(pickups.FibLift0StationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.FibLift1StationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.FibLift2StationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.FibLift3StationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.FibLift4StationPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.FibArsenalPos, 'Нажмите ~g~E~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.FibLift0StationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.FibLift1StationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.FibLift2StationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.FibLift3StationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.FibLift4StationPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.FibArsenalPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.CartelArsenalPos, 'Нажмите ~g~E~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.CartelArsenalPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.MeriaUpPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.MeriaDownPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.MeriaRoofPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.MeriaGarPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.MeriaGarderobPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.MeriaHelpPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.MeriaHelpIslandPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.MeriaUpPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.MeriaDownPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.MeriaRoofPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.MeriaGarPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.MeriaGarderobPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.MeriaHelpPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.MeriaHelpIslandPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.SapdStockPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdStockPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdStockPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.UsmcStockPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.FibStockPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.CartelStockPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdGarderobPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdGarderobPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdGarderobPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdArsenalPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdArsenalPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdArsenalPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdClearPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdClearPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdClearPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdArrestPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdArrestPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdArrestPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SapdKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdStockPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdStockPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdStockPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.UsmcStockPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.FibStockPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.CartelStockPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdGarderobPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdGarderobPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdGarderobPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdArsenalPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdArsenalPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdArsenalPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdClearPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdClearPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdClearPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdArrestPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdArrestPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdArrestPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SapdKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.UsmcArsenalPos1, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.UsmcArsenalPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.UsmcArsenalPos1, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.UsmcArsenalPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.DispatcherPos1, 'Диспетчерская', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.DispatcherPos2, 'Диспетчерская', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.DispatcherPos3, 'Диспетчерская', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.DispatcherPos4, 'Диспетчерская', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.DispatcherPos5, 'Диспетчерская', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.DispatcherPos6, 'Диспетчерская', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.DispatcherPos1, 'Dispečerinė', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.DispatcherPos2, 'Dispečerinė', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.DispatcherPos3, 'Dispečerinė', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.DispatcherPos4, 'Dispečerinė', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.DispatcherPos5, 'Dispečerinė', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.DispatcherPos6, 'Dispečerinė', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.SheriffKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.InvaderKeyPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffClearPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffClearPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffGarderobPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffGarderobPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffGarderobPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffArrestPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffArrestPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffArrestPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffArsenalPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffArsenalPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.SheriffArsenalPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.InvaderKeyPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffClearPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffClearPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffGarderobPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffGarderobPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffGarderobPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffArrestPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffArrestPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffArrestPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffArsenalPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffArsenalPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.SheriffArsenalPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.EmsArsenalPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsArsenalPos2, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsArsenalPos3, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsArsenalPos4, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.EmsArsenalPos5, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsArsenalPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsArsenalPos2, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsArsenalPos3, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsArsenalPos4, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.EmsArsenalPos5, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.PrisonArrestPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.PrisonArrestPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.ClubLsUserPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.ClubTehUserPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.ClubGalaxyUserPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.ClubUserPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.ClubLsUserPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.ClubTehUserPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.ClubGalaxyUserPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.ClubUserPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
     //methods.createCpVector(pickups.ClubGalaxyVPos, "Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом", 4, -1, pickups.Blue100, 0.3);
     //methods.createCpVector(pickups.ClubTehVPos, "Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом", 4, -1, pickups.Blue100, 0.3);
     //methods.createCpVector(pickups.ClubLsVPos, "Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом", 4, -1, pickups.Blue100, 0.3);
 
-    methods.createCpVector(pickups.IslandPos1, "Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом", 4, -1, pickups.Blue100, 0.3);
-    methods.createCpVector(pickups.IslandPos2, "Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом", 4, -1, pickups.Blue100, 0.3);
+    methods.createCpVector(pickups.IslandPos1, "Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa", 4, -1, pickups.Blue100, 0.3);
+    methods.createCpVector(pickups.IslandPos2, "Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa", 4, -1, pickups.Blue100, 0.3);
 
-    methods.createCpVector(business.BusinessOfficePos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(business.BusinessStreetPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(business.BusinessMotorPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(business.BusinessRoofPos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(business.BusinessGaragePos, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(business.BusinessBotPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, pickups.Blue);
+    methods.createCpVector(business.BusinessOfficePos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(business.BusinessStreetPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(business.BusinessMotorPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(business.BusinessRoofPos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(business.BusinessGaragePos, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(business.BusinessBotPos, 'Paspauskite ~g~E~s~ jog atidarytumete meniu', 1, -1, pickups.Blue);
 
-    methods.createCpVector(pickups.InvaderPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.InvaderPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.InvaderPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.InvaderPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.GangUserPosInt, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.GangUserPos1, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.GangUserPos2, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.GangUserPos3, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.GangUserPos4, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
-    methods.createCpVector(pickups.GangUserPos5, 'Нажмите ~g~Left Alt~s~ чтобы воспользоваться пикапом', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.GangUserPosInt, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.GangUserPos1, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.GangUserPos2, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.GangUserPos3, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.GangUserPos4, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
+    methods.createCpVector(pickups.GangUserPos5, 'Paspauskite ~g~Left Alt~s~ , jog naudotumete pickupa', 1, -1, pickups.Blue100);
 
-    methods.createCpVector(pickups.Gr6Pos, 'Нажмите ~g~E~s~ чтобы открыть меню инкассатора', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.Mech3Pos, 'Нажмите ~g~E~s~ чтобы открыть меню аренды транспорта', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.MailPos, 'Нажмите ~g~E~s~ чтобы открыть меню аренты транспорта', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.TaxiPos, 'Нажмите ~g~E~s~ чтобы открыть меню аренды такси', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.Bus1Pos, 'Нажмите ~g~E~s~ чтобы открыть меню городского маршрута', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.Bus2Pos, 'Нажмите ~g~E~s~ чтобы открыть меню трансферного маршрута', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.Bus3Pos, 'Нажмите ~g~E~s~ чтобы открыть меню рейсового маршрута', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.TreePos, 'Нажмите ~g~E~s~ чтобы открыть меню садовника/строителя', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.Tree1Pos, 'Нажмите ~g~E~s~ чтобы открыть меню садовника/строителя', 1, -1, pickups.Blue);
-    methods.createCpVector(pickups.AvePos, 'Нажмите ~g~E~s~ чтобы открыть меню священника', 1, -1, pickups.Yellow);
+    methods.createCpVector(pickups.Gr6Pos, 'Paspauskite ~g~E~s~ jog atidarytumete inkasatoriu meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.Mech3Pos, 'Paspauskite ~g~E~s~ jog atidarytumete transporto nuomos meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.MailPos, 'Paspauskite ~g~E~s~ jog atidarytumete transporto nuomos meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.TaxiPos, 'Paspauskite ~g~E~s~ jog atidarytumete taksi nuomos meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.Bus1Pos, 'Paspauskite ~g~E~s~ jog atidarytumete miesto marsruto meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.Bus2Pos, 'Paspauskite ~g~E~s~ jog atidarytumete marsruto meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.Bus3Pos, 'Paspauskite ~g~E~s~ jog atidarytumete reiso marsruto meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.TreePos, 'Paspauskite ~g~E~s~ jog atidarytumete sodininko/statybininko meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.Tree1Pos, 'Paspauskite ~g~E~s~ jog atidarytumete sodininko/statybininko meniu', 1, -1, pickups.Blue);
+    methods.createCpVector(pickups.AvePos, 'Paspauskite ~g~E~s~, jog atidarytumete kunigo meniu', 1, -1, pickups.Yellow);
     //methods.createCpVector(pickups.AveVehPos, 'Нажмите ~g~E~s~ чтобы открыть меню священника', 1, -1, pickups.Blue);
     //methods.createCpVector(pickups.BuilderPos, 'Нажмите ~g~E~s~ чтобы открыть меню строителя', 1, -1, pickups.Blue);
 };

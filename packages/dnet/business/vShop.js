@@ -17,8 +17,8 @@ vShop.loadAllShop = () => {
     enums.carShopList.forEach(item => {
         if (item.id == 0)
             return;
-        let blip = methods.createBlip(new mp.Vector3(item.buyPos[0], item.buyPos[1], item.buyPos[2]), item.blipId, item.blipColor, 0.9, 'Shop');
-        methods.createCp(blip.position.x, blip.position.y, blip.position.z - 1, "Нажмите ~g~Е~s~ чтобы открыть меню");
+        let blip = methods.createBlip(new mp.Vector3(item.buyPos[0], item.buyPos[1], item.buyPos[2]), item.blipId, item.blipColor, 0.9, 'Tr. parduotuve');
+        methods.createCp(blip.position.x, blip.position.y, blip.position.z - 1, "Spustelekite ~g~Е~s~ noredami atidaryti meniu");
     });
 };
 
@@ -134,7 +134,7 @@ vShop.buy = function(player, model, color1, color2, shopId, payType) {
 
     if (user.getMoney(player, payType) < price)
     {
-        player.notify('~r~У Вас недостаточно средств');
+        player.notify('~r~Jus neturite pakankamai lesu');
         return;
     }
 
@@ -142,20 +142,20 @@ vShop.buy = function(player, model, color1, color2, shopId, payType) {
         case 'Planes':
         case 'Helicopters':
             if (!user.get(player, 'air_lic')) {
-                player.notify('~r~У Вас нет лицензии на воздушный транспорт');
+                player.notify('~r~Jus neturite licencijos oro transportui');
                 return;
             }
             break;
         case 'Boats':
             if (!user.get(player, 'ship_lic')) {
-                player.notify('~r~У Вас нет лицензии на водный транспорт');
+                player.notify('~r~Jus neturite licencijos vandens transportui');
                 return;
             }
             break;
         case 'Commercials':
         case 'Industrial':
             if (!user.get(player, 'c_lic')) {
-                player.notify('~r~У Вас нет лицензии категории C');
+                player.notify('~r~Jus neturite C kategorijos licencijos');
                 return;
             }
             break;
@@ -171,13 +171,13 @@ vShop.buy = function(player, model, color1, color2, shopId, payType) {
         case 'Utility':
         case 'Vans':
             if (!user.get(player, 'b_lic')) {
-                player.notify('~r~У Вас нет лицензии категории B');
+                player.notify('~r~Neturite B kategorijos licencijos');
                 return;
             }
             break;
         case 'Motorcycles':
             if (!user.get(player, 'a_lic')) {
-                player.notify('~r~У Вас нет лицензии категории А');
+                player.notify('~r~Neturite A kategorijos licencijos');
                 return;
             }
             break;
@@ -197,12 +197,12 @@ vShop.buy = function(player, model, color1, color2, shopId, payType) {
     }*/
 
     if (freeSlot === 0) {
-        player.notify('~r~У Вас нет свободных слотов под транспорт');
+        player.notify('~r~Neturite slotu transportui');
         return;
     }
 
     if (user.has(player, 'buyCar')) {
-        player.notify('~r~Таймаут на покупку транспорта 2 минуты');
+        player.notify('~r~Transporto priemones skirtasis laikas - 2 minutes');
         return;
     }
 
@@ -233,8 +233,8 @@ vShop.buy = function(player, model, color1, color2, shopId, payType) {
                 user.save(player);
                 vehicles.save(id);
 
-                user.addHistory(player, 3, 'Покупка транспорта ' + model);
-                user.removeMoney(player, price, 'Покупка транспорта ' + model, payType);
+                user.addHistory(player, 3, 'Transporto pirkimas ' + model);
+                user.removeMoney(player, price, 'Transporto pirkimas ' + model, payType);
                 coffer.addMoney(1, price);
 
                 user.achiveDoneAllById(player, 30);
@@ -242,11 +242,11 @@ vShop.buy = function(player, model, color1, color2, shopId, payType) {
                 setTimeout(function () {
                     if (user.isLogin(player)) {
                         if (vInfo.fuel_type == 3)
-                            vShop.sendNotify(player, shopId, 'Поздравляем', `Поздравляем с покупкой электрокара ~g~${vInfo.display_name}~s~.\n\nСпасибо за то, что сохраняете экологию ;)`);
+                            vShop.sendNotify(player, shopId, 'Sveikiname', `Sveikiname isigijus elektromobili ~g~${vInfo.display_name}~s~.\n\nDekojame, kad taupote aplinką`);
                         else
-                            vShop.sendNotify(player, shopId, 'Поздравляем', `Поздравляем с покупкой транспорта ~b~${vInfo.display_name}~s~.`);
+                            vShop.sendNotify(player, shopId, 'Sveikiname', `Sveikiname isigijus transporto priemone ~b~${vInfo.display_name}~s~.`);
 
-                        vShop.sendNotify(player, shopId, '~r~Налог', `Учтите, что за ваш транспорт необходимо платить налог в здании правительства.`);
+                        vShop.sendNotify(player, shopId, '~r~Mokesciai', `Atkreipkite demesi, kad už savo transporta vyriausybes pastate turite sumoketi mokesti.`);
 
                         let serverId = vehicles.get(id, 'serverId');
                         let veh = mp.vehicles.at(serverId);
@@ -284,7 +284,7 @@ vShop.rent = function(player, model, color1, color2, shopId) {
 
     if (user.getMoney(player) < price)
     {
-        player.notify('~r~У вас недостаточно средств');
+        player.notify('~r~Jus neturite pakankamai lesu');
         return;
     }
 
@@ -294,20 +294,20 @@ vShop.rent = function(player, model, color1, color2, shopId) {
         case 'Planes':
         case 'Helicopters':
             if (!user.get(player, 'air_lic')) {
-                player.notify('~r~У Вас нет лицензии на воздушный транспорт');
+                player.notify('~r~Jus neturite licencijos oro transportui');
                 return;
             }
             break;
         case 'Boats':
             if (!user.get(player, 'ship_lic')) {
-                player.notify('~r~У Вас нет лицензии на водный транспорт');
+                player.notify('~r~Jus neturite licencijos vandens transportui');
                 return;
             }
             break;
         case 'Commercials':
         case 'Industrial':
             if (!user.get(player, 'c_lic')) {
-                player.notify('~r~У Вас нет лицензии категории C');
+                player.notify('~r~Jus neturite C kategorijos licencijos');
                 return;
             }
             break;
@@ -323,13 +323,13 @@ vShop.rent = function(player, model, color1, color2, shopId) {
         case 'Utility':
         case 'Vans':
             if (!user.get(player, 'b_lic')) {
-                player.notify('~r~У Вас нет лицензии категории B');
+                player.notify('~r~Neturite B kategorijos licencijos');
                 return;
             }
             break;
         case 'Motorcycles':
             if (model != 'Faggio' && !user.get(player, 'a_lic')) {
-                player.notify('~r~У Вас нет лицензии категории А');
+                player.notify('~r~Jus neturite A kategorijos licencijos');
                 return;
             }
             break;
@@ -345,11 +345,11 @@ vShop.rent = function(player, model, color1, color2, shopId) {
     });
 
     if (countOwnerCars > 10) {
-        player.notify('~r~Нельзя арендовывать более 10 ТС');
+        player.notify('~r~Negalite issinuomoti daugiau nei 10 transporto priemoniu');
         return;
     }
 
-    user.removeMoney(player, price, 'Аренда транспорта ' + model);
+    user.removeMoney(player, price, 'Transporto nuoma ' + model);
     coffer.addMoney(1, price);
     vehicles.spawnCarCb(veh => {
 
@@ -366,7 +366,7 @@ vShop.rent = function(player, model, color1, color2, shopId) {
         if (!user.isLogin(player))
             return;
         user.putInVehicle(player, veh, -1);
-        vShop.sendNotify(player, shopId, 'Аренда', `Вы арендовали транспорт ~b~${vInfo.display_name}~s~.`);
+        vShop.sendNotify(player, shopId, 'Nuoma', `Jus issinuomojote transporta ~b~${vInfo.display_name}~s~.`);
 
     }, new mp.Vector3(shopItem.spawnPos[0], shopItem.spawnPos[1], shopItem.spawnPos[2]), shopItem.spawnPos[3], model);
 };

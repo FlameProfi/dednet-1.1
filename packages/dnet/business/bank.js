@@ -132,41 +132,41 @@ bank.doorPosLockPick = [
 bank.loadAll = function() {
     methods.debug('bank.loadAll');
 
-    methods.createBlip(bank.pacificPos, 500, 65, 0.9, 'Bank Pacific');
-    methods.createBlip(bank.blainePos, 500, 67, 0.9, 'Bank Blaine');
-    methods.createBlip(bank.mazePos1, 500, 59, 0.9, 'Bank Maze');
-    methods.createBlip(bank.mazePos2, 500, 59, 0.9, 'Bank Maze');
+    methods.createBlip(bank.pacificPos, 500, 65, 0.9, 'Bankas Pacific');
+    methods.createBlip(bank.blainePos, 500, 67, 0.9, 'Bankas Blaine');
+    methods.createBlip(bank.mazePos1, 500, 59, 0.9, 'Bankas Maze');
+    methods.createBlip(bank.mazePos2, 500, 59, 0.9, 'Bankas Maze');
 
     bank.fleecaMarkers.forEach(function (item) {
         let bankPos = new mp.Vector3(item[0], item[1], item[2]);
-        methods.createBlip(bankPos, 500, 69, 0.9, 'Bank Fleeca');
+        methods.createBlip(bankPos, 500, 69, 0.9, 'Bankas Fleeca');
     });
 
     bank.markers.forEach(function (item) {
         let bankPos = new mp.Vector3(item[0], item[1], item[2] - 1);
-        methods.createCpVector(bankPos, "Нажмите ~g~Е~s~ чтобы открыть меню");
+        methods.createCpVector(bankPos, "Spustelekite ~g~Е~s~ noredami atidaryti meniu");
     });
 
     bank.doorPos.forEach(function (item) {
         let bankPos = new mp.Vector3(item[1], item[2], item[3]);
-        methods.createCpVector(bankPos, "~y~Место для установки взрывчатки", 1.7, -1, [0,0,0,0]);
+        methods.createCpVector(bankPos, "~y~Sprogmenu idejimo vieta", 1.7, -1, [0,0,0,0]);
     });
 
     bank.doorPos2.forEach(function (item) {
         let bankPos = new mp.Vector3(item[0], item[1], item[2]);
-        methods.createCpVector(bankPos, "~y~Нажмите ~s~E~y~ чтобы воспользоваться панелью", 1, -1, [0,0,0,0]);
+        methods.createCpVector(bankPos, "~y~Spustelekite ~s~E~y~ naudoti skydeli", 1, -1, [0,0,0,0]);
     });
 
     bank.doorPosLockPick.forEach(function (item) {
         let bankPos = new mp.Vector3(item[0], item[1], item[2]);
-        methods.createCpVector(bankPos, "~y~Используйте отмычку чтобы взломать дверь", 1, -1, [0,0,0,0]);
+        methods.createCpVector(bankPos, "~y~Noredami islaužti duris naudokite apsaugini skydeli", 1, -1, [0,0,0,0]);
     });
 
     let idx = 0;
     bank.grabPos.forEach(function (item) {
         try {
             let bankPos = new mp.Vector3(item[0], item[1], item[2]);
-            methods.createCpVector(bankPos, "~y~Место для ограбления ячеек", 1.7, -1, [0,0,0,0]);
+            methods.createCpVector(bankPos, "~y~Vieta apiplesti kameras", 1.7, -1, [0,0,0,0]);
             idx++;
         }
         catch (e) {
@@ -196,18 +196,18 @@ bank.transferMoney = function(player, bankNumber, money) {
         return;
 
     if (money < 1) {
-        player.notify('~r~Сумма должна быть больше нуля');
+        player.notify('~r~Suma turi buti didesne už nuli');
         user.updateClientCache(player);
         return;
     }
     if (bankNumber < 1) {
-        player.notify('~r~Номер карты должен быть больше нуля');
+        player.notify('~r~Korteles numeris turi buti didesnis nei nulis');
         user.updateClientCache(player);
         return;
     }
 
     if (user.getBankMoney(player) < money) {
-        player.notify('~r~У Вас недостаточно средств');
+        player.notify('~r~Jus neturite pakankamai lesu');
         user.updateClientCache(player);
         return;
     }
@@ -232,10 +232,10 @@ bank.transferMoney = function(player, bankNumber, money) {
             bank.addBusinessBankMoneyByCard(bankNumber, sumForBiz);
             bank.addBusinessBankMoneyByCard(user.getBankCardPrefix(player), sumForBiz);
 
-            user.sendSmsBankOperation(player, 'Перевод: ~g~$' + methods.numberFormat(sumFinal));
-            user.sendSmsBankOperation(pl, 'Зачисление: ~g~$' + methods.numberFormat(sumFinal));
-            user.removeBankMoney(player, money, 'Перевод ' + bankNumber);
-            user.addBankMoney(pl, sumFinal, 'Перевод от ' + user.get(player, 'bank_card'));
+            user.sendSmsBankOperation(player, 'Pervedimas: ~g~$' + methods.numberFormat(sumFinal));
+            user.sendSmsBankOperation(pl, 'Registracija: ~g~$' + methods.numberFormat(sumFinal));
+            user.removeBankMoney(player, money, 'Pervedimas ' + bankNumber);
+            user.addBankMoney(pl, sumFinal, 'Vertimas iš ' + user.get(player, 'bank_card'));
 
             user.save(pl);
             user.save(player);
@@ -251,10 +251,10 @@ bank.transferMoney = function(player, bankNumber, money) {
                     bank.addBusinessBankMoneyByCard(bankNumber, sumForBiz);
                     bank.addBusinessBankMoneyByCard(user.getBankCardPrefix(player), sumForBiz);
 
-                    user.sendSmsBankOperation(player, 'Перевод: ~g~' + methods.moneyFormat(sumFinal));
-                    user.removeBankMoney(player, money, 'Перевод ' + bankNumber);
-                    bank.addBankHistory(0, bankNumber, 'Перевод от ' + user.get(player, 'bank_card'), sumFinal);
-                    bank.addBankHistory(0, user.get(player, 'bank_card'), 'Перевод ' + bankNumber, sumFinal);
+                    user.sendSmsBankOperation(player, 'Pervedimas: ~g~' + methods.moneyFormat(sumFinal));
+                    user.removeBankMoney(player, money, 'Pervedimas ' + bankNumber);
+                    bank.addBankHistory(0, bankNumber, 'Vertimas iš ' + user.get(player, 'bank_card'), sumFinal);
+                    bank.addBankHistory(0, user.get(player, 'bank_card'), 'Pervedimas ' + bankNumber, sumFinal);
 
                     mysql.executeQuery("UPDATE users SET money_bank = '" + (item["money_bank"] + sumFinal) + "' where id = '" + item["id"] + "'");
                     isEquip = true;
@@ -267,17 +267,17 @@ bank.transferMoney = function(player, bankNumber, money) {
                             bank.addBusinessBankMoneyByCard(bankNumber, sumForBiz);
                             bank.addBusinessBankMoneyByCard(user.getBankCardPrefix(player), sumForBiz);
 
-                            user.sendSmsBankOperation(player, 'Перевод: ~g~' + methods.moneyFormat(sumFinal));
-                            user.removeBankMoney(player, money, 'Перевод ' + bankNumber);
-                            bank.addBankHistory(0, bankNumber, 'Перевод от ' + user.get(player, 'bank_card'), sumFinal);
-                            bank.addBankHistory(0, user.get(player, 'bank_card'), 'Перевод ' + bankNumber, sumFinal);
+                            user.sendSmsBankOperation(player, 'Pervedimas: ~g~' + methods.moneyFormat(sumFinal));
+                            user.removeBankMoney(player, money, 'Pervedimas ' + bankNumber);
+                            bank.addBankHistory(0, bankNumber, 'Vertimas iš' + user.get(player, 'bank_card'), sumFinal);
+                            bank.addBankHistory(0, user.get(player, 'bank_card'), 'Pervedimas ' + bankNumber, sumFinal);
 
                             mysql.executeQuery("UPDATE items SET count = '" + (item["count"] + sumFinal) + "' where id = '" + item["id"] + "'");
                             isEquip = true;
                         });
 
                         if (!isOnline && !isEquip)
-                            user.sendSmsBankOperation(player, 'Счёт не был найден', '~r~Ошибка перевода');
+                            user.sendSmsBankOperation(player, 'Paskyra nerasta', '~r~Vertimo klaida');
                     });
                 }
             });
@@ -293,18 +293,18 @@ bank.transferCryptoMoney = function(player, bankNumber, money) {
         return;
 
     if (money < 0) {
-        player.notify('~r~Сумма должна быть больше нуля');
+        player.notify('~r~Suma turi buti didesne už nuli');
         user.updateClientCache(player);
         return;
     }
     if (bankNumber === '') {
-        player.notify('~r~Номер карты должен быть больше нуля');
+        player.notify('~r~Korteles numeris turi buti didesnis nei nulis');
         user.updateClientCache(player);
         return;
     }
 
     if (user.getCryptoMoney(player) < money) {
-        player.notify('~r~У Вас недостаточно средств');
+        player.notify('~r~Jus neturite pakankamai lesu');
         user.updateClientCache(player);
         return;
     }
@@ -322,10 +322,10 @@ bank.transferCryptoMoney = function(player, bankNumber, money) {
             return;
         if (user.get(pl, 'crypto_card') == bankNumber) {
             isOnline = true;
-            player.notify('Перевод: ~g~' + methods.cryptoFormat(money));
-            pl.notify('Зачисление: ~g~' + methods.cryptoFormat(money));
-            user.removeCryptoMoney(player, money, 'Перевод ' + bankNumber);
-            user.addCryptoMoney(pl, money, 'Перевод от ' + user.get(player, 'crypto_card'));
+            player.notify('Pervedimas: ~g~' + methods.cryptoFormat(money));
+            pl.notify('Registracija: ~g~' + methods.cryptoFormat(money));
+            user.removeCryptoMoney(player, money, 'Pervedimas ' + bankNumber);
+            user.addCryptoMoney(pl, money, 'Pervedimas iš ' + user.get(player, 'crypto_card'));
 
             user.save(pl);
             user.save(player);
@@ -337,8 +337,8 @@ bank.transferCryptoMoney = function(player, bankNumber, money) {
 
             mysql.executeQuery(`SELECT * FROM users WHERE crypto_card = ${bankNumber}`, function (err, rows, fields) {
                 rows.forEach(function (item) {
-                    player.notify('Перевод: ~g~' + methods.cryptoFormat(money));
-                    user.removeCryptoMoney(player, money, 'Перевод ' + bankNumber);
+                    player.notify('Pervedimas: ~g~' + methods.cryptoFormat(money));
+                    user.removeCryptoMoney(player, money, 'Pervedimas ' + bankNumber);
 
                     mysql.executeQuery("UPDATE users SET money_crypto = '" + (item["money_crypto"] + money) + "' where id = '" + item["id"] + "'");
                     isEquip = true;
@@ -346,7 +346,7 @@ bank.transferCryptoMoney = function(player, bankNumber, money) {
             });
 
             if (!isEquip)
-                player.notify('~r~Счёт не был найден');
+                player.notify('~r~Paskyra nerasta');
         }
     }, 500);
     user.updateClientCache(player);
@@ -366,8 +366,8 @@ bank.changePin = function(player, pin) {
                 params.pin = pin;
                 inventory.updateItemParams(item['id'], JSON.stringify(params));
 
-                bank.addBankHistory(user.getId(player), bankNumber, 'Смена пинкода', 0);
-                user.sendSmsBankOperation(player, 'Вы успешно сменили пинкод', 'Смена пинкода');
+                bank.addBankHistory(user.getId(player), bankNumber, 'PIN kodo keitimas', 0);
+                user.sendSmsBankOperation(player, 'Jūs sėkmingai pakeitėte savo PIN kodą', 'PIN kodo keitimas');
                 user.save(player);
             }
         });
@@ -423,7 +423,7 @@ bank.withdraw = function(player, money, procent = 0) {
         return;
 
     if (money < 1) {
-        player.notify('~r~Сумма должна быть больше нуля');
+        player.notify('~r~Suma turi buti didesne už nuli');
         return;
     }
 
@@ -434,19 +434,19 @@ bank.withdraw = function(player, money, procent = 0) {
         if (!user.isLogin(player))
             return;
         if (rows.length < 1) {
-            player.notify('~r~Ваша банковская карта не экипирована');
+            player.notify('~r~Jusu banko kortele nera aprupinta');
             return;
         }
 
         if (user.getBankMoney(player) < money) {
-            player.notify('~r~У Вас недостаточно средств');
+            player.notify('~r~Jus neturite pakankamai lesu');
             return;
         }
 
         if (procent == 0) {
-            user.sendSmsBankOperation(player, 'Вывод: ~g~$' + methods.numberFormat(money));
-            user.removeBankMoney(player, money, 'Вывод средств через отделение банка');
-            user.addCashMoney(player, money, 'Вывод средств через отделение банка');
+            user.sendSmsBankOperation(player, 'Rezultatas: ~g~$' + methods.numberFormat(money));
+            user.removeBankMoney(player, money, 'Lėšų atsiėmimas per banko skyrių');
+            user.addCashMoney(player, money, 'Lėšų atsiėmimas per banko skyrių');
 
             inventory.updateItemCountByItemId(50, user.getBankMoney(player), user.getId(player));
         }
@@ -454,10 +454,10 @@ bank.withdraw = function(player, money, procent = 0) {
             let sum = methods.parseInt(money * ((100 - procent) / 100));
             let sumBank = methods.parseInt(money * (procent / 100));
 
-            user.sendSmsBankOperation(player, 'Вывод: ~g~$' + methods.numberFormat(sum));
+            user.sendSmsBankOperation(player, 'Rezultatas: ~g~$' + methods.numberFormat(sum));
             bank.addBusinessBankMoneyByCard(user.getBankCardPrefix(player), sumBank);
-            user.removeBankMoney(player, money, 'Вывод средств через банкомат');
-            user.addCashMoney(player, sum, 'Вывод средств через банкомат');
+            user.removeBankMoney(player, money, 'Lėšų atsiėmimas per bankomatą');
+            user.addCashMoney(player, sum, 'Lėšų atsiėmimas per bankomatą');
 
             inventory.updateItemCountByItemId(50, user.getBankMoney(player), user.getId(player));
         }
@@ -473,12 +473,12 @@ bank.deposit = function(player, money, procent = 0) {
         return;
 
     if (money < 1) {
-        player.notify('~r~Сумма должна быть больше нуля');
+        player.notify('~r~Suma turi buti didesne už nuli');
         return;
     }
 
     if (user.getCashMoney(player) < money) {
-        player.notify('~r~У Вас недостаточно средств');
+        player.notify('~r~Jus neturite pakankamai lesu');
         return;
     }
 
@@ -489,14 +489,14 @@ bank.deposit = function(player, money, procent = 0) {
         if (!user.isLogin(player))
             return;
         if (rows.length < 1) {
-            player.notify('~r~Ваша банковская карта не экипирована');
+            player.notify('~r~Jusu banko kortele nera aprupinta');
             return;
         }
 
         if (procent == 0) {
-            user.sendSmsBankOperation(player, 'Зачисление: ~g~$' + methods.numberFormat(money));
-            user.removeCashMoney(player, money, 'Зачисление в отделении банка');
-            user.addBankMoney(player, money, 'Зачисление в отделении банка');
+            user.sendSmsBankOperation(player, 'Registracija: ~g~$' + methods.numberFormat(money));
+            user.removeCashMoney(player, money, 'Registracija į banko skyrių');
+            user.addBankMoney(player, money, 'Registracija į banko skyrių');
 
             inventory.updateItemCountByItemId(50, user.getBankMoney(player), user.getId(player));
         }
@@ -504,10 +504,10 @@ bank.deposit = function(player, money, procent = 0) {
             let sum = methods.parseInt(money * ((100 - procent) / 100));
             let sumBank = methods.parseInt(money * (procent / 100));
 
-            user.sendSmsBankOperation(player, 'Зачисление: ~g~$' + methods.numberFormat(sum));
+            user.sendSmsBankOperation(player, 'Registracija: ~g~$' + methods.numberFormat(sum));
             bank.addBusinessBankMoneyByCard(user.getBankCardPrefix(player), sumBank);
-            user.removeCashMoney(player, money, 'Зачисление через банкомат');
-            user.addBankMoney(player, sum, 'Зачисление через банкомат');
+            user.removeCashMoney(player, money, 'Registracija per bankomatą');
+            user.addBankMoney(player, sum, 'Registracija per bankomatą');
 
             inventory.updateItemCountByItemId(50, user.getBankMoney(player), user.getId(player));
         }
@@ -543,7 +543,7 @@ bank.openCard = function(player, bankId, price) {
         return;
 
     if (user.getMoney(player) < price) {
-        player.notify('~r~У Вас недостаточно средств');
+        player.notify('~r~Jus neturite pakankamai lesu');
         return;
     }
 
@@ -577,7 +577,7 @@ bank.openCard = function(player, bankId, price) {
 
     //methods.saveLog('BuyCardNumber', `${user.getRpName(player)} (${user.getId(player)}): ${number}`);
 
-    user.removeCashMoney(player, price, 'Смена номера карты');
+    user.removeCashMoney(player, price, 'Pakeiskite kortelės numerį');
 
     if (business.isOpen(bankId)) {
         business.addMoney(bankId, price);
@@ -585,11 +585,11 @@ bank.openCard = function(player, bankId, price) {
     }
 
     bank.sendSmsBankOpenOperation(player, bankPrefix);
-    bank.addBankHistory(user.getId(player), number, 'Открытие счёта на имя ' + user.getRpName(player), price * -1);
+    bank.addBankHistory(user.getId(player), number, 'Sąskaitos atidarymas vardu ' + user.getRpName(player), price * -1);
 
     inventory.addItem(50, 1, 1, user.getId(player), 0, 0, `{"number":${number}, "pin":1234, "owner":"${user.getRpName(player)}"}`);
 
-    player.notify('~g~Вы оформили карту, она лежит в инвентаре, экипируйте её\nВаш пинкод: ~s~1234');
+    player.notify('~g~Isdavete kortele, ji yra jusu inventoriuje, ja aprupinkite\nTavo PIN kodas: ~s~1234');
 };
 
 bank.closeCard = function(player) {
@@ -602,7 +602,7 @@ bank.closeCard = function(player) {
     user.set(player, 'bank_card', 0);
     let currentBankMoney = user.getBankMoney(player);
     user.removeBankMoney(player, currentBankMoney);
-    bank.addBankHistory(user.getId(player), number, 'Закрытие счёта', 0);
+    bank.addBankHistory(user.getId(player), number, 'Sąskaitos uždarymas', 0);
     user.addCashMoney(player, currentBankMoney);
 
     mysql.executeQuery(`DELETE FROM items WHERE params LIKE '%"number":${number}%' OR params LIKE '%"number": ${number}%'`);
@@ -610,11 +610,11 @@ bank.closeCard = function(player) {
 };
 
 bank.sendSmsBankCloseOperation = function(player, pref = 0) {
-    user.sendSmsBankOperation(player, 'Ваш счёт в банке был закрыт. СМС оповещения были отключены, всего Вам хорошего!');
+    user.sendSmsBankOperation(player, 'Jūsų banko sąskaita uždaryta. SMS pranešimai buvo išjungti, geriausio jums!');
 };
 
 bank.sendSmsBankOpenOperation = function(player, pref = 0) {
-    player.notify('Поздравляем с открытием счёта! Надеемся на долгое сотрудничество!\nВаш пинкод от карты:~g~ 1234');
+    player.notify('Sveikiname atidarius saskaita! Mes tikimes ilgalaikio bendradarbiavimo!\nJusu PIN kodas is korteles:~g~ 1234');
     //user.sendSmsBankOperation(player, 'Поздравляем с открытием счёта! Надеемся на долгое сотрудничество!\nВаш пинкод от карты:~g~ 1234', pref);
 };
 
@@ -710,7 +710,7 @@ bank.hackFleecaDoor = function(player) {
                     user.blockKeys(player, false);
                     player.addAttachment('laptop', true);
 
-                    dispatcher.sendPos("Код 0", "В банке сработала сигнализация", player.position);
+                    dispatcher.sendPos("Kodas 0", "Signalas suveikė banke", player.position);
                     methods.explodeObject(pos2[0], pos2[1], pos2[2] - 0.5, 200, 18, 0.1, false, 0);
                     methods.explodeObject(pos2[0], pos2[1], pos2[2] + 0.5, 200, 18, 0.1, false, 0);
                     methods.explodeObject(pos2[0], pos2[1], pos2[2], 200, 18, 0.1, false, 0);
@@ -741,8 +741,8 @@ bank.lockPickDoor = function(player, radius = 3) {
                 user.stopAnimation(player);
                 user.blockKeys(player, false);
                 methods.openObject(pos[0], pos[1], pos[2], false, 5);
-                player.notify('~g~Вы взломали дверь');
-                dispatcher.sendPos("Код 0", "В банке сработала сигнализация", player.position);
+                player.notify('~g~Islaužei duris');
+                dispatcher.sendPos("Kodas 0", "Signalas suveikė banke", player.position);
             }
             catch (e) {}
         }, 5000);

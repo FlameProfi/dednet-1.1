@@ -136,7 +136,7 @@ graffiti.createWar = function() {
     if (isWar)
         return;
 
-    methods.notifyWithPictureToFractions2('Борьба за граффити', `~r~ВНИМАНИЕ!`, 'Началась война за граффити');
+    methods.notifyWithPictureToFractions2('Kova del graffiti', `~r~DEMESIO!`, 'Prasidejo kova del graffiti');
     isWar = true;
 
     graffiti.position.forEach((item, idx) => {
@@ -158,7 +158,7 @@ graffiti.stopWar = function() {
     isWar = false;
     timer = 0;
 
-    methods.notifyWithPictureToFractions2('Борьба за граффити', `~r~ВНИМАНИЕ!`, 'Закончилась война за граффити');
+    methods.notifyWithPictureToFractions2('Kova del graffiti', `~r~DEMESIO!`, 'Baigesi kova del graffiti');
 
     let moneyToUser = new Map();
     graffiti.position.forEach((item, idx) => {
@@ -185,12 +185,12 @@ graffiti.stopWar = function() {
 
             if (moneyToUser.has(user.get(p, 'fraction_id2').toString())) {
                 if (p.getVariable('isAfk') === true) {
-                    p.notify('~r~Зарплату вы не получили, связи с тем, что вы AFK');
+                    p.notify('~r~Jums nebuvo sumoketa, nes esate AFK');
                 }
                 else {
                     let cMoney = moneyToUser.get(user.get(p, 'fraction_id2').toString());
-                    p.notify(`~g~Вы получили ${methods.cryptoFormat(cMoney)} за ваши захваченные граффити`);
-                    user.addCryptoMoney(p, cMoney, 'Прибыль с граффити');
+                    p.notify(`~g~Jus gavote ${methods.cryptoFormat(cMoney)} už jusu užgrobtus graffiti`);
+                    user.addCryptoMoney(p, cMoney, 'Pelnas iš graffiti');
                 }
             }
         }
@@ -240,19 +240,19 @@ graffiti.changeGraffiti = function(player) {
     if (!user.isLogin(player))
         return;
     if (!user.isGang(player)) {
-        player.notify('~r~Вы не состоите в банде');
+        player.notify('~r~Nesate gaujos narys');
         return;
     }
     if (!isWar) {
-        player.notify('~r~Сейчас не идёт война за граффити');
+        player.notify('~r~Dabar nevyksta karas del graffiti');
         return;
     }
     if (player.vehicle) {
-        player.notify('~r~Вы сидите в ТС');
+        player.notify('~r~Jus sedite transporto priemoneje');
         return;
     }
     if (player.dimension > 0) {
-        player.notify('~r~Вы в виртуальном мире');
+        player.notify('~r~Jus esate virtualiame pasaulyje');
         return;
     }
 
@@ -260,7 +260,7 @@ graffiti.changeGraffiti = function(player) {
     graffitiList.forEach((obj, idx) => {
         if (methods.distanceToPos(obj.position, player.position) < 4) {
             if (graffiti.has(idx + 1, 'resmoke')) {
-                player.notify('~r~Это граффити уже перекрашивают');
+                player.notify('~r~Sis graffiti jau perdažytas');
                 return;
             }
 
@@ -287,7 +287,7 @@ graffiti.changeGraffiti = function(player) {
                     user.blockKeys(player, false);
 
                     if (methods.distanceToPos(obj.position, player.position) > 4) {
-                        player.notify('~r~Вы слишком далеко');
+                        player.notify('~r~Jus esate per toli');
                         return;
                     }
 
@@ -321,7 +321,7 @@ graffiti.changeGraffiti = function(player) {
         }
     });
     if (!isFind) {
-        player.notify('~r~Вы слишком далеко');
+        player.notify('~r~Jus esate per toli');
     }
 };
 

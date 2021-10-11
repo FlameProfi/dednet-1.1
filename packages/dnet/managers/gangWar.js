@@ -23,7 +23,7 @@ let currentDef = 0;
 let isStartTimer = false;
 let timerCounter = 0;
 let canArmor = false;
-let countUsers = 5;
+let countUsers = 5 ;
 let warPos = new mp.Vector3(0, 0, 0);
 
 let defC = 0;
@@ -133,15 +133,15 @@ gangWar.startWar = function(zoneId, attack, def, isArmor, count) {
             user.flashBlipByRadius(p, 1000 + currentZone, true);
     });
 
-    methods.notifyWithPictureToFraction2('Улица под угрозой', `ВНИМАНИЕ!`, 'Начался захват улицы ~y~#' + zoneId, 'CHAR_DEFAULT', def);
+    methods.notifyWithPictureToFraction2('Gatve, kuriai gresia pavojus', `DEMESIO!`, 'Prasidejo gatves peremimas ~y~#' + zoneId, 'CHAR_DEFAULT', def);
 
     for (let i = 1; i <= fraction.getCount(); i++) {
         if (def == i) continue;
         if (fraction.get(i, 'is_war')) {
-            methods.notifyWithPictureToFraction2('Война за улицу', `ВНИМАНИЕ!`, 'Начался захват улицы ~y~#' + zoneId, 'CHAR_DEFAULT', i);
+            methods.notifyWithPictureToFraction2('Karas del gatves', `DEMESIO!`, 'Prasidejo gatves peremimas ~y~#' + zoneId, 'CHAR_DEFAULT', i);
         }
     }
-    dispatcher.sendPos('Война банд', `(( Начался захват улицы ~y~#${zoneId}~s~ ))`, warPos);
+    dispatcher.sendPos('Gaujų karas', `(( Prasidėjo gatvės perėmimas ~y~#${zoneId}~s~ ))`, warPos);
 };
 
 gangWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIndex) {
@@ -152,29 +152,29 @@ gangWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIndex
     let id = zoneId;
 
     if (id == 0) {
-        player.notify('~r~Вы слишком далеко от какой либо территории');
+        player.notify('~r~Esate per toli nuo bet kurios teritorijos');
         return;
     }
 
     if (!gangWar.get(id, 'canWar')) {
-        player.notify('~r~Захват этой территории сейчас не доступен');
+        player.notify('~r~Siuo metu nera galimybes užfiksuoti sia sriti');
         return;
     }
     if (gangWar.get(id, 'cant_war')) {
-        player.notify('~r~Захват этой территории не доступен');
+        player.notify('~r~Si teritorija neužimta');
         return;
     }
     if (user.get(player, 'fraction_id2') < 1) {
-        player.notify('~r~Вы не состоите в организации');
+        player.notify('~r~Jus nesate organizacijos narys');
         return;
     }
     if (!user.isLeader2(player) && !user.isSubLeader2(player)) {
-        player.notify('~r~Начать захват может только лидер или заместитель лидера');
+        player.notify('~r~Peremima gali inicijuoti tik vadovas arba jo pavaduotojas.');
         return;
     }
 
     if (warPool.has(timeIndex.toString())) {
-        player.notify('~r~Данное время занято другими людьми, выберите другое');
+        player.notify('~r~Siuo metu užima kiti žmones, pasirinkite kita');
         return;
     }
 
@@ -192,7 +192,7 @@ gangWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIndex
         let fractionName = fraction.getName(newOwnerId);
         gangWar.save(zoneId, newOwnerId, fractionName);
         gangWar.set(zoneId, 'canWar', false);
-        player.notify('~g~Вы захватили территорию, т.к. ей никто не владел');
+        player.notify('~g~Jus peremete teritorija, nes ji niekam nepriklauso.');
 
         gangWar.changeZoneColor(currentZone, newOwnerId);
         return;
@@ -200,19 +200,19 @@ gangWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIndex
 
     let idxToHour = [14, 14, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 22, 22, 22, 22, 23, 23, 23, 23];
     let dateTime = new Date(); //TODO
-    if (dateTime.getHours() + 1 >= idxToHour[timeIndex]) {
-        player.notify('~r~Назначеное время не доступно, попробуйте выбрать на час-два позже');
+    if (dateTime.getHours() + 0 >= idxToHour[timeIndex]) {
+        player.notify('~r~Paskirtas laikas nepasiekiamas, pabandykite valanda ar dviem veliau');
         return;
     }
 
     if (dateTime.getHours() < 10) {
-        player.notify('~r~Доступно с 10:00');
+        player.notify('~r~Galima iki 10:00');
         return;
     }
 
     gangWar.set(id, 'timestamp', methods.getTimeStamp());
 
-    let gunLabel = ['Любое', 'Пистолеты', 'Дробовики', 'SMG', 'Автоматы'];
+    let gunLabel = ['Visi', 'Pistoletai', 'Šautuvai', 'SMG', 'Automatai'];
     let timeLabel = ['14:00', '14:15', '14:30', '14:45', '15:00', '15:15', '15:30', '15:45', '16:00', '16:15', '16:30', '16:45', '17:00', '17:15', '17:30', '17:45', '18:00', '18:15', '18:30', '18:45', '19:00', '19:15', '19:30', '19:45', '20:00', '20:15', '20:30', '20:45', '21:00', '21:15', '21:30', '21:45', '22:00', '22:15', '22:30', '22:45', '23:00'];
 
     let data = {
@@ -224,13 +224,13 @@ gangWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIndex
         gun: gunIndex,
         gunLabel: gunLabel[gunIndex],
         timeLabel: timeLabel[timeIndex],
-        armorLabel: armorIndex === 0 ? 'Разрешено' : 'Запрещено',
+        armorLabel: armorIndex === 0 ? 'Leidžiama' : 'Neleidžiama',
     };
 
     warPool.set(timeIndex.toString(), data);
 
-    methods.notifyWithPictureToFraction2('Улица под угрозой', `ВНИМАНИЕ!`, `Захват ~y~#${zoneId}~s~ начнется в ${timeLabel[timeIndex]} (( ООС МСК ))`, 'CHAR_DEFAULT', ownerId);
-    methods.notifyWithPictureToFraction2('Война за улицу', `ВНИМАНИЕ!`, `Захват ~y~#${zoneId}~s~ начнется в ${timeLabel[timeIndex]} (( ООС МСК ))`, 'CHAR_DEFAULT', user.get(player, 'fraction_id2'));
+    methods.notifyWithPictureToFraction2('Gatve, kuriai gresia pavojus', `DEMESIO!`, `Užgrobimas ~y~#${zoneId}~s~ prasides nuo ${timeLabel[timeIndex]} (( ООС МСК ))`, 'CHAR_DEFAULT', ownerId);
+    methods.notifyWithPictureToFraction2('Karas del gatves', `DEMESIO!`, `Užgrobimas ~y~#${zoneId}~s~ prasides nuo ${timeLabel[timeIndex]} (( ООС МСК ))`, 'CHAR_DEFAULT', user.get(player, 'fraction_id2'));
 };
 
 gangWar.dropTimer = function(player) {
@@ -247,7 +247,7 @@ gangWar.dropTimer = function(player) {
     attC = 0;
     warPos = new mp.Vector3(0, 0, 0);
 
-    player.notify('~b~Таймер сброшен');
+    player.notify('~b~Laikmacio nustatymas is naujo');
 };
 
 gangWar.timer = function() {
@@ -287,8 +287,8 @@ gangWar.timer = function() {
             gangWar.save(zoneId, ownerId, fractionName);
             gangWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToFraction2('Досрочное завершение', `Улица #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentDef);
-            methods.notifyWithPictureToFraction2('Досрочное завершение', `Улица #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentAttack);
+            methods.notifyWithPictureToFraction2('Ankstyvas nutraukimas', `Gatve #${currentZone}`, 'Gatve kontroliuoja ' + fractionName + '\nRysiai su žmoniu skaiciumi teritorijoje', 'CHAR_DEFAULT', currentDef);
+            methods.notifyWithPictureToFraction2('Ankstyvas nutraukimas', `Gatve #${currentZone}`, 'Gatve kontroliuoja ' + fractionName + '\nRysiai su žmoniu skaiciumi teritorijoje', 'CHAR_DEFAULT', currentAttack);
             gangWar.changeZoneColor(currentZone, ownerId);
             mp.players.forEachInRange(warPos, 400, p => {
                 if (!user.isLogin(p))
@@ -320,8 +320,8 @@ gangWar.timer = function() {
             gangWar.save(zoneId, ownerId, fractionName);
             gangWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToFraction2('Досрочное завершение', `Улица #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentDef);
-            methods.notifyWithPictureToFraction2('Досрочное завершение', `Улица #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentAttack);
+            methods.notifyWithPictureToFraction2('Ankstyvas nutraukimas', `Gatve #${currentZone}`, 'Gatve kontroliuoja ' + fractionName + '\nRysiai su žmoniu skaiciumi teritorijoje', 'CHAR_DEFAULT', currentDef);
+            methods.notifyWithPictureToFraction2('Ankstyvas nutraukimas', `Gatve #${currentZone}`, 'Gatve kontroliuoja ' + fractionName + '\nRysiai su žmoniu skaiciumi teritorijoje', 'CHAR_DEFAULT', currentAttack);
 
             gangWar.changeZoneColor(currentZone, ownerId);
             mp.players.forEachInRange(warPos, 400, p => {
@@ -381,8 +381,8 @@ gangWar.timer = function() {
                 gangWar.save(zoneId, ownerId, fractionName);
                 gangWar.set(zoneId, 'canWar', false);
 
-                methods.notifyWithPictureToFraction2('Итоги войны', `Улица #${currentZone}`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', currentDef);
-                methods.notifyWithPictureToFraction2('Итоги войны', `Улица #${currentZone}`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', currentAttack);
+                methods.notifyWithPictureToFraction2('Karo rezultatai', `Gatve #${currentZone}`, 'Gatve kontroliuoja ' + fractionName, 'CHAR_DEFAULT', currentDef);
+                methods.notifyWithPictureToFraction2('Karo rezultatai', `Gatve #${currentZone}`, 'Gatve kontroliuoja ' + fractionName, 'CHAR_DEFAULT', currentAttack);
 
                 gangWar.changeZoneColor(currentZone, ownerId);
                 mp.players.forEachInRange(warPos, 400, p => {
@@ -447,13 +447,13 @@ gangWar.timerMoney = function() {
         if (user.isLogin(p) && user.get(p, 'fraction_id2') > 0) {
             if (moneyToUser.has(user.get(p, 'fraction_id2').toString())) {
                 if (p.getVariable('isAfk') === true) {
-                    p.notify('~r~Зарплату вы не получили, связи с тем, что вы AFK');
+                    p.notify('~r~Jums nebuvo sumoketa, nes esate AFK');
                 }
                 else {
                     let cMoney = moneyToUser.get(user.get(p, 'fraction_id2').toString());
                     let cCount = countToUser.get(user.get(p, 'fraction_id2').toString());
-                    p.notify(`~g~Вы получили ${methods.cryptoFormat(cMoney)} за ваши захваченные территории`);
-                    user.addCryptoMoney(p, cMoney, 'Прибыль с территорий');
+                    p.notify(`~g~Jus gavote ${methods.cryptoFormat(cMoney)} už jusu užgrobtas teritorijas`);
+                    user.addCryptoMoney(p, cMoney, 'Pelnas iš teritorijų');
 
                     if (cCount > 58)
                         user.achiveDoneAllById(p, 27);

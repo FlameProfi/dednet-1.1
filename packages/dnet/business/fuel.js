@@ -46,11 +46,11 @@ fuel.loadAll = function() {
     fuel.list.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
         if (item[3] === 147 || item[3] === 148 || item[3] === 149 || item[3] === 150)
-            methods.createBlip(shopPos, 415, 5, 0.6, 'Заправка');
+            methods.createBlip(shopPos, 415, 5, 0.6, 'Degaline');
         else if (item[3] === 151 || item[3] === 152 || item[3] === 153)
-            methods.createBlip(shopPos, 415, 3, 0.6, 'Заправка');
+            methods.createBlip(shopPos, 415, 3, 0.6, 'Degaline');
         else
-            methods.createBlip(shopPos, 415, 0, 0.6, 'Заправка');
+            methods.createBlip(shopPos, 415, 0, 0.6, 'Degaline');
     });
 };
 

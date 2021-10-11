@@ -21,7 +21,6 @@ gun.list = [
     [-1117.679,2698.744,17.55415,79],
     [1693.555,3759.9,33.70533,80],
     [-330.36,6083.885,30.45477,81],
-    [4962.1513671875, -5107.576171875, 1.982065200805664,167],
 ];
 
 gun.loadAll = function() {
@@ -29,7 +28,7 @@ gun.loadAll = function() {
     gun.list.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2] - 1);
         methods.createBlip(shopPos, 110, 0, 0.8);
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню магазина");
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~E~s~ atidaryti parduotuves meniu");
     });
 };
 
@@ -81,13 +80,13 @@ gun.buy = function(player, itemId, price, count, superTint, tint, shopId, payTyp
 
     if (payType === 1) {
         if (user.getBankMoney(player) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             return;
         }
     }
     else {
         if (user.getCashMoney(player) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             return;
         }
     }
@@ -97,7 +96,7 @@ gun.buy = function(player, itemId, price, count, superTint, tint, shopId, payTyp
 
     let amount = inventory.getInvAmount(player, user.getId(player), 1);
     if (amount + items.getItemAmountById(itemId) > inventory.getPlayerInvAmountMax(player)) {
-        user.showCustomNotify(player, 'В инвентаре нет места', 1, 9);
+        user.showCustomNotify(player, 'Inventoriuje nera vietos', 1, 9);
         return;
     }
 
@@ -116,14 +115,14 @@ gun.buy = function(player, itemId, price, count, superTint, tint, shopId, payTyp
     else
         inventory.addItem(itemId, 1, 1, user.getId(player), -1, 0, `{"userName": "${user.getRpName(player)}"}`, 1);
 
-    user.showCustomNotify(player, 'Вы купили ' + items.getItemNameById(itemId) +  ' по цене: ' + methods.moneyFormat(price), 2, 9);
+    user.showCustomNotify(player, 'Tu nupirkai ' + items.getItemNameById(itemId) +  ' pagal kaina: ' + methods.moneyFormat(price), 2, 9);
 
-    user.addHistory(player, 5, `Покупка оружия ${items.getItemNameById(itemId)} (${serial})`);
+    user.addHistory(player, 5, `Ginklų pirkimas ${items.getItemNameById(itemId)} (${serial})`);
     if (payType === 1) {
-        user.removeBankMoney(player, price, `Покупка оружия ${items.getItemNameById(itemId)} (${serial})`);
+        user.removeBankMoney(player, price, `Ginklų pirkimas ${items.getItemNameById(itemId)} (${serial})`);
     }
     else {
-        user.removeCashMoney(player, price, `Покупка оружия ${items.getItemNameById(itemId)} (${serial})`);
+        user.removeCashMoney(player, price, `Ginklų pirkimas ${items.getItemNameById(itemId)} (${serial})`);
     }
     if (business.isOpen(shopId)) {
         business.addMoney(shopId, price, items.getItemNameById(itemId));

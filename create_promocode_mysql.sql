@@ -1,1 +1,0 @@
-INSERT INTO `promocode_top_list` (`id`, `promocode`, `start`, `end`, `is_one`, `is_use`) VALUES (1, 'REGISTER', '{"money":1000}', '{"money":25000}', 0, 0);

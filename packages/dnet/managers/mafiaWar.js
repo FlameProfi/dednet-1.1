@@ -48,7 +48,6 @@ mafiaWar.loadAll = function() {
             mafiaWar.set(row['id'], 'ownerId', row['owner_id']);
             mafiaWar.set(row['id'], 'money', row['money']);
             mafiaWar.set(row['id'], 'm_1', row['m_1']);
-            mafiaWar.set(row['id'], 'm_2', row['m_2']);
             mafiaWar.set(row['id'], 'm_3', row['m_3']);
             mafiaWar.set(row['id'], 'canWar',true);
         });
@@ -94,6 +93,7 @@ mafiaWar.startWar = function(id) {
         return;
     }
     if (weather.getHour() < 20 && weather.getHour() > 8) {
+            mafiaWar.set(row['id'], 'm_2', row['m_2']);
         player.notify('~r~Доступно только с 20 до 8 утра IC времени');
         return;
     }
@@ -126,9 +126,9 @@ mafiaWar.startWar = function(id) {
 
             isStartTimer1 = true;
             timerCounter1 = 900;
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Порт', 'CHAR_DEFAULT', mafiaId1);
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Порт', 'CHAR_DEFAULT', mafiaId2);
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Порт', 'CHAR_DEFAULT', mafiaId3);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Uostas', 'CHAR_DEFAULT', mafiaId1);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Uostas', 'CHAR_DEFAULT', mafiaId2);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Uostas', 'CHAR_DEFAULT', mafiaId3);
             break;
         case 2:
             if (isStartTimer2) {
@@ -141,9 +141,9 @@ mafiaWar.startWar = function(id) {
 
             isStartTimer2 = true;
             timerCounter2 = 900;
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Свалка', 'CHAR_DEFAULT', mafiaId1);
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Свалка', 'CHAR_DEFAULT', mafiaId2);
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Свалка', 'CHAR_DEFAULT', mafiaId3);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Savartynas', 'CHAR_DEFAULT', mafiaId1);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Savartynas', 'CHAR_DEFAULT', mafiaId2);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Savartynas', 'CHAR_DEFAULT', mafiaId3);
             break;
         case 3:
             if (isStartTimer3) {
@@ -156,9 +156,9 @@ mafiaWar.startWar = function(id) {
 
             isStartTimer3 = true;
             timerCounter3 = 900;
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Карьер', 'CHAR_DEFAULT', mafiaId1);
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Карьер', 'CHAR_DEFAULT', mafiaId2);
-            methods.notifyWithPictureToFraction('Война за территорию', `Организация`, 'Начался захват территории ~y~Карьер', 'CHAR_DEFAULT', mafiaId3);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Karjeras', 'CHAR_DEFAULT', mafiaId1);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Karjeras', 'CHAR_DEFAULT', mafiaId2);
+            methods.notifyWithPictureToFraction('Karas del teritorijos', `Organizacija`, 'Prasidejo teritorijos grobimas ~y~Karjeras', 'CHAR_DEFAULT', mafiaId3);
             break;
     }
     return true;
@@ -237,9 +237,9 @@ mafiaWar.timer = function() {
             mafiaWar.set(zoneId, 'ownerId', ownerId);
             mafiaWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToFraction('Итоги войны', `Порт`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId1);
-            methods.notifyWithPictureToFraction('Итоги войны', `Порт`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId2);
-            methods.notifyWithPictureToFraction('Итоги войны', `Порт`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId3);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Uostas`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId1);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Uostas`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId2);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Uostas`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId3);
         }
         mp.players.forEachInRange(warPos1, warPosRadius1, p => {
             if (!user.isLogin(p))
@@ -301,9 +301,9 @@ mafiaWar.timer = function() {
             mafiaWar.set(zoneId, 'ownerId', ownerId);
             mafiaWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToFraction('Итоги войны', `Свалка`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId1);
-            methods.notifyWithPictureToFraction('Итоги войны', `Свалка`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId2);
-            methods.notifyWithPictureToFraction('Итоги войны', `Свалка`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId3);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Savartynas`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId1);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Savartynas`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId2);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Savartynas`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId3);
         }
         mp.players.forEachInRange(warPos2, warPosRadius2, p => {
             if (!user.isLogin(p))
@@ -366,9 +366,9 @@ mafiaWar.timer = function() {
             mafiaWar.set(zoneId, 'ownerId', ownerId);
             mafiaWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToFraction('Итоги войны', `Карьер`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId1);
-            methods.notifyWithPictureToFraction('Итоги войны', `Карьер`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId2);
-            methods.notifyWithPictureToFraction('Итоги войны', `Карьер`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', mafiaId3);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Karjeras`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId1);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Karjeras`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId2);
+            methods.notifyWithPictureToFraction('Karo rezultatai', `Karjeras`, 'Teritorija kontroliuoja ' + fractionName, 'CHAR_DEFAULT', mafiaId3);
         }
 
         mp.players.forEachInRange(warPos3, warPosRadius3, p => {
@@ -411,12 +411,12 @@ mafiaWar.timerMoney = function() {
         if (user.isLogin(p) && user.get(p, 'fraction_id2') > 0) {
             if (moneyToUser.has(user.get(p, 'fraction_id2').toString())) {
                 if (p.getVariable('isAfk') === true) {
-                    p.notify('~r~Зарплату вы не получили, связи с тем, что вы AFK');
+                    p.notify('~r~Jums nebuvo sumoketa, nes esate AFK');
                 }
                 else {
                     let cMoney = moneyToUser.get(user.get(p, 'fraction_id2').toString());
-                    p.notify(`~g~Вы получили ${methods.cryptoFormat(cMoney)} за ваши захваченные бизнесы`);
-                    user.addCryptoMoney(p, cMoney, 'Прибыль с бизнесов');
+                    p.notify(`~g~Jus gavote ${methods.cryptoFormat(cMoney)} už jusu užgrobtus verslus`);
+                    user.addCryptoMoney(p, cMoney, 'Pelnas iš verslų');
                 }
             }
         }

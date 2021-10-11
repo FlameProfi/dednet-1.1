@@ -51,8 +51,8 @@ rent.loadAll = function() {
     methods.debug('rent.loadAll');
     rent.listBike.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
-        methods.createBlip(shopPos, 226, 0, 0.6, 'Rent');
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню", 0.8, -1, [33, 150, 243, 100], 0.3);
+        methods.createBlip(shopPos, 226, 0, 0.6, 'Nuoma');
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ noredami atidaryti meniu", 0.8, -1, [33, 150, 243, 100], 0.3);
     });
 };
 
@@ -109,14 +109,14 @@ rent.buy = function(player, hash, price, shopId, payType) {
     if (payType === 1) {
         if (user.getBankMoney(player) < price)
         {
-            player.notify('~r~У вас недостаточно средств');
+            player.notify('~r~Jus neturite pakankamai lesu');
             return;
         }
     }
     else {
         if (user.getCashMoney(player) < price)
         {
-            player.notify('~r~У вас недостаточно средств');
+            player.notify('~r~Jus neturite pakankamai lesu');
             return;
         }
     }
@@ -132,20 +132,20 @@ rent.buy = function(player, hash, price, shopId, payType) {
         case 'Planes':
         case 'Helicopters':
             if (!user.get(player, 'air_lic')) {
-                player.notify('~r~У Вас нет лицензии на воздушный транспорт');
+                player.notify('~r~Jus neturite licencijos oro transportui');
                 return;
             }
             break;
         case 'Boats':
             if (!user.get(player, 'ship_lic')) {
-                player.notify('~r~У Вас нет лицензии на водный транспорт');
+                player.notify('~r~Jus neturite licencijos vandens transportui');
                 return;
             }
             break;
         case 'Commercials':
         case 'Industrial':
             if (!user.get(player, 'c_lic')) {
-                player.notify('~r~У Вас нет лицензии категории C');
+                player.notify('~r~Jus neturite C kategorijos licencijos');
                 return;
             }
             break;
@@ -161,13 +161,13 @@ rent.buy = function(player, hash, price, shopId, payType) {
         case 'Utility':
         case 'Vans':
             if (!user.get(player, 'b_lic')) {
-                player.notify('~r~У Вас нет лицензии категории B');
+                player.notify('~r~Neturite B kategorijos licencijos');
                 return;
             }
             break;
         case 'Motorcycles':
             if (!user.get(player, 'a_lic')) {
-                player.notify('~r~У Вас нет лицензии категории А');
+                player.notify('~r~Jus neturite A kategorijos licencijos');
                 return;
             }
             break;
@@ -183,23 +183,23 @@ rent.buy = function(player, hash, price, shopId, payType) {
     });
 
     if (countOwnerCars > 5) {
-        player.notify('~r~Нельзя арендовывать более 5 ТС');
+        player.notify('~r~Negalite issinuomoti daugiau nei 5 transporto priemones');
         return;
     }
 
     if (payType === 1)
-        user.removeBankMoney(player, price, 'Аренда ТС ' + vInfo.display_name);
+        user.removeBankMoney(player, price, 'Transporto priemonių nuoma ' + vInfo.display_name);
     else
-        user.removeCashMoney(player, price, 'Аренда ТС ' + vInfo.display_name);
+        user.removeCashMoney(player, price, 'Transporto priemonių nuoma ' + vInfo.display_name);
 
     if (business.isOpen(shopId)) {
-        business.addMoney(shopId, price, 'Аренда ' + vInfo.display_name);
+        business.addMoney(shopId, price, 'Nuoma ' + vInfo.display_name);
         business.removeMoneyTax(shopId, price / business.getPrice(shopId));
     }
 
-    user.showCustomNotify(player, 'Для того чтобы запустить двигатель нажмите 2 -> Вкл/Выкл двигатель', 0, 9, 15000);
-    user.showCustomNotify(player, 'Для того чтобы его закрыть, нажмите L', 0, 9, 15000);
-    user.showCustomNotify(player, 'Чтобы завершить аренду нажмите 2 -> Завершить аренду', 0, 9, 15000);
+    user.showCustomNotify(player, 'Norėdami paleisti varikli, paspauskite 2 -> Variklis ijungtas / isjungtas', 0, 9, 15000);
+    user.showCustomNotify(player, 'Norėdami ji užrakinti, paspauskite L', 0, 9, 15000);
+    user.showCustomNotify(player, 'Norėdami baigti nuoma, paspauskite 2 -> Baigti nuoma', 0, 9, 15000);
 
     vehicles.spawnCarCb(veh => {
 
@@ -209,7 +209,7 @@ rent.buy = function(player, hash, price, shopId, payType) {
         vehicles.setNumberPlate(veh, ('RENT' + veh.getVariable('vid')).toString().trim());
         veh.setColor(methods.getRandomInt(0, 150), methods.getRandomInt(0, 150));
         vSync.setEngineState(veh, false);
-        veh.locked = true;
+        veh.locked = false;
         veh.setVariable('owner_id', user.getId(player));
         veh.setVariable('rentOwner', user.getId(player));
 

@@ -21,7 +21,7 @@ admin.giveLeader = function(player, type, id, listIndex) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejas nerastas serveryje.');
                 return;
             }
 
@@ -33,8 +33,8 @@ admin.giveLeader = function(player, type, id, listIndex) {
 
             user.updateClientCache(target);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал доступ ${user.getRpName(target)} к организации ${user.getFractionName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал доступ ${user.getRpName(target)} к организации ${user.getFractionName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} suteikta prieiga ${user.getRpName(target)} organizacijai ${user.getFractionName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} suteikta prieiga ${user.getRpName(target)} organizacijai ${user.getFractionName(target)}`);
         }
         else {
             let target = user.getPlayerById(id);
@@ -44,7 +44,7 @@ admin.giveLeader = function(player, type, id, listIndex) {
             }
 
             mysql.executeQuery(`UPDATE users SET fraction_id = '${listIndex}', is_leader = '${listIndex > 0 ? 1 : 0}' WHERE id = '${id}'`);
-            player.notify('~r~Вы выдали лидерку игроку ' + id);
+            player.notify('~r~Jus davete žaidejui lyderi ' + id);
         }
     }
     catch (e) {
@@ -62,19 +62,19 @@ admin.blacklist = function(player, type, id, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejas nerastas serveryje.');
                 return;
             }
 
             mysql.executeQuery(`INSERT INTO black_list (social, serial, rgsc_id, address, reason) VALUES ('${target.socialClub}', '${target.serial}', '${target._rgscId}', '${target.ip}', '${reason}')`);
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} был занесён в чёрный список проекта с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} buvo įtrauktas į juodąjį projekto sąrašą su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
             user.kick(target, reason, 'BlackList');
-            discord.sendDeadList(user.getRpName(target), 'Занесён в черный список проекта', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
+            discord.sendDeadList(user.getRpName(target), 'Į juodąjį sąrašą įtrauktas žaidėjas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejas nerastas serveryje.');
                 return;
             }
             admin.blacklist(player, 0, target.id, reason);
@@ -135,18 +135,18 @@ admin.ban = function(player, type, id, listIndex, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejas nerastas serveryje.');
                 return;
             }
 
             user.set(target, 'date_ban', methods.getTimeStamp() + timeFormat);
             mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${user.getRpName(target)}', '${timeStr[listIndex]}', '${methods.getTimeStamp()}', '${reason}')`);
 
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} был забанен с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} buvo užblokuotas dėl priežasties!{${chat.clWhite}} ${reason}`, chat.clRed);
 
-            discord.sendDeadList(user.getRpName(target), 'Забанен на ' + timeStr[listIndex], reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
+            discord.sendDeadList(user.getRpName(target), 'Užblokuota ' + timeStr[listIndex], reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
 
-            user.kick(target, reason, 'Вы забанены');
+            user.kick(target, reason, 'Jūs esate užblokuotas');
         }
         else {
             let target = user.getPlayerById(id);
@@ -160,9 +160,9 @@ admin.ban = function(player, type, id, listIndex, reason) {
                     mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${row['name']}', '${timeStr[listIndex]}', '${methods.getTimeStamp()}', '${reason}')`);
                     mysql.executeQuery(`UPDATE users SET date_ban = '${methods.getTimeStamp() + timeFormat}' WHERE id = '${id}'`);
 
-                    chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${row['name']}!{${chat.clRed}} был забанен с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+                    chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${row['name']}!{${chat.clRed}} buvo užblokuotas dėl priežasties!{${chat.clWhite}} ${reason}`, chat.clRed);
 
-                    discord.sendDeadList(row['name'], 'Забанен на ' + timeStr[listIndex], reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
+                    discord.sendDeadList(row['name'], 'Užblokuota ' + timeStr[listIndex], reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
                 })
             });
         }
@@ -224,11 +224,11 @@ admin.banByAnticheat = function(type, id, listIndex, reason) {
             user.set(target, 'date_ban', methods.getTimeStamp() + timeFormat);
             mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('Server', '${user.getRpName(target)}', '${timeStr[listIndex]}', '${methods.getTimeStamp()}', '${reason}')`);
 
-            chat.sendToAll(`Anti-Cheat Protection`, `${user.getRpName(target)}!{${chat.clRed}} был забанен с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+            chat.sendToAll(`Anti-Cheat Protection`, `${user.getRpName(target)}!{${chat.clRed}} buvo užblokuotas su priežastimi !{${chat.clWhite}} ${reason}`, chat.clRed);
 
-            discord.sendDeadList(user.getRpName(target), 'Забанен на ' + timeStr[listIndex], reason, 'Anti-Cheat Protection');
+            discord.sendDeadList(user.getRpName(target), 'Užblokuotas už ' + timeStr[listIndex], reason, 'Anti-Cheat Protection');
 
-            user.kick(target, reason, 'Вы забанены');
+            user.kick(target, reason, 'Jus esate užblokuotas');
         }
         else {
             let target = user.getPlayerById(id);
@@ -242,9 +242,9 @@ admin.banByAnticheat = function(type, id, listIndex, reason) {
                     mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('Server', '${row['name']}', '${timeStr[listIndex]}', '${methods.getTimeStamp()}', '${reason}')`);
                     mysql.executeQuery(`UPDATE users SET date_ban = '${methods.getTimeStamp() + timeFormat}' WHERE id = '${id}'`);
 
-                    chat.sendToAll(`Anti-Cheat Protection`, `${row['name']}!{${chat.clRed}} был забанен с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+                    chat.sendToAll(`Anti-Cheat Protection`, `${row['name']}!{${chat.clRed}} buvo užblokuotas su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
 
-                    discord.sendDeadList(row['name'], 'Забанен на ' + timeStr[listIndex], reason, 'Anti-Cheat Protection');
+                    discord.sendDeadList(row['name'], 'Užblokuotas už ' + timeStr[listIndex], reason, 'Anti-Cheat Protection');
                 })
             });
         }
@@ -262,22 +262,22 @@ admin.unban = function(player, type, id, reason) {
         id = methods.parseInt(id);
 
         if (type === 0) {
-            player.notify('~r~Доступно только для статичных ID.');
+            player.notify('~r~Galima naudoti tik statiniams ID.');
         }
         else {
             let target = user.getPlayerById(id);
             if (user.isLogin(target)) {
-                player.notify('~r~Игрок сейчас находится на сервере. Его ID: ~s~' + target.id);
+                player.notify('~r~Žaidejas dabar yra serveryje. Jo ID: ~s~' + target.id);
                 return;
             }
 
             mysql.executeQuery(`SELECT * FROM users WHERE id = '${methods.parseInt(id)}'`, (err, rows, fields) => {
                 rows.forEach(row => {
-                    mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${row['name']}', 'Разбан', '${methods.getTimeStamp()}', '${reason}')`);
+                    mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${row['name']}', 'Atblokavimas', '${methods.getTimeStamp()}', '${reason}')`);
                     mysql.executeQuery(`UPDATE users SET date_ban = '0' WHERE id = '${id}'`);
 
-                    chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${row['name']}!{${chat.clRed}} был разбанен с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-                    discord.sendDeadList(row['name'], 'Разбанен', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
+                    chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${row['name']}!{${chat.clRed}} atblokavo su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+                    discord.sendDeadList(row['name'], 'Atblokuotas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase());
                 })
             });
         }
@@ -297,21 +297,21 @@ admin.warn = function(player, type, id, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} было выдано предупреждение с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-            discord.sendDeadList(user.getRpName(target), 'Было выдано предупреждение', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} davė įspėjimą su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+            discord.sendDeadList(user.getRpName(target), 'Buvo duotas įspėjimas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
             user.warn(target, 1, reason, false);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} было выдано предупреждение с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-            discord.sendDeadList(user.getRpName(target), 'Было выдано предупреждение', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} davė įspėjimą su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+            discord.sendDeadList(user.getRpName(target), 'Buvo duotas įspėjimas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
             user.warn(target, 1, reason, false);
         }
     }
@@ -330,21 +330,21 @@ admin.unwarn = function(player, type, id, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} было снято предупреждение с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-            discord.sendDeadList(user.getRpName(target), 'Было снято предупреждение', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} nuėmė įspėjimą su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+            discord.sendDeadList(user.getRpName(target), 'Buvo nuimtas įspėjimas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
             user.warn(target, -1, reason, false);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} было снято предупреждение с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-            discord.sendDeadList(user.getRpName(target), 'Было снято предупреждение', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} nuėmė įspėjimą su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+            discord.sendDeadList(user.getRpName(target), 'Buvo nuimtas įspėjimas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
             user.warn(target, -1, reason, false);
         }
     }
@@ -363,11 +363,11 @@ admin.untimer = function(player, type, id, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} было снят таймаут на получения оружия с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-            discord.sendDeadList(user.getRpName(target), 'Был снят таймаут на получения оружия', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} atšaukė ginklų gavimo pertrauką su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+            discord.sendDeadList(user.getRpName(target), 'Buvo atšaukta ginklų gavimo pertrauka', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
             user.set(target, 'online_lspd', 0);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_REMOVE_TIMEOUT_LSPD', `${user.getRpName(target)}`]);
@@ -375,11 +375,11 @@ admin.untimer = function(player, type, id, reason) {
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} было снят таймаут на получения оружия с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-            discord.sendDeadList(user.getRpName(target), 'Был снят таймаут на получения оружия', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} atšaukė ginklų gavimo pertrauką su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+            discord.sendDeadList(user.getRpName(target), 'Buvo atšaukta ginklų gavimo pertrauka', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
             user.set(target, 'online_lspd', 0);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_REMOVE_TIMEOUT_LSPD', `${user.getRpName(target)}`]);
@@ -400,24 +400,24 @@ admin.kick = function(player, type, id, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} был кикнут с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} iškickino su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
             user.kick(target, reason);
 
-            discord.sendDeadList(user.getRpName(target), 'Был кикнут', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            discord.sendDeadList(user.getRpName(target), 'Buvo iškickintas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} был кикнут с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} iškickino su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
             user.kick(target, reason);
 
-            discord.sendDeadList(user.getRpName(target), 'Был кикнут', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
+            discord.sendDeadList(user.getRpName(target), 'Buvo iškickintas', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FFEB3B");
         }
     }
     catch (e) {
@@ -435,14 +435,14 @@ admin.jail = function(player, type, id, min, reason) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
             user.jail(target, min * 60, 1);
-            chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} был посажен в тюрьму на ${min}мин. с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
+            chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${user.getRpName(target)}!{${chat.clRed}} pasodino į kalėjimą ${min}min. su priežastimis!{${chat.clWhite}} ${reason}`, chat.clRed);
 
-            mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${user.getRpName(target)}', 'Тюрьма ${min}мин.', '${methods.getTimeStamp()}', '${reason}')`);
-            discord.sendDeadList(user.getRpName(target), 'Посажен в тюрьму', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FF9800");
+            mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${user.getRpName(target)}', 'Įkalinimas ${min}min.', '${methods.getTimeStamp()}', '${reason}')`);
+            discord.sendDeadList(user.getRpName(target), 'Pasodino į kalėjimą', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FF9800");
         }
         else {
             let target = user.getPlayerById(id);
@@ -453,10 +453,10 @@ admin.jail = function(player, type, id, min, reason) {
 
             mysql.executeQuery(`SELECT * FROM users WHERE id = '${methods.parseInt(id)}'`, (err, rows, fields) => {
                 rows.forEach(row => {
-                    mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${row['name']}', Тюрьма ${min}мин.', '${methods.getTimeStamp()}', '${reason}')`);
+                    mysql.executeQuery(`INSERT INTO ban_list (ban_from, ban_to, count, datetime, reason) VALUES ('${user.getRpName(player)}', '${row['name']}', Įkalinimas ${min}min.', '${methods.getTimeStamp()}', '${reason}')`);
                     mysql.executeQuery(`UPDATE users SET jail_time = '${min * 60}', jail_type = '1' WHERE id = '${id}'`);
-                    chat.sendToAll(`Администратор ${user.getRpName(player)}`, `${row['name']}!{${chat.clRed}} был посажен в тюрьму на ${min}мин. с причиной!{${chat.clWhite}} ${reason}`, chat.clRed);
-                    discord.sendDeadList(row['name'], 'Посажен в тюрьму', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FF9800");
+                    chat.sendToAll(`Administratorius ${user.getRpName(player)}`, `${row['name']}!{${chat.clRed}} pasodino į kalėjimą ${min}min. su priežastimi!{${chat.clWhite}} ${reason}`, chat.clRed);
+                    discord.sendDeadList(row['name'], 'Pasodino į kalėjimą', reason, user.getRpName(player), discord.socialClub + player.socialClub.toLowerCase(), "#FF9800");
                 })
             });
         }
@@ -476,28 +476,28 @@ admin.setArmorById = function(player, type, id, num) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             user.setArmour(target, num);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% брони ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% брони ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% sarvu ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% sarvu ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_ARMOUR', `${user.getRpName(target)} | ${num}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             user.setArmour(target, num);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% брони ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% брони ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% sarvu ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% sarvu ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_ARMOUR', `${user.getRpName(target)} | ${num}`]);
         }
@@ -517,28 +517,28 @@ admin.setHpById = function(player, type, id, num) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             user.setHealth(target, num);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% здоровья ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% здоровья ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% gyvybiu ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% gyvybiu ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_HEALTH', `${user.getRpName(target)} | ${num}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             user.setHealth(target, num);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% здоровья ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал ${num}% здоровья ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% gyvybiu ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave ${num}% gyvybiu ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_HEALTH', `${user.getRpName(target)} | ${num}`]);
         }
@@ -558,7 +558,7 @@ admin.setSkinById = function(player, type, id, skin) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -567,15 +567,15 @@ admin.setSkinById = function(player, type, id, skin) {
             else
                 target.model = mp.joaat(skin);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_SKIN', `${user.getRpName(target)} | ${skin}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -584,8 +584,8 @@ admin.setSkinById = function(player, type, id, skin) {
             else
                 target.model = mp.joaat(skin);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_SKIN', `${user.getRpName(target)} | ${skin}`]);
         }
@@ -605,7 +605,7 @@ admin.resetSkinById = function(player, type, id) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -617,15 +617,15 @@ admin.resetSkinById = function(player, type, id) {
             user.updateCharacterFace(target);
             user.updateCharacterCloth(target);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_RESET_SKIN', `${user.getRpName(target)}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -637,8 +637,8 @@ admin.resetSkinById = function(player, type, id) {
             user.updateCharacterFace(target);
             user.updateCharacterCloth(target);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выдал скин ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} dave skina ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_RESET_SKIN', `${user.getRpName(target)}`]);
         }
@@ -658,28 +658,28 @@ admin.adrenalineById = function(player, type, id) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             user.useAdrenaline(target);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} использовал адреналин на ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} использовал адреналин на ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} panaudojo adrenalina ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} panaudojo adrenalina ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_ADRENALINE', `${user.getRpName(target)}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             user.useAdrenaline(target);
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} использовал адреналин на ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} использовал адреналин на ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} panaudojo adrenalina ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} panaudojo adrenalina ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_ADRENALINE', `${user.getRpName(target)}`]);
         }
@@ -699,28 +699,28 @@ admin.freeHospById = function(player, type, id) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             target.call('client:hosp:free');
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выпустил из больницы ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выпустил из больницы ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} isleido is ligonines ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} isleido is ligonines ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_FREE_HOSP', `${user.getRpName(target)}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             target.call('client:hosp:free');
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} выпустил из больницы ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} выпустил из больницы ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} isleido is ligonines ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} isleido is ligonines ${user.getRpName(target)}`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_FREE_HOSP', `${user.getRpName(target)}`]);
         }
@@ -740,7 +740,7 @@ admin.tpToAdmin = function(player, type, id) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -748,15 +748,15 @@ admin.tpToAdmin = function(player, type, id) {
             user.teleport(target, pos.x, pos.y, pos.z);
             target.dimension = player.dimension;
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} телепортировал игрока ${user.getRpName(target)} к себе`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} телепортировал игрока ${user.getRpName(target)} к себе`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} atsiteleportavo žaideja ${user.getRpName(target)} pas save`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} atsiteleportavo žaideja ${user.getRpName(target)} pas save`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_TP_TO_ADMIN', `${user.getRpName(target)} | ${methods.parseInt(pos.x)} | ${methods.parseInt(pos.y)} | ${methods.parseInt(pos.z)} | DIMENSION: ${player.dimension}`]);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -764,8 +764,8 @@ admin.tpToAdmin = function(player, type, id) {
             user.teleport(target, pos.x, pos.y, pos.z);
             target.dimension = player.dimension;
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} телепортировал игрока ${user.getRpName(target)} к себе`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} телепортировал игрока ${user.getRpName(target)} к себе`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} atsiteleportavo žaideja ${user.getRpName(target)} pas save`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} atsiteleportavo žaideja ${user.getRpName(target)} pas save`);
 
             methods.saveLog('log_admin', ['name', 'type', 'do'], [`${user.getRpName(player)}`, 'USER_TP_TO_ADMIN', `${user.getRpName(target)} | ${methods.parseInt(pos.x)} | ${methods.parseInt(pos.y)} | ${methods.parseInt(pos.z)} | DIMENSION: ${player.dimension}`]);
         }
@@ -785,7 +785,7 @@ admin.tpToUser = function(player, type, id) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -795,7 +795,7 @@ admin.tpToUser = function(player, type, id) {
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
@@ -818,26 +818,26 @@ admin.changeDimension = function(player, type, id, dim) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             target.dimension = dim;
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} изменил виртуальный мир игроку ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} изменил виртуальный мир игроку ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} pakeite žaidejo virtualuji pasauli ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} pakeite žaidejo virtualuji pasauli ${user.getRpName(target)}`);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
             target.dimension = dim;
 
-            target.notify(`~b~Администратор ${user.getRpName(player)} изменил виртуальный мир игроку ${user.getRpName(target)}`);
-            player.notify(`~b~Администратор ${user.getRpName(player)} изменил виртуальный мир игроку ${user.getRpName(target)}`);
+            target.notify(`~b~Administratorius ${user.getRpName(player)} pakeite žaidejo virtualuji pasauli ${user.getRpName(target)}`);
+            player.notify(`~b~Administratorius ${user.getRpName(player)} pakeite žaidejo virtualuji pasauli ${user.getRpName(target)}`);
         }
     }
     catch (e) {
@@ -855,20 +855,20 @@ admin.getDimension = function(player, type, id) {
         if (type === 0) {
             let target = mp.players.at(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
-            player.notify(`~b~Виртуальный мир игрока ${user.getRpName(target)} равен ~s~${target.dimension}`);
+            player.notify(`~b~Žaidejo virtualus pasaulis ${user.getRpName(target)} lygus ~s~${target.dimension}`);
         }
         else {
             let target = user.getPlayerById(id);
             if (!user.isLogin(target)) {
-                player.notify('~r~Игрок не найден на сервере.');
+                player.notify('~r~Žaidejo nera serveryje.');
                 return;
             }
 
-            player.notify(`~b~Виртуальный мир игрока ${user.getRpName(target)} равен ~s~${target.dimension}`);
+            player.notify(`~b~Žaidejo virtualus pasaulis ${user.getRpName(target)} lygus ~s~${target.dimension}`);
         }
     }
     catch (e) {

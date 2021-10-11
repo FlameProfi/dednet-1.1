@@ -18,8 +18,8 @@ barberShop.loadAll = function() {
     methods.debug('barberShop.loadAll');
     barberShop.list.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
-        methods.createBlip(shopPos, 71, 0, 0.8, 'BarberShop');
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню");
+        methods.createBlip(shopPos, 71, 0, 0.8, 'Kirpykla');
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ noredami atidaryti meniu");
     });
 };
 

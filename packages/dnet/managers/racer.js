@@ -597,8 +597,8 @@ let racerList = [
         ],
     },*/
     {
-        title: 'Дюна',
-        desc: 'Человек относительно недавно освоил полёты, а уже сейчас каждый может провести там по несколько секунд',
+        title: 'Dune',
+        desc: 'Žmogus palyginti neseniai įvaldė skraidymą, o jau dabar kiekvienas gali ten praleisti kelias sekundes.',
         repeat: 9,
         class: 1,
         allowVehicle: ['Dune4', 'Dune5'],
@@ -647,8 +647,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Реактивный прыжок',
-        desc: 'Новейшая армейская разработка доступна для каждого туриста, нажмите на кнопку, прыгните в будущее',
+        title: 'Reaktyvinis šokinėjimas',
+        desc: 'Naujausias kariuomenės pasiekimas prieinamas kiekvienam stovyklautojui, spauskite mygtuką ir leiskitės į ateitį',
         repeat: 4,
         class: 1,
         allowVehicle: ['Voltic2'],
@@ -708,8 +708,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Кровь и горы',
-        desc: 'Доберитесь по горам восточной части острова до горы Гордо, покажите всем, кто здесь хозяин',
+        title: 'Kraujas ir kalnai',
+        desc: 'Keliaukite į kalnus rytinėje salos pusėje, į Gordo kalną, ir parodykite visiems, kas čia šeimininkas.',
         repeat: 0,
         class: 1,
         allowVehicle: ['Marshall', 'Monster'],
@@ -797,8 +797,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Сухим из воды',
-        desc: 'Преодолейте огромный маршрут сковь грязь и водоёмы, чтобы добраться до мёртвого города Сэнди-Шорс',
+        title: 'Iš vandens',
+        desc: 'Įveikite didžiulį purvo ir vandens taką, kad pasiektumėte mirusį miestą Sandy Shores',
         repeat: 0,
         class: 1,
         allowVehicle: ['Blazer5'],
@@ -920,8 +920,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Путь героя',
-        desc: 'Какого быть героем? Вопрос, который возникает у каждого! Пройдите маршрут и осознайте всю боль геройства в Лос-Сантосе',
+        title: 'Herojo kelias',
+        desc: 'Koks jausmas būti didvyriu? Klausimas, kuris kyla kiekvieno žmogaus galvoje! Keliaukite maršrutu ir supraskite, kaip skaudu būti didvyriu Los Santos mieste',
         repeat: 0,
         class: 1,
         allowVehicle: ['Vigilante'],
@@ -1053,8 +1053,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Фантомная боль',
-        desc: 'Лучший способ побороть боль, это причинить её кому-нибудь! Запрыгивайте в модифицированный Phantom и давите соперников!',
+        title: 'Fantominis skausmas',
+        desc: 'Geriausias būdas kovoti su skausmu - ką nors sužeisti! Sėskite į modifikuotą "Phantom" ir sutriuškinkite priešininkus!',
         repeat: 4,
         class: 1,
         allowVehicle: ['Phantom2'],
@@ -1115,8 +1115,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Песок, океан и пулемёты',
-        desc: 'Нет, никто вам не даст стрелять по мирному населению, но прокатится на чуде самобытного строения реднеков - пожалуйста!',
+        title: 'Smėlis, vandenynas ir kulkosvaidžiai',
+        desc: 'Ne, niekas jums neleis šaudyti į civilius, bet kviečiame pasivažinėti originalios konstrukcijos Redneck stebuklu!',
         repeat: 0,
         class: 1,
         allowVehicle: ['Technical2'],
@@ -1217,8 +1217,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Побег от элитной жизни',
-        desc: 'Прокатитесь по элитным переулкам до наблюдательной вышки LifeGuard',
+        title: 'Pabėgimas nuo elitinio gyvenimo',
+        desc: 'Nuvažiuokite į LifeGuard sargybos bokštą aukščiausios klasės gatvėmis',
         repeat: 0,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1311,8 +1311,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Портовый договор',
-        desc: 'Не ведитесь на дешёвую рыбу и свежих кальмаров, педаль в пол и никогда не возвращайтесь',
+        title: 'Uosto sutartis',
+        desc: 'Neapsigaukite dėl pigios žuvies ir šviežių kalmarų, nuspauskite pedalus ir niekada negrįžkite.',
         repeat: 0,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1449,8 +1449,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Ставки на спорт',
-        desc: 'В конце 20 века вашу бабушку развёл какой-то брокер? Отомстите всем им и разнесите весь Центр к чертям',
+        title: 'Sporto lažybos',
+        desc: 'XX a. pabaigoje jūsų močiutę apgavo kažkoks brokeris? Atkeršykite jiems visiems ir visą Centrą nušluokite į pragarą.',
         repeat: 1,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1542,8 +1542,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Выжить в гетто',
-        desc: 'Опасная гонка в южном Лос-Сантосе, если не крутой поворот, так пуля вас точно прикончит',
+        title: 'Išgyventi gete',
+        desc: 'Pavojingos lenktynės Los Santoso pietuose, jei tai nėra siauras posūkis, kulka jus tikrai užmuš.',
         repeat: 1,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1627,8 +1627,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Звёзды Вайнвуда',
-        desc: 'Какого быть звездой? Спросите у Лазло, а мы предложим вам потрепать нервы всем безмозглым туристам, что рассматривают звёзды на Вайнвуде',
+        title: 'Vinewood žvaigždės',
+        desc: 'Koks jausmas būti žvaigžde? Paklauskite Laszlo, o mes pasiūlysime jums pakutenti nervus visiems bejausmiams turistams, žiūrintiems į žvaigždes Vinewoode.',
         repeat: 1,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1714,8 +1714,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Промышленные повороты',
-        desc: 'Промышленный класс работает здесь поколениями, а вы просто хотите взять и погонять по этим опасным улицам? Попробуйте',
+        title: 'Pramoninės kreivės',
+        desc: 'Pramonės klasė čia dirbo iš kartos į kartą, o jūs norite pasivažinėti šiomis pavojingomis gatvėmis? Išbandykite',
         repeat: 1,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1793,8 +1793,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Серпантины холмов Вайнвуда',
-        desc: 'Опасные на большой скорости узкие улицы и отвратительные повороты, но разве кого-то это останавливало?',
+        title: 'Vinewoodo serpantinų kalvos',
+        desc: 'Pavojingos didelio greičio siauros gatvelės ir bjaurūs posūkiai, bet ar tai ką nors sustabdė?',
         repeat: 1,
         class: 2,
         allowVehicle: ['Alpha', 'Banshee', 'Buffalo2', 'Comet3', 'Comet5', 'Drafter', 'Elegy', 'Elegy2', 'Feltzer2', 'Furoregt', 'Komoda', 'Imorgon', 'Jugular', 'Jester', 'Jester3', 'Khamelion', 'Kuruma', 'Locust', 'Lynx', 'Massacro', 'Neo', 'Ninef2', 'Paragon', 'Sentinel3', 'Seven70', 'Specter', 'Specter2', 'Sugoi', 'Sultan', 'Sultan2', 'Surano', 'Verlierer2', 'Tampa2', 'Yosemite2', 'Zr380'],
@@ -1899,8 +1899,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Водохранилище Вайнвуда',
-        desc: 'Обедьте несколько раз и посмотрите, как живёт элита Вайнвуда, знайте, кого ненавидеть',
+        title: 'Vinewoodo rezervuaras',
+        desc: 'Keliskart apeikite ir pamatykite, kaip gyvena Vinewoodo elitas, sužinokite, ko nekęsti',
         repeat: 4,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -1970,8 +1970,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Свет Миррор-Парка',
-        desc: 'Вы объёдите несколько раз самый благопалучный район Лос-Сантоса, может заодно заприметите себе домик',
+        title: 'Mirror Park šviesa',
+        desc: 'Kelis kartus apvažiuosite geriausią Los Santoso dalį, galbūt įsigysite namą.',
         repeat: 4,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -2034,8 +2034,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Центральный скоростной лимит',
-        desc: 'Попробуйте развить максимальную скорость в рамках самого богатого района Лос-Сантоса, при этом не вылетев с окна',
+        title: 'Centrinis greičio apribojimas',
+        desc: 'Pasistenkite pasiekti maksimalų greitį turtingiausiame Los Santoso rajone neiškrisdami pro langą',
         repeat: 4,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -2096,8 +2096,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Наследие заподного Лос-Сантоса',
-        desc: 'Несколько кругов широкой дороги и высокой скорости, стоит ли оно того?',
+        title: 'Los Santos palikimas Vakaruose',
+        desc: 'Ar verta apvažiuoti kelis ratus plačiu keliu ir dideliu greičiu?',
         repeat: 2,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -2178,8 +2178,8 @@ let racerList = [
         ],
     },
     {
-        title: 'От богатств до знаний',
-        desc: 'Деньги ведь не так важны, если есть шанс чему-то научится, стоит ли всё бросать и гнать на самый верх ради новых знаний?',
+        title: 'Nuo turto iki žinių',
+        desc: 'Pinigai nėra tokie svarbūs, jei yra galimybė ko nors išmokti, ar verta jų atsisakyti ir stumti save į viršų dėl naujų žinių?',
         repeat: 0,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -2306,8 +2306,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Театральный беспредел',
-        desc: 'Шекспир снова ставит пьесы, а вы в Грейпсиде? Бросайте всё и мчитесь в Vinewood Bowl',
+        title: 'Teatrinis chaosas',
+        desc: 'Šekspyras vėl stato spektaklius, o tu esi Grapeside? Viską mesti ir skubėti į Vinewood Bowl',
         repeat: 0,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -2448,8 +2448,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Из князи в грязи',
-        desc: 'Надоели бесконечные тусовки, прислуга и богатство? Бросайте всё и переезжайте с Сэнди-Шорс',
+        title: 'Nuo kunigaikščių iki purvo',
+        desc: 'Pavargote nuo nesibaigiančių vakarėlių, tarnų ir turtų? Viską mesti ir persikelti į Sandy Shores',
         repeat: 0,
         class: 3,
         allowVehicle: ['Italigto', 'Pariah', 'Autarch', 'Banshee2', 'Bullet', 'Cheetah', 'Cyclone', 'Entity2', 'Entityxf', 'Emerus', 'Fmj', 'Furia', 'Gp1', 'Infernus', 'Italigtb', 'Italigtb2', 'Krieger', 'Osiris', 'Penetrator', 'Pfister811', 'Reaper', 'Sc1', 'Sheava', 'Sultanrs', 'T20', 'Taipan', 'Tempesta', 'Turismor', 'Tyrant', 'Vacca', 'Voltic', 'Xa21', 'Zentorno', 'Zorrusso'],
@@ -2579,8 +2579,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Борьба с ветряными мельницами',
-        desc: 'Сможете ли вы изменить мир и победить ветряную мельницу? Никому не удавалось, может вам по силам?',
+        title: 'Kova su vėjo malūnais',
+        desc: 'Ar galite pakeisti pasaulį ir įveikti vėjo malūną? Niekas to nepadarė, ar galite tai padaryti?',
         repeat: 1,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Streiter', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Brutus', 'Caracara2', 'Dubsta3', 'Everon', 'Freecrawler', 'Hellion', 'Kamacho', 'Outlaw', 'Riata', 'Trophytruck', 'Trophytruck2'],
@@ -2675,8 +2675,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Свет Редвуда',
-        desc: 'Трасса ещё не достроена, но кто мешает, провести на ней серию гонок?',
+        title: 'Redwood šviesa',
+        desc: 'Trasa dar nebaigta, bet kas trukdo joje rengti lenktynes?',
         repeat: 2,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Freecrawler', 'Outlaw', 'Riata'],
@@ -2743,8 +2743,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Круговорот грязи',
-        desc: 'Опасные горные пики и болотные дороги ждут вас, если вы не свалитесь на первом повороте',
+        title: 'Purvo nuošliauža',
+        desc: 'Jūsų laukia pavojingos kalnų viršukalnės ir pelkėti keliai, jei nenukrisite pirmame posūkyje.',
         repeat: 1,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Streiter', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Brutus', 'Caracara2', 'Dubsta3', 'Everon', 'Freecrawler', 'Hellion', 'Kamacho', 'Outlaw', 'Riata', 'Trophytruck', 'Trophytruck2'],
@@ -2856,8 +2856,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Призыв НЛО',
-        desc: 'Матая круги возле горы Сэнди-Шорс есть шанс увидиеть НЛО, смотрите в оба!',
+        title: 'NSO iškvietimas',
+        desc: 'Kartografuojant ratus netoli Sandy Shores kalno yra tikimybė pamatyti NSO, todėl stebėkite savo akis!',
         repeat: 2,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Streiter', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Brutus', 'Caracara2', 'Dubsta3', 'Everon', 'Freecrawler', 'Hellion', 'Kamacho', 'Outlaw', 'Riata', 'Trophytruck', 'Trophytruck2'],
@@ -2921,8 +2921,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Ковбои Грейпсида',
-        desc: 'Ранчо так и манит, конечно вы оседлаете не жеребца а полноприводного монстра, но кого это волнует?',
+        title: 'Grapeseed kaubojai',
+        desc: 'Ranča vilioja, žinoma, jūs jodinėjate ne eržilą, o keturratį monstrą, bet kam tai rūpi?',
         repeat: 2,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Streiter', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Brutus', 'Caracara2', 'Dubsta3', 'Everon', 'Freecrawler', 'Hellion', 'Kamacho', 'Outlaw', 'Riata', 'Trophytruck', 'Trophytruck2'],
@@ -2994,8 +2994,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Заповедник Чиллиада',
-        desc: 'Одна из самых сложных и опасных трасс, которая показывает небывалые виды заповедника горы Чиллиад',
+        title: 'Chilliad rezervatas',
+        desc: 'Vienas sudėtingiausių ir pavojingiausių takų, kuriuo atsiveria nepakartojami Chilliad kalno rezervato vaizdai.',
         repeat: 0,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Streiter', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Brutus', 'Caracara2', 'Dubsta3', 'Everon', 'Freecrawler', 'Hellion', 'Kamacho', 'Outlaw', 'Riata', 'Trophytruck', 'Trophytruck2'],
@@ -3122,8 +3122,8 @@ let racerList = [
         ],
     },
     {
-        title: 'По грязи Палето-Бэй',
-        desc: 'Малое число туристов знает тайные пути Палето-Бэй, но мы покажем вам каждую дорожку и каждый камень, который останется у вас в ботинке',
+        title: 'Paleto Bay dumblyne',
+        desc: 'Tik nedaugelis turistų žino slaptus Paleto Bay takus, tačiau mes jums parodysime kiekvieną takelį ir kiekvieną akmenį, kuris lieka jūsų bate.',
         repeat: 1,
         class: 4,
         allowVehicle: ['Comet4', 'Flashgt', 'Gb200', 'Issi7', 'Omnis', 'Streiter', 'Tropos', 'Issi4', 'Bifta', 'Brawler', 'Brutus', 'Caracara2', 'Dubsta3', 'Everon', 'Freecrawler', 'Hellion', 'Kamacho', 'Outlaw', 'Riata', 'Trophytruck', 'Trophytruck2'],
@@ -3204,8 +3204,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Город под горой',
-        desc: 'Бывали ли вы в Палето-Бэй? Как на счёт сесть в прекрасную классику и обкатить этот прекрасный городок?',
+        title: 'Miestas po kalnu',
+        desc: 'Ar buvote Paleto Bay? Kaip dėl to, kad sėdate į gražų klasikinį automobilį ir pasivažinėjate po šį nuostabų miestą?',
         repeat: 2,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3270,8 +3270,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Гранд Тур по Грейпсид',
-        desc: 'Родились в 21 веке? Не беда, садитесь в классический спорткар и гоните из-за всех сил к первому месту',
+        title: 'Didysis turas po Grapeseed',
+        desc: 'Gimėte XXI amžiuje? Nesijaudinkite, sėskite į klasikinį sportinį automobilį ir intensyviai lenktyniaukite dėl pirmosios vietos',
         repeat: 2,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3354,8 +3354,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Туннель и свет',
-        desc: 'Небольшие круги вокруг холма обсерватории Галилео, тесно, но постарайтесь быть первым',
+        title: 'Tunelis ir šviesa',
+        desc: 'Nedideli ratai aplink Galileo observatorijos kalvą, glaudūs, bet stenkitės būti pirmi',
         repeat: 3,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3409,8 +3409,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Членство клуба',
-        desc: 'Всегда хотели поиграть в самом лучшем гольф-клубе западного побережья? Лучше покатайтесь вокруг него, советуем',
+        title: 'Naryste klube',
+        desc: 'Visada norėjote žaisti geriausiame Vakarų pakrantės golfo klube? Siūlome geriau jį apvažiuoti',
         repeat: 3,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3468,8 +3468,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Гламурный Лос-Сантос',
-        desc: 'Пробегитесь по модным бутикам, посмотрите на каналы и зайдите на киностудию, в общем, советуем',
+        title: 'Glamūrinis Los Santos',
+        desc: 'Bėgiokite po mados parduotuves, apžiūrėkite kanalus ir nueikite į kino studiją.',
         repeat: 1,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3539,8 +3539,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Дорога до Эклипса',
-        desc: 'Путь до шикарной жизни не так прост, но добравшись до верхушки Эклипса, вы познаете все прелести жизни',
+        title: 'Kelias į užtemimą',
+        desc: 'Kelias į prabangų gyvenimą nėra lengvas, tačiau užkopę į Eclipse viršūnę patirsite visus gyvenimo malonumus.',
         repeat: 0,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3674,8 +3674,8 @@ let racerList = [
         ],
     },
     {
-        title: 'От Занкудо до Вайнвуда',
-        desc: 'Длинная дорога до верхушки Вайнвуда, но перед этим вам нужно побороть опасные серпантины холмов, которые начинаются с Занкудо',
+        title: 'Nuo Zancudo iki Vinewood',
+        desc: 'Ilga kelionė iki Vinewoodo viršūnės, bet prieš tai reikia nuvažiuoti pavojingus serpantinus, kurie prasideda nuo Zancudo.',
         repeat: 0,
         class: 5,
         allowVehicle: ['Ardent', 'Casco', 'Cheetah2', 'Coquette2', 'Deluxo', 'Feltzer3', 'Gt500', 'Infernus2', 'Jb7002', 'Mamba', 'Monroe', 'Rapidgt3', 'Retinue2', 'Savestra', 'Stinger', 'Stingergt', 'Swinger', 'Torero', 'Turismo2', 'Viseris', 'Z190', 'Ztype', 'Zion3'],
@@ -3806,8 +3806,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Как в старые добрые',
-        desc: 'Мощь настоящих маслкаров по настоящему можно ощутить только в глуши, где невозможно кого-то переехать',
+        title: 'Kaip senais gerais laikais',
+        desc: 'Tikro raumeningo automobilio galią galima iš tikrųjų pajusti tik niekur kitur, kur neįmanoma ko nors pervažiuoti.',
         repeat: 2,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -3881,8 +3881,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Вокруг Аламо',
-        desc: 'Соскучились по старому доброму Аламо? Прокатитесь пару кругов, вас определённо стошнит',
+        title: 'Aplink Alamo',
+        desc: 'Pasiilgote senojo gerojo Alamo? Apsukite porą ratų, tikrai pasigerėsite',
         repeat: 1,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -3981,8 +3981,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Побег из Болингброука',
-        desc: 'Как бы вы не хотели, но от правосудия не сбежать, сколько бы кругов вы не наматали',
+        title: 'Pabėgimas iš Bolingbroko',
+        desc: 'Kad ir kaip norėtumėte, teisingumo nepavyks išvengti, kad ir kiek ratų nuvažiuotumėte.',
         repeat: 5,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -4036,8 +4036,8 @@ let racerList = [
         ],
     },
     {
-        title: 'В тесноте и обиде',
-        desc: 'Не рекомендуем участвовать всем тем, кто боится, что его размажут по стенам форда Занкудо',
+        title: 'Susispaudę ir pasipiktinę',
+        desc: 'Nerekomenduojama tiems, kurie bijo atsitrenkti į Zancudo Ford sienas',
         repeat: 1,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -4114,8 +4114,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Гнев Чумаша',
-        desc: 'Если хоть раз вы проезжали мимо Чумаша, то знайте, что это прекрасное место для гонках на маслкарах',
+        title: 'Chumash įniršis',
+        desc: 'Jei kada nors važiavote pro Chumash, žinote, kad tai puiki vieta lenktyniauti raumeningu automobiliu.',
         repeat: 1,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -4182,8 +4182,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Ненависть к пляжному сезону',
-        desc: 'Вас тоже бесят бесконечные толпы туристов, что мешают вам прокатится на маслкаре по солнечному пляжу? Согласны? Узнали?',
+        title: 'Neapykanta paplūdimio sezonui',
+        desc: 'Ar jus taip pat erzina nesibaigiančios turistų minios, trukdančios važiuoti saulėtame paplūdimyje raumeningu automobiliu? Ar sutinkate? Ar atpažįstate jį?',
         repeat: 0,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -4305,8 +4305,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Неизбежный прогресс',
-        desc: 'Куда бы мы не девались, но прогресс везде, не вернуть больше тех времён с копьями и мамонтами, а может уплыть туда, где это всё процветает?',
+        title: 'Neišvengiama pažanga',
+        desc: 'Kad ir kur keliautume, bet pažanga yra visur, į tuos laikus su ietimis ir mamutais negrįžtama, bet gal išplaukite ten, kur visa tai klesti?',
         repeat: 0,
         class: 6,
         allowVehicle: ['Deviant', 'Dominator', 'Dominator3', 'Dominator4', 'Dukes2', 'Ellie', 'Gauntlet', 'Gauntlet4', 'Gauntlets', 'Imperator', 'Nightshade', 'Sabregt2', 'Tulip'],
@@ -4438,8 +4438,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Нефтяная игла',
-        desc: 'Кто бы знал, что в начале 21 века столько возни будет на нефтяной бирже, а ведь мы могли как раньше кататься на лошадях и стрелять по людям',
+        title: 'Alyvos adata',
+        desc: 'Kas galėjo pagalvoti, kad XXI a. pradžioje kils tiek daug triukšmo dėl naftos biržos, kai galėjome jodinėti žirgais ir šaudyti į žmones, kaip kadaise?',
         repeat: 1,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -4517,8 +4517,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Татавиамский водоём',
-        desc: 'Чудесный водоём, что объят вниманием туристов и инженеров предоставили нам для проведения жестоких гонок на Кроссоверах',
+        title: 'Tataviam rezervuaras',
+        desc: 'Nuostabus vandens telkinys, kurį mums padovanojo žygeiviai ir inžinieriai žiaurioms Crossover lenktynėms',
         repeat: 1,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -4601,8 +4601,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Философия холмов',
-        desc: 'Склоны, холмы и равнины, всё это так умиротворительно, но не дайте себе заснуть, иначе бригаде EMS придётся выковыривать ваш труп с прекрасного холма',
+        title: 'Kalvų filosofija',
+        desc: 'Šlaitai, kalvos ir lygumos - viskas taip ramu, bet neleiskite sau užmigti, antraip greitosios pagalbos komandai teks iškasti jūsų lavoną iš gražios kalvos.',
         repeat: 1,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -4688,8 +4688,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Опасная тропа',
-        desc: 'По сей день на тропах каньона Ратона находят бедолаг, что случайно оступились и сорвались с обрыва, а теперь представьте, что на этой тропе вам нужно занять первое место',
+        title: 'Pavojingas takas',
+        desc: 'Iki šių dienų Ratono kanjono takais vis dar ieškoma netyčia suklupusių ir nuo uolos nukritusių vargšų, o dabar įsivaizduokite, kad šiuo taku turite užimti pirmąją vietą.',
         repeat: 1,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -4774,8 +4774,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Попытка взлететь',
-        desc: 'По ночам в аэропорту Сэнди-Шорс кто-то матает круги, тем самым образовав трассу, на которой мы проведим наши гонки',
+        title: 'Bandymas pakilti',
+        desc: 'Naktį Sandy Shores oro uoste kažkas suko ratus ir taip suformavo trasą, kurioje vyks mūsų lenktynės.',
         repeat: 2,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -4833,8 +4833,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Пустынная даль',
-        desc: 'Вам придётся обуздать величайшую пустыню Гранд-Сенору, для того, чтобы доказать себе и окружающим, что вы умеете не только кататься на велосипеде',
+        title: 'Laukinės dykumos teritorija',
+        desc: 'Turėsite įveikti didžiausią Grand Senora dykumą, kad įrodytumėte sau ir kitiems, jog galite ne tik važiuoti dviračiu.',
         repeat: 0,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -4936,8 +4936,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Страх высоты',
-        desc: 'Страшнее высоты может быть лишь страх проиграть, не бойтесь, занимайте автомобиль и постарайтесь не упасть с обрыва',
+        title: 'Aukščio baimė',
+        desc: 'Vienintelis už aukštį baisesnis dalykas yra baimė prarasti, todėl nebijokite, sėskite į automobilį ir pasistenkite nenukristi nuo uolos.',
         repeat: 1,
         class: 7,
         allowVehicle: ['Baller3', 'Dubsta2', 'Huntley', 'Patriot', 'Rebla', 'Rocoto', 'Serrano', 'Toros', 'Xls', 'Dubstag'],
@@ -5009,8 +5009,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Жажда скорости',
-        desc: 'Федеральная трасса, что может быть лучше, чем огромная скорость и относительно безопасная дорога?',
+        title: 'Greičio troškimas',
+        desc: 'Federalinis greitkelis, kas gali būti geriau už didelį greitį ir santykinai saugų kelią?',
         repeat: 3,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione'],
@@ -5078,8 +5078,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Быстрый и яростный',
-        desc: 'Надело разгоняться до 70 миль на своём японском хетчбэке, что достался от мамы? Залезай в скоростной автомобиль и вырывай победу бабушкиными зубами',
+        title: 'Greitai ir įnirtingai',
+        desc: 'Tikitės nuvažiuoti iki 70 mylių japonišku hečbeku, kurį paveldėjo jūsų mama? Sėskite į greitąjį automobilį ir išplėškite pergalę močiutės dantimis',
         repeat: 3,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione'],
@@ -5138,8 +5138,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Обитель скорости',
-        desc: 'Да, современные магистрали строили так, будто хотели, чтобы автолюбители их воненавидели, но мы используем их в лучших целях',
+        title: 'Greičio gyventojas',
+        desc: 'Taip, šiuolaikiniai greitkeliai buvo nutiesti taip, tarsi norėta, kad vairuotojai jų nekenčia, tačiau mes juos naudojame geresniems tikslams.',
         repeat: 1,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione'],
@@ -5245,8 +5245,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Очевидный исход',
-        desc: 'Вся жизнь, это круговорот, в котором происходят одни и тежи вещи, так что мешает нам промчатся на огромной скорости по этим кругам?',
+        title: 'Akivaizdus rezultatas',
+        desc: 'Visas gyvenimas yra ciklas, kuriame vyksta tie patys dalykai, tad kas trukdo mums milžinišku greičiu bėgti šiais ratais?',
         repeat: 2,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione'],
@@ -5315,8 +5315,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Реквием по Лос-Сантосу',
-        desc: 'Промчистесь по всему острову несколько раз и только попробуйте не восхетиться тому, как похорошел весь округ при...',
+        title: 'Requiem dėl Los Santos',
+        desc: 'Keletą kartų apvažiuokite salą ir pasistenkite nesistebėti, kaip visą teritoriją pagražino...',
         repeat: 1,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione', 'Hotring'],
@@ -5425,8 +5425,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Обратный реквием по Лос-Сантосу',
-        desc: 'Круто осознавать, что ты самый быстрый гонщик в Сан-Андреас, а ещё круче стать им',
+        title: 'Atvirkštinis requiem Los Santos',
+        desc: 'Smagu žinoti, kad esi greičiausias lenktynininkas San Andreas, o dar smagiau juo tapti.',
         repeat: 0,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione', 'Hotring'],
@@ -5544,8 +5544,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Полный реквием по Лос-Сантосу',
-        desc: 'Обширные магистрали и холодное пиво с хот-догами на ближайшей заправки, что может быть лучше? Только педаль в пол на огромной скорости!',
+        title: 'Pilnas requiem Los Santos',
+        desc: 'Ar gali būti geriau už didžiulius greitkelius, šaltą alų ir dešrainius artimiausioje degalinėje? Tiesiog spauskite pedalus iki pat dugno milžinišku greičiu!',
         repeat: 0,
         class: 8,
         allowVehicle: ['Formula', 'Formula2', 'Deveste', 'Adder', 'Le7b', 'Nero', 'Nero2', 'Prototipo', 'S80', 'Vagner', 'Visione', 'Hotring'],
@@ -5663,8 +5663,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Война спец.служб',
-        desc: 'В обеденный перерыв сотрудники FIB и IAA очень любят погонять на изъятом радиоупровляемом транспорте, но кто их запретит?',
+        title: 'Specialiųjų tarnybų karas',
+        desc: 'Per pietus FIB ir IAA pareigūnai mėgsta vairuoti konfiskuotas radijo bangomis valdomas transporto priemones, bet kas gali juos sustabdyti?',
         repeat: 2,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -5732,8 +5732,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Погром в деловом районе',
-        desc: 'Достали все эти пижоны с завышенным сомнением? Выбесите их в наших круговых гонках на радиоупровляемом транспорте',
+        title: 'Pogromas verslo rajone',
+        desc: 'Pavargote nuo visų tų pernelyg savimi pasitikinčių vyrukų? Išmuškite juos iš vėžių mūsų radijo bangomis valdomų transporto priemonių žiedinėse lenktynėse',
         repeat: 1,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -5827,8 +5827,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Добро пожаловать в Лос-Сантос',
-        desc: 'На кароблях перевозят не только иммигрантов, но и милые радиоуправляемые машинки, на которых можно устроить беспредел',
+        title: 'Sveiki atvykę į Los Santos',
+        desc: 'Vežimėliais vežami ne tik imigrantai, bet ir mieli radijo bangomis valdomi automobiliai, su kuriais galima padaryti netvarką.',
         repeat: 1,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -5904,8 +5904,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Война на каналах',
-        desc: 'Доставайте джостик и включайте радиоуправляемый автомобиль, подъезжайте к старту и постарайтесь не упать в каналы',
+        title: 'Karas dėl kanalų',
+        desc: 'Išsitraukite vairalazdę ir įjunkite radijo bangomis valdomą automobilį, važiuokite iki starto vietos ir stenkitės neįkristi į kanalus.',
         repeat: 1,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -5982,8 +5982,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Режиссерский стиль',
-        desc: 'Разгромите всё на съёмочной площадке на студии Ричарда Маджестика, ему всё равно, а вам точно будет весело!',
+        title: 'Režisūros stilius',
+        desc: 'Sugadinkite viską Richard Majestic studijos filmavimo aikštelėje, jam tai nerūpi ir tikrai smagiai praleisite laiką!',
         repeat: 1,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -6065,8 +6065,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Игра в гольф',
-        desc: 'Нет, мы не предоставляем возможность понудеть со стариками пиная мячи, но мы даём возможность выбесить их!',
+        title: 'Golfo žaidimas',
+        desc: 'Ne, mes nesuteikiame galimybės pasijuokti iš senų žmonių spardant kamuolius, bet suteikiame galimybę juos supykdyti!',
         repeat: 1,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -6159,8 +6159,8 @@ let racerList = [
         ],
     },
     {
-        title: 'Поход в лабиринт',
-        desc: 'Добравшись до лабиринта вы застряните там на несколько часов, пока соперники будут смеятся на вас с призовых мест',
+        title: 'Kelionė į labirintą',
+        desc: 'Kai pateksite į labirintą, jame užstrigsite kelioms valandoms, o varžovai iš jūsų juoksis iš prizų.',
         repeat: 1,
         class: 9,
         allowVehicle: ['Rcbandito'],
@@ -6268,7 +6268,7 @@ let currentLobby = 0;
 let lobbyMax = 30;
 let finishNumber = 0;
 let startTimer = 10;
-let currentPrize = 40000;
+let currentPrize = 2000;
 
 racer.loadAll = function () {
     setInterval(racer.timer, 1000);
@@ -6296,24 +6296,24 @@ racer.finish = function (player) {
             if (finishNumber === 1) {
                 user.achiveDoneAllById(player, 1);
                 let money = currentPrize * 0.2;
-                methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~1-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užeme ~g~1~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
 
                 user.set(player, 'rating_racer_mmr', user.get(player, 'rating_racer_mmr') + 25);
                 user.set(player, 'rating_racer_win', user.get(player, 'rating_racer_win') + 1);
             }
             else if (finishNumber === 2) {
                 let money = currentPrize * 0.15;
-                methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~2-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užeme ~g~2~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
 
                 user.set(player, 'rating_racer_mmr', user.get(player, 'rating_racer_mmr') + 20);
                 user.set(player, 'rating_racer_win', user.get(player, 'rating_racer_win') + 1);
             }
             else if (finishNumber === 3) {
                 let money = currentPrize * 0.1;
-                methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~3-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užeme ~g~3~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
 
                 user.set(player, 'rating_racer_mmr', user.get(player, 'rating_racer_mmr') + 15);
                 user.set(player, 'rating_racer_win', user.get(player, 'rating_racer_win') + 1);
@@ -6323,24 +6323,24 @@ racer.finish = function (player) {
                 user.set(player, 'rating_racer_mmr', user.get(player, 'rating_racer_mmr') + 5);
 
                 let money = currentPrize * 0.08;
-                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~${finishNumber}-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užeme ~g~${finishNumber}~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
             }
             else if (finishNumber > 5 && finishNumber <= 10) {
 
                 user.set(player, 'rating_racer_mmr', user.get(player, 'rating_racer_mmr') + 5);
 
                 let money = currentPrize * 0.05;
-                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~${finishNumber}-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užėmė ~g~${finishNumber}~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
             }
             else if (finishNumber > 10 && finishNumber <= 15) {
 
                 user.set(player, 'rating_racer_mmr', user.get(player, 'rating_racer_mmr') + 5);
 
                 let money = currentPrize * 0.03;
-                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~${finishNumber}-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užėmė ~g~${finishNumber}~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
             }
             else {
                 if (finishNumber === lobbyMax - 2)
@@ -6356,8 +6356,8 @@ racer.finish = function (player) {
                     user.set(player, 'rating_racer_mmr', 0);
 
                 let money = 150;
-                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ занял ~g~${finishNumber}-ое~s~ место и выиграл ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
-                user.addCashMoney(player, money, finishNumber + ' место в гонке ' + racerList[currentRace].title);
+                player.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~${user.getRpName(player)}~s~ užeme ~g~${finishNumber}~s~ vieta ir laimejo ~g~${methods.moneyFormat(money)}`, 'CHAR_CARSITE4');
+                user.addCashMoney(player, money, finishNumber + ' vieta lenktynėse ' + racerList[currentRace].title);
             }
             user.reset(player, 'isRaceLobby');
             user.save(player);
@@ -6405,25 +6405,16 @@ racer.createRace = function (id = -1, currentVeh = undefined) {
     racer.notifyRace();
 };
 
-racer.notifyRace = function () {
-
-    let desc = '';
-    if (racerList[currentRace].repeat > 0)
-        desc = `\n~s~Кругов: ~b~${racerList[currentRace].repeat + 1}`;
-
-    methods.notifyWithPictureToAll('Arena RaceClub', '~b~' + racerList[currentRace].title, `Скоро состоится гонка на транспорте ~g~${currentVehicle}~s~ с призовым фондом ~g~${methods.moneyFormat(currentPrize)}\n~s~Свободных мест: ~b~${lobbyMax - currentLobby}${desc}`, 'CHAR_CARSITE4');
-};
-
 racer.getLobbyName = function () {
     if (isCreate)
         return racerList[currentRace].title;
-    return 'Ожидание гонки';
+    return 'Lenktynių laukimas';
 };
 
 racer.getLobbyVehicle = function () {
     if (isCreate)
         return currentVehicle;
-    return 'Неизвестно';
+    return 'Nežinoma';
 };
 
 racer.getLobbyCount = function () {
@@ -6436,14 +6427,13 @@ racer.startRace = function () {
 
     if (currentLobby < 5) {
         isCreate = false;
-        methods.notifyWithPictureToAll('Arena RaceClub', '~r~' + racerList[currentRace].title, 'Гонка была отменена из-за нехватки участников', 'CHAR_CARSITE4');
 
         mp.players.forEach(p => {
             if (user.isLogin(p)) {
                 if (methods.isInPoint(p.position, greenZone)) {
                     if (user.has(p, 'isRaceLobby')) {
-                        user.addCashMoney(p, 1000, 'Возврат средств');
-                        p.notify('~g~Вам вернули деньги за внос');
+                        user.addCashMoney(p, 1000, 'Grąžinamos lėšos');
+                        p.notify('~g~Jums buvo grazinta statymo suma');
                         user.reset(p, 'isRaceLobby');
                     }
                 }
@@ -6456,7 +6446,7 @@ racer.startRace = function () {
     isStart = true;
     startTimer = 10;
 
-    methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `Гонка началась\n${racerList[currentRace].desc}`, 'CHAR_CARSITE4');
+    methods.notifyWithPictureToAll('Arena RaceClub', '~g~' + racerList[currentRace].title, `Lenktynes prasidejo\n${racerList[currentRace].desc}`, 'CHAR_CARSITE4');
 
     let currentSpawn = 0;
     mp.players.forEach(p => {
@@ -6474,8 +6464,8 @@ racer.startRace = function () {
                     user.teleport(p, spawnArray[0], spawnArray[1], spawnArray[2]);
                     user.playSound(p, '10s', 'MP_MISSION_COUNTDOWN_SOUNDSET');
 
-                    p.outputChatBoxNew(`Кнопка !{2196F3}F!{FFFFFF} чтобы зареспавнить автомобиль`);
-                    p.outputChatBoxNew(`Кнопка !{2196F3}ESC!{FFFFFF} выйти из гонки`);
+                    p.outputChatBoxNew(`Mygtukas !{2196F3}F!{FFFFFF} jog atstatyti transporto priemonę`);
+                    p.outputChatBoxNew(`Mygtukas !{2196F3}ESC!{FFFFFF} išeiti iš lenktynių`);
 
                     setTimeout(function () {
                         vehicles.spawnCarCb(veh => {
@@ -6522,13 +6512,13 @@ racer.timer = function () {
                         }
 
                         if (startTimer === 0) {
-                            p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~СТАРТ!!!\nСТАРТ!!!\nСТАРТ!!!`, 'CHAR_CARSITE4');
+                            p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~g~STARTAS!!!\nSTARTAS!!!\nSTARTAS!!!`, 'CHAR_CARSITE4');
                             vSync.setFreezeState(p.vehicle, false);
                             vSync.setAnchorState(p.vehicle, false);
                             p.vehicle.engine = true;
                         }
                         else if (startTimer > 0 && startTimer <= 3) {
-                            p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `До старта ~g~${startTimer}сек`, 'CHAR_CARSITE4');
+                            p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `Iki starto ~g~${startTimer}sek`, 'CHAR_CARSITE4');
                         }
                     }
                 }
@@ -6553,11 +6543,11 @@ racer.timer = function () {
     mp.players.forEach(p => {
         if (user.isLogin(p)) {
             if (user.has(p, 'isRaceLobby') && methods.isInPoint(p.position, greenZone)) {
-                p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~b~В лобби:~s~ ${currentLobby}\nОжидайте начала гонки\nНе покидайте помещение, иначе вы покините лобби\nПризовой фонд: ~g~${methods.moneyFormat(currentPrize)}`, 'CHAR_CARSITE4');
+                p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~b~Tarp lobby:~s~ ${currentLobby}\nLaukite, kol prasides lenktynes\nNeiseikite is kambario, kitaip iseisite is lobby\nPrizu fondas: ~g~${methods.moneyFormat(currentPrize)}`, 'CHAR_CARSITE4');
             }
             if(user.has(p, 'isRaceLobby') && !methods.isInPoint(p.position, greenZone)) {
                 user.reset(p, 'isRaceLobby');
-                p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Вы покинули лобби`, 'CHAR_CARSITE4');
+                p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Jus isejote is lobby`, 'CHAR_CARSITE4');
             }
         }
     });
@@ -6569,29 +6559,29 @@ racer.enterLobby = function (p) {
 
             if (isCreate === false)
             {
-                p.notifyWithPicture('Arena RaceClub', '~r~Регистрация', `~b~На данный момент регистрация закрыта`, 'CHAR_CARSITE4');
+                p.notifyWithPicture('Arena RaceClub', '~r~Registracija', `~b~Registracija siuo metu uždaryta`, 'CHAR_CARSITE4');
                 return;
             }
 
             if (currentLobby >= lobbyMax) {
                 if (!user.has(p, 'isRaceLobby')) {
-                    p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~В связи с большим наплывом участников, заявка на участие была отклонена. Извините за неудобства. В следующий раз приезжайте заранее.`, 'CHAR_CARSITE4');
+                    p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Del didelio dalyviu antpludžio paraiska buvo atmesta. Atsiprasome už nepatogumus. Kita karta atvykite anksciau.`, 'CHAR_CARSITE4');
                 }
             }
             else {
 
                 if (user.has(p, 'isRaceLobby')) {
-                    p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Вы уже являетесь участником гонки.`, 'CHAR_CARSITE4');
+                    p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Jus jau esate lenktyniu dalyvis.`, 'CHAR_CARSITE4');
                     return;
                 }
 
                 if (user.getCashMoney(p) < 1000) {
-                    p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Недостаточно средств для взноса, необходимо $1000`, 'CHAR_CARSITE4');
+                    p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~r~Lesu statymui nepakanka, reikia 1000€`, 'CHAR_CARSITE4');
                     return;
                 }
-                user.removeCashMoney(p, 1000, 'Взнос в участии гонки');
+                user.removeCashMoney(p, 1000, 'Dalyvavimo lenktynėse indėlis');
                 currentPrize = currentPrize + 1000;
-                p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~b~Ожидайте начала мероприятия`, 'CHAR_CARSITE4');
+                p.notifyWithPicture('Arena RaceClub', '~g~' + racerList[currentRace].title, `~b~Palaukite, kol prasides renginys`, 'CHAR_CARSITE4');
                 user.set(p, 'isRaceLobby', true);
             }
         }

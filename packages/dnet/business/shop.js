@@ -83,23 +83,23 @@ shop.loadAll = function() {
                 case 1:
                 case 2:
                 case 3:
-                    methods.createBlip(shopPos, 52, 6, 0.6, 'Алкогольный магазин');
+                    methods.createBlip(shopPos, 52, 6, 0.6, 'Alkoholio parduotuve');
                     break;
                 case 5:
-                    methods.createBlip(shopPos, 521, 0, 0.6, 'Digital Den');
+                    methods.createBlip(shopPos, 521, 0, 0.6, 'Komunikacijos parduotuve');
                     break;
                 case 6:
-                    methods.createBlip(shopPos, 153, 69, 0.8, 'Аптека');
+                    methods.createBlip(shopPos, 153, 69, 0.8, 'Vaistine');
                     break;
                 case 7:
-                    methods.createBlip(shopPos, 68, 0, 0.6, 'Fish Shop');
+                    methods.createBlip(shopPos, 68, 0, 0.6, 'Žvejybos parduotuve');
                     break;
                 case 8:
-                    methods.createBlip(shopPos, 141, 0, 0.6, 'Hunting Store');
+                    methods.createBlip(shopPos, 141, 0, 0.6, 'Medžiokles parduotuve');
                     break;
             }
         }
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню");
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ noredami atidaryti meniu");
         prevId = item[3];
     });
 };
@@ -198,7 +198,7 @@ shop.buy = function(player, itemId, price, shopId, payType = 0) {
         return;
 
     if (user.getMoney(player, payType) < price) {
-        user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+        user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
         return;
     }
 
@@ -207,7 +207,7 @@ shop.buy = function(player, itemId, price, shopId, payType = 0) {
 
     let amount = inventory.getInvAmount(player, user.getId(player), 1);
     if (amount + items.getItemAmountById(itemId) > inventory.getPlayerInvAmountMax(player)) {
-        player.notify('~r~В инвентаре нет места');
+        player.notify('~r~Inventoriuje nera vietos');
         return;
     }
 
@@ -218,16 +218,16 @@ shop.buy = function(player, itemId, price, shopId, payType = 0) {
     inventory.addItem(itemId, 1, 1, user.getId(player), 1, 0, JSON.stringify(params), 1);
 
     if (shopId > 0) {
-        user.showCustomNotify(player, 'Вы купили ' + items.getItemNameById(itemId) +  ' по цене: ' + methods.moneyFormat(price), 2, 9);
-        user.removeMoney(player, price, 'Покупка ' + items.getItemNameById(itemId), payType);
+        user.showCustomNotify(player, 'Tu nupirkai ' + items.getItemNameById(itemId) +  ' kuri kainavo tau: ' + methods.moneyFormat(price), 2, 9);
+        user.removeMoney(player, price, 'Pirkimas ' + items.getItemNameById(itemId), payType);
         if (business.isOpen(shopId)) {
             business.addMoney(shopId, price, items.getItemNameById(itemId));
             business.removeMoneyTax(shopId, price / business.getPrice(shopId));
         }
     }
     else if (price > 0) {
-        user.showCustomNotify(player, 'Вы купили ' + items.getItemNameById(itemId) +  ' по цене: ' + methods.moneyFormat(price), 2, 9);
-        user.removeMoney(player, price, 'Покупка ' + items.getItemNameById(itemId), payType);
+        user.showCustomNotify(player, 'Tu nupirkai ' + items.getItemNameById(itemId) +  ' kuri kainavo tau: ' + methods.moneyFormat(price), 2, 9);
+        user.removeMoney(player, price, 'Pirkimas ' + items.getItemNameById(itemId), payType);
     }
     inventory.updateAmount(player, user.getId(player), 1);
 };

@@ -117,12 +117,12 @@ dispatcher.acceptTaxi = function (player, id) {
     });
     taxiList = newList;
     if (!order) {
-        player.notify('~r~Заказ не был найден');
+        player.notify('~r~Užsakymas nerastas');
         return;
     }
 
     if (user.get(player, 'phone') == order.phone) {
-        player.notify('~r~Собственные заказы принимать нельзя');
+        player.notify('~r~Jus negalite priimti savo užsakymu.');
         return;
     }
 
@@ -132,9 +132,9 @@ dispatcher.acceptTaxi = function (player, id) {
     player.vehicle.setVariable('taxiOrderId', order.phone);
 
     let vInfo = methods.getVehicleInfo(player.vehicle.model);
-    phone.sendMessageByNumber(user.get(player, 'phone'), order.phone, `Здравствуйте. Таксист принял ваш заказ. Транспорт: ${vInfo.display_name} | ${player.vehicle.numberPlate}`);
+    phone.sendMessageByNumber(user.get(player, 'phone'), order.phone, `Sveiki. Taksi vairuotojas priėmė jūsų užsakymą. Transportas: ${vInfo.display_name} | ${player.vehicle.numberPlate}`);
 
-    player.notify('~y~Вы приняли заказ');
+    player.notify('~y~Jus priemete užsakyma');
 };
 
 dispatcher.acceptMech = function (player, id) {
@@ -151,18 +151,18 @@ dispatcher.acceptMech = function (player, id) {
     });
     mechList = newList;
     if (!order) {
-        player.notify('~r~Заказ не был найден');
+        player.notify('~r~Užsakymas nerastas');
         return;
     }
 
     if (user.get(player, 'phone') == order.phone) {
-        player.notify('~r~Собственные заказы принимать нельзя');
+        player.notify('~r~Jus negalite priimti savo užsakymu.');
         return;
     }
 
     user.setWaypoint(player, order.pos.x, order.pos.y);
-    phone.sendMessageByNumber(user.get(player, 'phone'), order.phone, `Здравствуйте. Механик принял ваш заказ, ожидайте.`);
-    player.notify('~y~Вы приняли заказ');
+    phone.sendMessageByNumber(user.get(player, 'phone'), order.phone, `Sveiki. Mechanikas priėmė jūsų užsakymą, palaukite.`);
+    player.notify('~y~Jus priemete užsakyma');
 };
 
 mp.events.add("playerEnterVehicle", (player, vehicle, seat) => {
@@ -173,7 +173,7 @@ mp.events.add("playerEnterVehicle", (player, vehicle, seat) => {
             let pos = JSON.parse(user.get(driver, 'taxiPoint'));
             user.set(player, 'taxiPointFrom', JSON.stringify(player.position));
             user.setWaypoint(driver, pos.x, pos.y);
-            driver.notify('~y~Клиент сел к вам в автомобиль, метка установлена');
+            driver.notify('~y~Klientas isedo i jusu automobili, žyme nustatyta');
         }
     }
     catch (e) {
@@ -198,16 +198,16 @@ mp.events.add("playerExitVehicle", (player, vehicle) => {
             }
 
             user.reset(player, 'waitTaxi');
-            user.removeMoney(player, price, 'Услуги такси');
-            user.addMoney(driver, price, 'Услуги такси');
+            user.removeMoney(player, price, 'Taksi paslaugos');
+            user.addMoney(driver, price, 'Taksi paslaugos');
 
             user.reset(driver, 'taxiPrice');
             user.reset(driver, 'taxiPoint');
             user.reset(driver, 'taxiPointFrom');
             vehicle.setVariable('taxiOrderId', undefined);
 
-            player.notify(`~y~С вас списало ${methods.moneyFormat(price)}`);
-            driver.notify(`~y~Вы заработали ${methods.moneyFormat(price)}`);
+            player.notify(`~y~Nurasyta nuo jusu ${methods.moneyFormat(price)}`);
+            driver.notify(`~y~Jus uždirbote ${methods.moneyFormat(price)}`);
         }
     }
     catch (e) {

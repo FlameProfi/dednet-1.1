@@ -19,7 +19,7 @@ tattoo.loadAll = function() {
     tattoo.list.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
         methods.createBlip(shopPos, 75, 0, 0.8);
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню");
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ noredami atidaryti meniu");
     });
 };
 
@@ -87,13 +87,13 @@ tattoo.buy = function(player, collection, overlay, zone, price, itemName, shopId
 
     if (payType === 1) {
         if (user.getBankMoney(player) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             return;
         }
     }
     else {
         if (user.getCashMoney(player) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             return;
         }
     }
@@ -107,7 +107,7 @@ tattoo.buy = function(player, collection, overlay, zone, price, itemName, shopId
         tattooList = [];
 
     if (tattooList.length > 30) {
-        user.showCustomNotify(player, 'У Вас на теле слишком много татуировок, для начала необходимо свести старые', 1, 9);
+        user.showCustomNotify(player, 'Ant kuno yra per daug tatuiruociu, pirmiausia reikia pasalinti senas', 1, 9);
         user.updateTattoo(player);
         return;
     }
@@ -117,15 +117,15 @@ tattoo.buy = function(player, collection, overlay, zone, price, itemName, shopId
     user.set(player, 'tattoo', JSON.stringify(tattooList));
 
     if (payType === 1)
-        user.removeBankMoney(player, price, 'Татуировка: ' + itemName);
+        user.removeBankMoney(player, price, 'Tatuiruotė: ' + itemName);
     else
-        user.removeCashMoney(player, price, 'Татуировка: ' + itemName);
+        user.removeCashMoney(player, price, 'Tatuiruotė: ' + itemName);
 
     if (business.isOpen(shopId)) {
         business.addMoney(shopId, price, itemName);
         business.removeMoneyTax(shopId, price / business.getPrice(shopId));
     }
-    user.showCustomNotify(player, 'Вы набили татуировку', 2, 9);
+    user.showCustomNotify(player, 'Tu pasidarei tatuiruote', 2, 9);
     user.updateTattoo(player);
     user.save(player);
     user.achiveDoneDailyById(player, 17);
@@ -137,13 +137,13 @@ tattoo.destroy = function(player, collection, overlay, zone, price, itemName, sh
 
     if (payType === 1) {
         if (user.getBankMoney(player) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             return;
         }
     }
     else {
         if (user.getCashMoney(player) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             return;
         }
     }
@@ -163,12 +163,12 @@ tattoo.destroy = function(player, collection, overlay, zone, price, itemName, sh
     user.set(player, 'tattoo', JSON.stringify(newArray));
 
     if (payType === 1)
-        user.removeBankMoney(player, price, 'Лазерная коррекция татуировки ' + itemName);
+        user.removeBankMoney(player, price, 'Tatuiruotės korekcija lazeriu ' + itemName);
     else
-        user.removeCashMoney(player, price, 'Лазерная коррекция татуировки ' + itemName);
+        user.removeCashMoney(player, price, 'Tatuiruotės korekcija lazeriu ' + itemName);
     business.addMoney(shopId, price, itemName);
     business.removeMoneyTax(shopId, price / business.getPrice(shopId));
-    user.showCustomNotify(player, 'Вы сделали лазерную коррецию', 2, 9);
+    user.showCustomNotify(player, 'Jus atlikote lazerine korekcija', 2, 9);
     user.updateTattoo(player);
     user.save(player);
 };

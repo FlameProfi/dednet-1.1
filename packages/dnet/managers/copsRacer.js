@@ -258,7 +258,7 @@ copsRacer.playerToLobby = function(player, role = 0) {
     methods.debug('copsRacer.playerToLobby');
     if (user.isLogin(player)) {
         if (user.hasById(user.getId(player), 'uniform')) {
-            player.notify('~r~В форме запрещено учавствовать в Cops & Racer');
+            player.notify('~r~Dalyvauti Cops & Racer su uniforma draudžiama');
             return;
         }
 
@@ -281,8 +281,8 @@ copsRacer.playerToLobby = function(player, role = 0) {
 
         countLobby++;
 
-        player.outputChatBoxNew(`Кнопка !{2196F3}ESC!{FFFFFF} выйти из лобби`);
-        player.notify(`Кнопка ~g~ESC~s~ выйти из лобби`);
+        player.outputChatBoxNew(`Mygtukas! {2196F3}ESC!{FFFFFF} išeikite iš lobby`);
+        player.notify(`Mygtukas ~g~ESC~s~ kad iseitumete is lobby`);
 
         vehicles.spawnCarCb(veh => {
 

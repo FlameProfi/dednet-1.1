@@ -9,15 +9,15 @@ wheel.isBlock = false;
 wheel.start = function (player) {
     if (user.isLogin(player)) {
         if (wheel.isBlock) {
-            player.notify('~r~Таймаут 30 секунд, подождите');
+            player.notify('~r~Skirtasis laikas baigesi, palaukite 30 sekundziu');
             return;
         }
         if (user.get(player, 'online_wheel') < 21) {
-            player.notify(`~r~Вы еще не отыграли 3 часа на сервере\nВам осталось: ${((21 - user.get(player, 'online_wheel')) * 8.5).toFixed(1)} мин.`);
+            player.notify(`~r~Dar nesi žaides 3 valandų serveryje\nJus pražaidete: ${((21 - user.get(player, 'online_wheel')) * 8.5).toFixed(1)} min.`);
             return;
         }
         if (user.get(player, 'online_wheel') > 999) {
-            player.notify(`~r~Вы уже крутили колесо сегодня.`);
+            player.notify(`~r~Siandien jau sukai rata.`);
             return;
         }
         wheel.isBlock = true;
@@ -80,7 +80,7 @@ mp.events.add('server:casino:wheel:finalRoll', (player) => {
     try {
 
         if (user.get(player, 'online_wheel') > 999) {
-            player.notify(`~r~Вы уже крутили колесо сегодня.`);
+            player.notify(`~r~Siandien jau sukote rata.`);
             return;
         }
 
@@ -88,47 +88,47 @@ mp.events.add('server:casino:wheel:finalRoll', (player) => {
         let win = user.get(player, 'wheelWin');
 
         if (win === 19) {
-            user.giveVehicle(player, enums.vehLuckyList[methods.getRandomInt(0, enums.vehLuckyList.length)], 1, true, ' в колесе удачи');
+            user.giveVehicle(player, enums.vehLuckyList[methods.getRandomInt(0, enums.vehLuckyList.length)], 1, true, ' sėkmės ratu');
         }
         /*else if (win === 1) {
             user.addCashMoney(player, 2500, 'Колесо удачи');
             player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$2,500`, 'CHAR_CASINO');
         }*/
         else if (win === 3) {
-            user.addCashMoney(player, 20000, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$20,000`, 'CHAR_CASINO');
+            user.addCashMoney(player, 20000, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~20,000€`, 'CHAR_CASINO');
         }
         else if (win === 4) {
-            user.addCashMoney(player, 25000, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$25,000`, 'CHAR_CASINO');
+            user.addCashMoney(player, 25000, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~25,000€`, 'CHAR_CASINO');
         }
         else if (win === 7) {
-            user.addCashMoney(player, 30000, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$30,000`, 'CHAR_CASINO');
+            user.addCashMoney(player, 30000, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~30,000€`, 'CHAR_CASINO');
         }
         else if (win === 15) {
-            user.addCashMoney(player, 40000, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$40,000`, 'CHAR_CASINO');
+            user.addCashMoney(player, 40000, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~40,000€`, 'CHAR_CASINO');
         }
         else if (win === 0) {
-            user.addCashMoney(player, 50000, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$50,000`, 'CHAR_CASINO');
+            user.addCashMoney(player, 50000, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~50,000€`, 'CHAR_CASINO');
         }
         else if (win === 5) {
-            user.giveVip(player, methods.getRandomInt(1, 5), 2, true, ' с колеса удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли VIP HARD`, 'CHAR_CASINO');
+            user.giveVip(player, methods.getRandomInt(1, 5), 2, true, ' iš laimės rato');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai VIP HARD`, 'CHAR_CASINO');
         }
         else if (win === 9) {
-            user.giveRandomMask(player, 0, true, ' в колесе удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли маску`, 'CHAR_CASINO');
+            user.giveRandomMask(player, 0, true, 'sėkmės ratu');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai kaukę`, 'CHAR_CASINO');
         }
         else if (win === 11) {
-            user.addCashMoney(player, 20000, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$20,000`, 'CHAR_CASINO');
+            user.addCashMoney(player, 20000, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~$20,000`, 'CHAR_CASINO');
         }
         else {
-            user.addCashMoney(player, 2500, 'Колесо удачи');
-            player.notifyWithPicture('Diamond Casino', '~g~Колесо Удачи', `Вы выиграли ~g~$2,500`, 'CHAR_CASINO');
+            user.addCashMoney(player, 2500, 'Sėkmės ratas');
+            player.notifyWithPicture('Diamond Casino', '~g~Sekmes ratas', `Tu laimejai ~g~$2,500`, 'CHAR_CASINO');
         }
 
         /*if (win < 1) {

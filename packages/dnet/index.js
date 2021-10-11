@@ -11,6 +11,8 @@ require('./managers/attach');
 require('./managers/attachWeapons');
 require('./managers/dispatcher');
 
+require('./commands/index');
+
 require('./casino/wheel');
 
 let mysql = require('./modules/mysql');
@@ -31,6 +33,7 @@ let bank = require('./business/bank');
 let fuel = require('./business/fuel');
 let shop = require('./business/shop');
 let tradeMarket = require('./business/tradeMarket');
+let junkyard = require('./business/junkyard');
 
 let houses = require('./property/houses');
 let condos = require('./property/condos');
@@ -56,7 +59,7 @@ let racer = require('./managers/racer');
 let trucker = require('./managers/trucker');
 let graffiti = require('./managers/graffiti');
 let fishing = require('./managers/fishing');
-
+let weedplants = require('./managers/weedplants');
 let coffer = require('./coffer');
 let inventory = require('./inventory');
 let weapons = require('./weapons');
@@ -96,6 +99,7 @@ function init() {
         racer.loadAll();
         gangZone.loadAll();
         copsRacer.loadAll();
+        junkyard.loadAll();
 
         carWash.loadAll();
         rent.loadAll();
@@ -109,7 +113,7 @@ function init() {
         fuel.loadAll();
         shop.loadAll();
         tradeMarket.loadAll();
-
+        weedplants.loadAll();
         pickups.createAll();
 
         coffer.load();

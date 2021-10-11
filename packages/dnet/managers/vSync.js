@@ -393,32 +393,33 @@ vSync.setBodyHealth = function(v, health) {
 
 mp.events.add("playerEnterVehicle", function (player, vehicle) {
     if (vehicles.exists(vehicle)) {
-
+        if (vehicle.locked) {
+            return player.removeFromVehicle();
+        }
         if (!vSync.has(vehicle))
             vSync.updateVehicleSyncData(vehicle, vSync.VehicleSyncData);
-
         try {
             if (vehicle.getVariable('fraction_id') || vehicle.getVariable('user_id') || vehicle.getVariable('useless'))
                 return;
             vehicles.set(vehicle.id, 'afkTimer', 0);
         }
         catch (e) {
-            
         }
     }
 });
 
 mp.events.add("playerExitVehicle", function (player, vehicle) {
     setTimeout(function () {
-    if (vehicles.exists(vehicle))
-        vSync.setEngineState(vehicle, vSync.getEngineState(vehicle));
+        if (vehicles.exists(vehicle))
+            vSync.setEngineState(vehicle, vSync.getEngineState(vehicle));
+        let data = vSync.getVehicleSyncData(vehicle);
+        if (data.SirenState) vSync.setSirenState(vehicle, true);
     }, 1500);
-
     try {
         for (let i = -1; i < 20; i++)
             vehicle.setOccupant(i, null);
     }
-    catch (e) {}
+    catch (e) { }
 });
 
 mp.events.add('s:vSync:setDirtLevel', (player, vId, level) => {
@@ -632,7 +633,7 @@ mp.events.add('server:vehicles:speedLimit', (player, vId, speed) => {
     let veh = mp.vehicles.at(vId);
     if (mp.players.exists(player) && vehicles.exists(veh)) {
         vehicles.getOccupants(veh).forEach(p => {
-            if (user.isLogin(p) && p.seat === -1)
+            if (user.isLogin(p) && p.seat === 0)
                 p.call('client:setNewMaxSpeedServer', [speed]);
         });
     }

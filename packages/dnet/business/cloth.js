@@ -21,11 +21,11 @@ cloth.loadAll = function(){
     /*methods.createBlip(cloth.printShopPos, 72, 0, 0.8, 'Print Shop');
     methods.createCpVector(cloth.printShopPos, 'Нажмите ~g~E~s~ чтобы открыть меню', 1, -1, [33, 150, 243, 100]);*/
 
-    methods.createBlip(cloth.maskShop, 437, 0, 0.8, 'Movie Masks');
-    methods.createCp(cloth.maskShop.x, cloth.maskShop.y, cloth.maskShop.z, "Нажмите ~g~E~s~ чтобы открыть меню магазина", 0.8, -1, [33, 150, 243, 100], 0.3);
+    methods.createBlip(cloth.maskShop, 437, 0, 0.8, 'Kaukiu parduotuve');
+    methods.createCp(cloth.maskShop.x, cloth.maskShop.y, cloth.maskShop.z, "Spustelekite ~g~E~s~ jog atidarytumete parduotuves meniu", 0.8, -1, [33, 150, 243, 100], 0.3);
 
-    methods.createBlip(cloth.maskShop2, 437, 0, 0.8, 'Movie Masks');
-    methods.createCp(cloth.maskShop2.x, cloth.maskShop2.y, cloth.maskShop2.z, "Нажмите ~g~E~s~ чтобы открыть меню магазина", 0.8, -1, [33, 150, 243, 100], 0.3);
+    methods.createBlip(cloth.maskShop2, 437, 0, 0.8, 'Kaukiu parduotuve');
+    methods.createCp(cloth.maskShop2.x, cloth.maskShop2.y, cloth.maskShop2.z, "Spustelekite ~g~E~s~ jog atidarytumete parduotuves meniu", 0.8, -1, [33, 150, 243, 100], 0.3);
 
     methods.createBlip(new mp.Vector3(-619.8532104492188, -233.54541015625, 37.0570182800293), 617, 0, 0.8, 'Vangelico');
     try {
@@ -54,13 +54,13 @@ cloth.loadAll = function(){
                         methods.createBlip(pos, 73, 81, 0.8);
                         break;
                 }
-                methods.createCp(pos.x, pos.y, pos.z, "Нажмите ~g~E~s~ чтобы открыть меню магазина", 0.8, -1, [33, 150, 243, 100], 0.3);
+                methods.createCp(pos.x, pos.y, pos.z, "Spustelekite ~g~E~s~ jog atidarytumete parduotuves meniu", 0.8, -1, [33, 150, 243, 100], 0.3);
             }
 
             if (shopType === 3 || shopType === 999)
-                methods.createCp(pos.x, pos.y, pos.z, "Нажмите ~g~E~s~ чтобы открыть меню магазина", 0.8, -1, [33, 150, 243, 100], 0.3);
+                methods.createCp(pos.x, pos.y, pos.z, "Spustelekite ~g~E~s~ jog atidarytumete parduotuves meniu", 0.8, -1, [33, 150, 243, 100], 0.3);
             if (shopType === 4) {
-                methods.createCp(pos.x, pos.y, pos.z, "Нажмите ~g~E~s~ чтобы открыть меню магазина", 0.8, -1, [33, 150, 243, 100], 0.3);
+                methods.createCp(pos.x, pos.y, pos.z, "Spustelekite ~g~E~s~ jog atidarytumete parduotuves meniu", 0.8, -1, [33, 150, 243, 100], 0.3);
             }
 
         }
@@ -110,15 +110,15 @@ cloth.checkPosForOpenMenu = function (player) {
 
                 let shopType = shopList[i][0];
                 let animList = [
-                    ["Сесть 1","amb@prop_human_seat_chair@male@generic@base", "base",9],
-                    ["Сесть 2","amb@prop_human_seat_chair@male@elbows_on_knees@base", "base",9],
-                    ["Сесть 3","amb@prop_human_seat_chair@male@left_elbow_on_knee@base", "base",9],
-                    ["Сесть 4","amb@prop_human_seat_chair@male@right_foot_out@base", "base",9],
-                    ["Сидеть расслаблено - 2", "anim@amb@office@seating@male@var_e@base@", "base",9],
-                    ["Сидеть расслаблено - 3", "anim@amb@office@seating@male@var_d@base@", "base",9],
-                    ["Сидеть расслаблено - 4", "anim@amb@office@seating@female@var_d@base@", "base",9],
-                    ["Сидеть расслаблено - 5", "anim@amb@office@seating@female@var_c@base@", "base",9],
-                    ["Сидеть сложа руки - 3", "amb@world_human_seat_steps@male@hands_in_lap@base", "base",9],
+                    ["Atsisėskite 1","amb@prop_human_seat_chair@male@generic@base", "base",9],
+                    ["Atsisėskite 2","amb@prop_human_seat_chair@male@elbows_on_knees@base", "base",9],
+                    ["Atsisėskite 3","amb@prop_human_seat_chair@male@left_elbow_on_knee@base", "base",9],
+                    ["Atsisėskite 4","amb@prop_human_seat_chair@male@right_foot_out@base", "base",9],
+                    ["Sėdėk atsipalaidavęs - 2", "anim@amb@office@seating@male@var_e@base@", "base",9],
+                    ["Sėdėk atsipalaidavęs - 3", "anim@amb@office@seating@male@var_d@base@", "base",9],
+                    ["Sėdėk atsipalaidavęs - 4", "anim@amb@office@seating@female@var_d@base@", "base",9],
+                    ["Sėdėk atsipalaidavęs - 5", "anim@amb@office@seating@female@var_c@base@", "base",9],
+                    ["Atsisėsk į rankas - 3", "amb@world_human_seat_steps@male@hands_in_lap@base", "base",9],
                 ];
                 let animId = methods.getRandomInt(0, animList.length);
 
@@ -196,14 +196,14 @@ cloth.buyProp = function (player, price, body, clothId, color, itemName, shopId,
 
     if (payType === 1) {
         if (user.getBankMoney(player) < price && !isFree) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             user.updateCharacterCloth(player);
             return;
         }
     }
     else {
         if (user.getCashMoney(player) < price && !isFree) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             user.updateCharacterCloth(player);
             return;
         }
@@ -261,16 +261,16 @@ cloth.buyProp = function (player, price, body, clothId, color, itemName, shopId,
 
     if (!isFree) {
         if (payType === 1)
-            user.removeBankMoney(player, price, 'Покупка аксессуара ' + itemName);
+            user.removeBankMoney(player, price, 'Aksesuaro pirkimas ' + itemName);
         else
-            user.removeCashMoney(player, price, 'Покупка аксессуара ' + itemName);
+            user.removeCashMoney(player, price, 'Aksesuaro pirkimas ' + itemName);
 
         if (business.isOpen(shopId)) {
             business.addMoney(shopId, price, itemName);
             business.removeMoneyTax(shopId, price / business.getPrice(shopId));
         }
 
-        user.showCustomNotify(player, 'Вы купили аксессуар', 2, 9);
+        user.showCustomNotify(player, 'Jus nusipirkote prieda', 2, 9);
     }
 
     user.updateCharacterCloth(player);
@@ -295,25 +295,25 @@ cloth.change = function (player, body, cloth, color, torso, torsoColor, parachut
 
 cloth.getClothBagName = function (idx) {
     methods.debug('cloth.getClothBagName');
-    let names = ['Черная', 'Синяя', 'Желтая', 'Розовая', 'Зелёная', 'Оранжевая', 'Фиолетовая', 'Светло-розовая', 'Красно-синяя', 'Голубая', 'Цифра', 'Флора', 'Синяя флора', 'Узор', 'Пустынная', 'Камо', 'Белая'];
+    let names = ['Juoda', 'Mėlyna', 'Geltona', 'Rožinė', 'Žalia', 'Oranžinė', 'Violetinė', 'Šviesiai rožinė', 'Raudona-mėlyna', 'Šviesiai mėlyna', 'Skaičius', 'Flora', 'Mėlyna flora' , 'Raštas', 'Dykuma', 'Camo', 'Balta'];
     return names[idx];
 };
 
-cloth.buy = function (player, price, body, cloth, color, torso, torsoColor, parachute, parachuteColor, itemName = "Одежда", shopId = 0, isFree = false, payType = 0) {
+cloth.buy = function (player, price, body, cloth, color, torso, torsoColor, parachute, parachuteColor, itemName = "apranga", shopId = 0, isFree = false, payType = 0) {
     methods.debug('cloth.buy');
     if (!user.isLogin(player))
         return;
 
     if (payType === 1) {
         if (user.getBankMoney(player) < price && !isFree) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             user.updateCharacterCloth(player);
             return;
         }
     }
     else {
         if (user.getCashMoney(player) < price && !isFree) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             user.updateCharacterCloth(player);
             return;
         }
@@ -422,15 +422,15 @@ cloth.buy = function (player, price, body, cloth, color, torso, torsoColor, para
 
     if (!isFree) {
         if (payType === 1)
-            user.removeBankMoney(player, price, 'Покупка одежды ' + itemName);
+            user.removeBankMoney(player, price, 'Drabužių pirkimas ' + itemName);
         else
-            user.removeCashMoney(player, price, 'Покупка одежды ' + itemName);
+            user.removeCashMoney(player, price, 'Drabužių pirkimas ' + itemName);
 
         if (business.isOpen(shopId)) {
             business.addMoney(shopId, price, itemName);
             business.removeMoneyTax(shopId, price / business.getPrice(shopId));
         }
-        user.showCustomNotify(player, 'Вы купили одежду, старая одежда находится в инвентаре', 2, 9);
+        user.showCustomNotify(player, 'Jus nusipirkote drabužiu, seni drabužiai yra jusu inventoriuje', 2, 9);
     }
 
     user.updateCharacterCloth(player);
@@ -453,7 +453,7 @@ cloth.buyMask = function (player, price, maskId, shopId, payType = 0) {
 
     if (price > 10) {
         if (user.getMoney(player, payType) < price) {
-            user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+            user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
             user.updateCharacterCloth(player);
             return;
         }
@@ -476,13 +476,13 @@ cloth.buyMask = function (player, price, maskId, shopId, payType = 0) {
 
     if (shopId == 0)
         return;
-    user.removeMoney(player, price, 'Покупка маски ' + itemName, payType);
+    user.removeMoney(player, price, 'Kaukės pirkimas ' + itemName, payType);
 
     if (business.isOpen(shopId)) {
         business.addMoney(shopId, price, itemName);
         business.removeMoneyTax(shopId, price / business.getPrice(shopId));
     }
-    user.showCustomNotify(player, 'Вы купили маску', 2, 9);
+    user.showCustomNotify(player, 'Jus nusipirkote kauke', 2, 9);
     user.save(player);
 };
 
@@ -491,7 +491,7 @@ cloth.buyPrint = function(player, collection, overlay, price, shopId, payType) {
         return;
 
     if (user.getMoney(player, payType) < price) {
-        user.showCustomNotify(player, 'У вас недостаточно средств', 1, 9);
+        user.showCustomNotify(player, 'Jus neturite pakankamai lesu', 1, 9);
         return;
     }
 
@@ -501,12 +501,12 @@ cloth.buyPrint = function(player, collection, overlay, price, shopId, payType) {
     user.set(player, "tprint_c", collection);
     user.set(player, "tprint_o", overlay);
 
-    user.removeMoney(player, price, 'Принт на одежду', payType);
+    user.removeMoney(player, price, 'Spausdinkite ant drabužių', payType);
     if (business.isOpen(shopId)) {
-        business.addMoney(shopId, price, 'Покупка принта');
+        business.addMoney(shopId, price, 'Spausdinimo pirkimas');
         business.removeMoneyTax(shopId, price / business.getPrice(shopId));
     }
-    user.showCustomNotify(player, 'Вы купили принт', 2, 9);
+    user.showCustomNotify(player, 'Jus nusipirkote spaudini', 2, 9);
     user.updateTattoo(player);
 
     mysql.executeQuery(`SELECT * FROM items WHERE owner_id = '${user.getId(player)}' AND owner_type = '1' AND item_id = '265' AND is_equip = '1' ORDER BY id DESC`, function (err, rows, fields) {

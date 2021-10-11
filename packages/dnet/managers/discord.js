@@ -6,25 +6,26 @@ let user = require('../user');
 
 let discord = exports;
 
-discord.report = "https://discordapp.com/api/webhooks/682573681415028740/l0tkdhaVqlCLa_JZQ6xnAE1lE2aZejqq8Zj_x8QvUlAH8hoIB6frc6uZpUPfx3C7K8Ah";
-discord.deadlist = "https://discord.com/api/webhooks/800625907323633676/6i7L7D9R0_WnwyNZdzZJHrkT3ZqUltCrOdu-UFzZzxg7N4jbJ-iP40UGBAUeYTSniKYB";
-discord.invaderAd = "https://discord.com/api/webhooks/800626231351312425/No7GOZ8TxubI-CbIX9ylGQmRoNv3sxG2ONJSSY2bwIrGdjwdILeulTYqgnedvl36-GPc";
-discord.invaderNews = "https://discordapp.com/api/webhooks/749837863985610853/8TJa5mtY2hdq1_2NWXoJEiiXT9o4BsDaUgrTungw5xJ5l3BNBVclgXMIiQo8Pf1L1Dkj";
-discord.fractionNews = "https://discordapp.com/api/webhooks/682956739792076838/xnKY61UPcvyakdcRkMIFEsaFCMGKuK9u4wT7KK4lN_Spo1EdA_ySlzMOSLtfyW44QWMb";
+discord.report = "https://discord.com/api/webhooks/893617734615707648/6VsDl4HdwWxNI_dBoNnPFYNebwvdvUG0OpQK658_VNW1jhdv_u2zrM8mPqhRfEsgZOGb";
+discord.deadlist = "https://discord.com/api/webhooks/893617872415379506/pp1DRee_bfat1JCAZhYdpa8npPp2miTp1JgOeqavYOZofJMR8UAzt1YVbVz32uKpGcav";
+discord.invaderAd = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.invaderNews = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.fractionNews = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
 
-discord.workBcsd = "https://discord.com/api/webhooks/793982959157248030/RPNJVWyyqk8LrqVkzmEo-7wrke_OPKiouBa0FepwEMj3tdOFIPUYdydirNRzcfv-2xy3";
-discord.workLspd = "https://discord.com/api/webhooks/793982785542946846/6YZb1qRNvw03bV8rQkr-uhDeEbasw9LeUiFLLENNJE4s6-2rTUeWKOrR7_fNcqLGAfrG";
-discord.workUsmc = "https://discord.com/api/webhooks/793982506390913065/7irBRWrmVfiXlJg3_RVKv3W_4YInkEzYEON55Ucn5sHSBtXHczT9t7FxhRPSCQXSpzNO";
-discord.workNews = "https://discord.com/api/webhooks/793982310009012244/AC6aL2bazUf0G2t1g28rYWLx0b8M6z5R38Jp59KK20rb47yEQVo5kLI3y5XvOuJC6lm5";
-discord.workEms = "https://discord.com/api/webhooks/793982662549307403/u3zvwVQfmOJ6qOyiK4bnSGZcel9wKSVFR8JMT3-vRPWIYH95RgePHDKYjATEwGzVvb4M";
-discord.workGov = "https://discordapp.com/api/webhooks/756864667233812531/KgEtvxABddRxRW7ppLql2kTy4ZPFhFx5cCpvsSVlfdtKmj6i-1A5cJ4LFya9g-xVwbUw";
+discord.workBcsd = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.workLspd = "https://discord.com/api/webhooks/893617180359401523/bkOcg8OlJq63tSNz0H4Vmz__znb_ibZzZ0QtagJToLfgK50u4mFbr4wouStBpwTsvTEl";
+discord.workUsmc = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.workNews = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.workEms = "https://discord.com/api/webhooks/892904502032732160/Ou3vGgu5E4Ca2fH88KIXEtR1H1I_PCgN6JAv9nD_7rsZdRULY_nO88O-tbrYu_Z-nONJ";
+discord.workFib = "https://discord.com/api/webhooks/893616543349506098/OgjWWKi4t-6kjHrrz5TKL7C8ZR-qFa0mUKEFlnhoEjwgSMnjC0up74RSHvBp5pWAHE79";
+discord.workGov = "https://discord.com/api/webhooks/893617318867902564/PMMFNDkHRcHdPyIKiaVVGsg84G6Ihy6yo-1FGAM14fQTbTf10wOd5l8JlypUvVb_LZJc";
 
-discord.marketProperty = "https://discord.com/api/webhooks/793983974397181962/x5MReHfl4s02-C2HI5Q6xOBjWdIAY9-gkeW-_aMqrXugJ_yXC9u1EFDCQL6gXl7MSDvg";
-discord.marketBusiness = "https://discord.com/api/webhooks/793983974397181962/x5MReHfl4s02-C2HI5Q6xOBjWdIAY9-gkeW-_aMqrXugJ_yXC9u1EFDCQL6gXl7MSDvg";
-discord.marketVehicles = "https://discord.com/api/webhooks/793983974397181962/x5MReHfl4s02-C2HI5Q6xOBjWdIAY9-gkeW-_aMqrXugJ_yXC9u1EFDCQL6gXl7MSDvg";
+discord.marketProperty = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.marketBusiness = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
+discord.marketVehicles = "https://discord.com/api/webhooks/876696775753359420/UPDfvxJiQ2FmLfusULCiaD5MG_-ecTYi_TctAXGI_6BQRcCB1ejBidY1jplOcO_Uj4so";
 
 discord.dednetImg = "https://i.imgur.com/WhubVMp.png";
-discord.socialClub = "https://a.rsg.sc//n/";
+discord.socialClub = "https://a.rsg.sc/n/";
 
 discord.imgGov = "https://i.imgur.com/eFGOitl.png";
 discord.imgLspd = "https://i.imgur.com/uRUp6ig.png";
@@ -46,7 +47,7 @@ discord.sendFractionList = function (title, sender, message, senderImg = discord
     const Hook = new webhook.Webhook(discord.fractionNews);
 
     const msg = new webhook.MessageBuilder()
-        .setName('Новости Штата')
+        .setName('Valstybės žinios')
         .setTitle(sender)
         .setAvatar(avatar)
         .setDescription(message)
@@ -63,8 +64,8 @@ discord.sendDeadList = function (target, desc, reason, sender = 'Server', sender
     const msg = new webhook.MessageBuilder()
         .setName("DEAD LIST")
         .setTitle(target)
-        .addField("Описание", desc)
-        .addField("Причина", reason)
+        .addField("Aprašymas", desc)
+        .addField("Priežastis", reason)
         .setFooter(sender, senderImg)
         .setColor(color)
         .setTime();
@@ -76,21 +77,21 @@ discord.sendAd = function (title, name, text, phone, editor, editorImg) {
     const Hook = new webhook.Webhook(discord.invaderAd);
 
     let color = "#607D8B";
-    if (title === 'Покупка')
+    if (title === 'Pirkimas')
         color = "#03A9F4";
-    if (title === 'Продажа')
+    if (title === 'Parduodama')
         color = "#8BC34A";
-    if (title === 'Услуга')
+    if (title === 'Paslauga')
         color = "#FFEB3B";
 
     const msg = new webhook.MessageBuilder()
-        .setName('Рекламное объявление')
+        .setName('Skelbimas')
         .setTitle(title)
         .setAvatar(discord.imgInvader)
-        .addField(`Phone Number`, `\`\`\`${phone}\`\`\``, true)
-        .addField(`Customer`, `\`\`\`${name}\`\`\``, true)
+        .addField(`Telefono numeris`, `\`\`\`${phone}\`\`\``, true)
+        .addField(`Klientas`, `\`\`\`${name}\`\`\``, true)
         .setDescription(`\`\`\`fix\n${text}\`\`\``)
-        .setFooter(editor, 'https://a.rsg.sc//n/' + editorImg.toLowerCase())
+        .setFooter(editor, 'https://a.rsg.sc/n/' + editorImg.toLowerCase())
         .setColor(color)
         .setTime();
 
@@ -100,10 +101,10 @@ discord.sendAd = function (title, name, text, phone, editor, editorImg) {
 discord.sendNews = function (title, text, editor, editorImg) {
     const Hook = new webhook.Webhook(discord.invaderNews);
     const msg = new webhook.MessageBuilder()
-        .setName('Новости')
+        .setName('Naujienos')
         .setTitle(title)
         .setDescription(text)
-        .setFooter(editor, 'https://a.rsg.sc//n/' + editorImg)
+        .setFooter(editor, 'https://a.rsg.sc/n/' + editorImg)
         .setColor("#f44336")
         .setTime();
 
@@ -133,18 +134,18 @@ discord.sendWork = function (url, player, dscrd, text) {
         }
 
         if (history === '')
-            history = 'Криминальной истории - нет';
+            history = 'Nėra teistumo istorijos';
 
         const Hook = new webhook.Webhook(url);
         const msg = new webhook.MessageBuilder()
-            .setName('Заявление')
+            .setName('DARBO PARAIŠKA')
             .setTitle(sender)
             .setDescription(text)
-            .addField(`Телефон`, `\`\`\`${phone}\`\`\``, true)
-            .addField(`Дискорд`, `\`\`\`${dscrd}\`\`\``, true)
-            .addField(`Work ID`, `\`\`\`${user.get(player, 'work_lvl')} / ${user.get(player, 'work_exp')}\`\`\``, true)
-            .addField(`История`, `\`\`\`${history}\`\`\``)
-            .setFooter(sender, 'https://a.rsg.sc//n/' + senderImg)
+            .addField(`Telefonas`, `\`\`\`${phone}\`\`\``, true)
+            .addField(`DISCORD`, `\`\`\`${dscrd}\`\`\``, true)
+            .addField(`Darbo lygis / Darbo patirtis`, `\`\`\`${user.get(player, 'work_lvl')} / ${user.get(player, 'work_exp')}\`\`\``, true)
+            .addField(`Istorija`, `\`\`\`${history}\`\`\``)
+            .setFooter(sender, 'https://a.rsg.sc/n/' + senderImg)
             .setColor("#f44336")
             .setTime();
 
@@ -155,10 +156,10 @@ discord.sendWork = function (url, player, dscrd, text) {
 discord.sendMarketProperty = function (title, text) {
     const Hook = new webhook.Webhook(discord.marketProperty);
     const msg = new webhook.MessageBuilder()
-        .setName('Новости имущества')
+        .setName('Nekilnojamojo turto naujienos')
         .setTitle(title)
         .setDescription(`\`\`\`ml\n${text}\`\`\``)
-        .setFooter('Правительство', discord.imgGov)
+        .setFooter('Vyriausybė', discord.imgGov)
         .setColor("#f44336")
         .setTime();
     Hook.send(msg);
@@ -167,10 +168,10 @@ discord.sendMarketProperty = function (title, text) {
 discord.sendMarketBusiness = function (title, text) {
     const Hook = new webhook.Webhook(discord.marketBusiness);
     const msg = new webhook.MessageBuilder()
-        .setName('Новости бизнеса')
+        .setName('Verslo naujienos')
         .setTitle(title)
         .setDescription(`\`\`\`ml\n${text}\`\`\``)
-        .setFooter('Правительство', discord.imgGov)
+        .setFooter('Vyriausybė', discord.imgGov)
         .setColor("#f44336")
         .setTime();
     Hook.send(msg);
@@ -179,11 +180,11 @@ discord.sendMarketBusiness = function (title, text) {
 discord.sendMarketVehicles = function (title, text, imgUrl) {
     const Hook = new webhook.Webhook(discord.marketVehicles);
     const msg = new webhook.MessageBuilder()
-        .setName('Новости транспорта')
+        .setName('Transporto naujienos')
         .setTitle(title)
         .setDescription(`\`\`\`ml\n${text}\`\`\``)
         .setImage(imgUrl)
-        .setFooter('Правительство', discord.imgGov)
+        .setFooter('Vyriausybė', discord.imgGov)
         .setColor("#f44336")
         .setTime();
     Hook.send(msg);

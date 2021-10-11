@@ -204,7 +204,7 @@ gangZone.generateLobby = function() {
             let spawnIdx = methods.getRandomInt(0, zoneSpawnList[currentZone].length);
             user.teleport(p, zoneSpawnList[currentZone][spawnIdx][0], zoneSpawnList[currentZone][spawnIdx][1], zoneSpawnList[currentZone][spawnIdx][2], zoneSpawnList[currentZone][spawnIdx][3]);
 
-            p.outputChatBoxNew(`[${chat.getTime()}] Запуск нового раунда.`);
+            p.outputChatBoxNew(`[${chat.getTime()}] Naujo raundo pradžia.`);
         }
     });
 };
@@ -213,7 +213,7 @@ gangZone.playerToLobby = function(player) {
     methods.debug('gangZone.playerToLobby');
     if (user.isLogin(player)) {
         if (user.hasById(user.getId(player), 'uniform')) {
-            player.notify('~r~В форме запрещено учавствовать в GangZone');
+            player.notify('~r~Uniformas draudžiama deveti GangZone');
             return;
         }
 
@@ -225,8 +225,8 @@ gangZone.playerToLobby = function(player) {
         user.set(player, 'gangZoneKills', 0);
         user.set(player, 'gangZoneDeath', 0);
 
-        player.outputChatBoxNew(`Кнопка !{2196F3}ESC!{FFFFFF} выйти из лобби`);
-        player.notify(`Кнопка ~g~ESC~s~ выйти из лобби`);
+        player.outputChatBoxNew(`Klavišas !{2196F3}ESC!{FFFFFF} išeiti iš lobby`);
+        player.notify(`Klavisas ~g~ESC~s~ iseiti is lobby`);
 
         setTimeout(function () {
             try {
@@ -282,10 +282,10 @@ mp.events.add("playerDeath", (player, reason, killer) => {
 
                     user.achiveDoneAllById(killer, 2);
                     gangZone.generateLobby();
-                    user.addMoney(killer, 2000, 'Награда за 1 место GangZone');
+                    user.addMoney(killer, 2000, 'GangZone 1-osios vietos apdovanojimas');
                     mp.players.forEach(p => {
                         if (user.isLogin(p) && user.has(p, 'gangZoneKills')) {
-                            p.outputChatBoxNew(`[${chat.getTime()}] Игрок !{${chat.clBlue}}${user.getRpName(killer)} (${killer.id})!{${chat.clWhite}} сделал 25 убийств, получил приз в $2000.`);
+                            p.outputChatBoxNew(`[${chat.getTime()}] Žaidėjas !{${chat.clBlue}}${user.getRpName(killer)} (${killer.id})!{${chat.clWhite}} įvykdė 25 nužudymus, laimėjo 2000€ prizą.`);
                         }
                     });
                     return;
@@ -317,9 +317,9 @@ mp.events.add("playerDeath", (player, reason, killer) => {
                 mp.players.forEach(p => {
                     if (user.isLogin(p) && user.has(p, 'gangZoneKills')) {
                         if (p.id === killer.id || p.id === player.id)
-                            p.outputChatBoxNew(`[${chat.getTime()}] !{${chat.clOrange}}${user.getRpName(killer)} (${killer.id} | ${kills} убийств) !{${chat.clWhite}}убил игрока !{${chat.clOrange}}${user.getRpName(player)} (${player.id} | ${killsPlayer} убийств)`);
+                            p.outputChatBoxNew(`[${chat.getTime()}] !{${chat.clOrange}}${user.getRpName(killer)} (${killer.id} | ${kills} nužudymai) !{${chat.clWhite}}nužudė žaidėją !{${chat.clOrange}}${user.getRpName(player)} (${player.id} | ${killsPlayer} nužudymai)`);
                         else
-                            p.outputChatBoxNew(`[${chat.getTime()}] !{${chat.clBlue}}${user.getRpName(killer)} (${killer.id} | ${kills} убийств) !{${chat.clWhite}}убил игрока !{${chat.clBlue}}${user.getRpName(player)} (${player.id} | ${killsPlayer} убийств)`);
+                            p.outputChatBoxNew(`[${chat.getTime()}] !{${chat.clBlue}}${user.getRpName(killer)} (${killer.id} | ${kills} nužudymai) !{${chat.clWhite}}nužudė žaidėją !{${chat.clBlue}}${user.getRpName(player)} (${player.id} | ${killsPlayer} nužudymai)`);
                     }
                 });
             }

@@ -40,9 +40,9 @@ fishing.trade = function () {
     setTimeout(fishing.trade, methods.getRandomInt(30, 45) * 1000 * 60);
 
     methods.notifyWithPictureToAll(
-        `Биржа рыбаков`,
-        "~y~Новости биржи",
-        `Цены на рыбу были изменены`,
+        `Žveju birža`,
+        "~y~Biržos naujienos",
+        `Pakeistos žuvu kainos`,
         "CHAR_LIFEINVADER",
         1
     );

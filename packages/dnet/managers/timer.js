@@ -173,12 +173,12 @@ timer.min60Timer = function() {
     });
 
     let arrayRandom = [
-        'Если у тебя возникли трудности, обращайтесь в М - Вопрос',
-        'Напоминаем, у тебя есть возможность кастомизировать чат\n(M - Настройки - Текстовый чат)',
-        'Напоминаем, у тебя есть возможность кастомизировать интерфейс\n(M - Настройки - Интерфейс)',
-        'Напоминаем, у тебя есть использовать бинды клавиш\n(M - Настройки - Назначение клавиш)',
+        'Jei kyla sunkumu, kreipkites i M - Klausimas',
+        'Priminimas, kad galite tvarkyti savo pokalbius\n(M - Nustatymai - Tekstiniai pokalbiai)',
+        'Primename, kad galite pritaikyti sasaja\n(M - Nustatymai - Sasaja).',
+        'Primename, kad galite naudoti klavisu priskyrimus\n(M - Nustatymai - Klavisu priskyrimas).',
     ];
-    methods.notifyWithPictureToAll('Подсказка', '', arrayRandom[methods.getRandomInt(0, arrayRandom.length)], 'CHAR_ACTING_UP');
+    methods.notifyWithPictureToAll('Patarimas', '', arrayRandom[methods.getRandomInt(0, arrayRandom.length)], 'CHAR_ACTING_UP');
     setTimeout(timer.min60Timer, 1000 * 60 * 60);
 };
 
@@ -186,7 +186,7 @@ timer.min59Timer = function() {
 
     coffer.addMoney(9, 50000);
 
-    try {
+   /* try {
         let player = methods.getRandomPlayer();
         if (user.isLogin(player)) {
             user.giveVip(player, methods.getRandomInt(1, 5), 2, true);
@@ -204,7 +204,7 @@ timer.min59Timer = function() {
     }
     catch (e) {
         
-    }
+    }*/
     setTimeout(timer.min59Timer, 1000 * 60 * 59);
 };
 

@@ -17,10 +17,10 @@ let ems = require('./ems');
 
 let weather = exports;
 
-let _year = 2012;
-let _month = 1;
-let _day = 1;
-let _hour = 12;
+let _year = 2021;
+let _month = 10;
+let _day = 01;
+let _hour = 18;
 let _minute = 0;
 let _tempNew = 27;
 let _weatherType = 0;
@@ -234,7 +234,7 @@ weather.timeSyncTimer = function() {
         }
 
         if (_hour === 1 && _minute === 0)
-            methods.notifyWithPictureToFractions2('Борьба за груз', `~r~ВНИМАНИЕ!`, 'Через час начнется война за груз!');
+            methods.notifyWithPictureToFractions2('Kova del krovinio', `~r~DEMESIO!`, 'Po valandos prasides karas del krovinio!');
         if (_hour === 2 && _minute === 0)
             fraction.createCargoWar(4);
         if (_hour === 6 && _minute === 0)
@@ -302,32 +302,6 @@ weather.timeSyncTimer = function() {
         }
         if (dateTime.getHours() === 19 && dateTime.getMinutes() === 1) {
             isCreateEms = false
-        }
-
-        if (dateTime.getHours() === 20 && dateTime.getMinutes() === 1) {
-            if (!isCreateVeh) {
-                isCreateVeh = true;
-                try {
-                    let player = methods.getRandomPlayer();
-                    if (user.isLogin(player)) {
-                        user.giveVehicle(player, enums.vehWinList[methods.getRandomInt(0, enums.vehWinList.length)], 1, true);
-                        //user.giveVip(player, methods.getRandomInt(1, 8), 2, true);
-                    }
-                    player = methods.getRandomPlayer();
-                    if (user.isLogin(player)) {
-                        user.giveVehicle(player, enums.vehWinList[methods.getRandomInt(0, enums.vehWinList.length)], 1, true);
-                        //user.giveRandomMask(player, 0, true);
-                    }
-                    player = methods.getRandomPlayer();
-                    if (user.isLogin(player)) {
-                        user.giveVehicle(player, enums.vehWinList[methods.getRandomInt(0, enums.vehWinList.length)], 1, true);
-                        //user.giveRandomMask(player, 0, true);
-                    }
-                }
-                catch (e) {
-
-                }
-            }
         }
 
         /*if (dateTime.getDay() === 6) {
@@ -614,9 +588,9 @@ weather.timeSyncTimer = function() {
         }*/
 
         if (dateTime.getHours() == 4 && dateTime.getMinutes() == 50) //TODO
-            methods.notifyToAll('Рестарт сервера через 15 минут');
+            methods.notifyToAll('Serverio restartas už 15 minuciu');
         if (dateTime.getHours() == 4 && dateTime.getMinutes() == 59)
-            methods.notifyToAll('Рестарт сервера через 5 минут');
+            methods.notifyToAll('Serverio restartas už 5 minuciu');
         if (dateTime.getHours() == 5 && dateTime.getMinutes() == 2)
             methods.saveAll();
         if (dateTime.getHours() == 5 && dateTime.getMinutes() == 3)
@@ -626,7 +600,7 @@ weather.timeSyncTimer = function() {
             mp.players.forEach(function (p) {
                 if (mp.players.exists(p)) {
                     user.set(p, 'online_wheel', 0);
-                    user.kick(p, 'Рестарт');
+                    user.kick(p, 'Restartas');
                 }
             });
 
@@ -729,27 +703,27 @@ weather.nextRandomWeather = function() {
 weather.getWeatherName = function(type) {
     switch (type) {
         case "EXTRASUNNY":
-            return 'Безоблачно';
+            return 'Ne debesuota';
         case "CLEAR":
-            return 'Низкая облачность';
+            return 'Mažas debesuotumas';
         case "CLOUDS":
-            return 'Облачно';
+            return 'Debesuota';
         case "SMOG":
-            return 'Смог';
+            return 'Smogas';
         case "FOGGY":
-            return 'Туман';
+            return 'Rukas';
         case "OVERCAST":
-            return 'Пасмурно';
+            return 'Apsiniauke';
         case "RAIN":
-            return 'Дождь';
+            return 'Lietus';
         case "THUNDER":
-            return 'Гроза';
+            return 'Perkunija';
         case "CLEARING":
-            return 'Лёгкий дождь';
+            return 'Mažas lietus';
         case "XMAS":
-            return 'Снег';
+            return 'Sniegas';
     }
-    return 'Безоблачно';
+    return 'Ne debesuota';
 };
 
 weather.getWeatherDesc = function(type) {
@@ -760,17 +734,17 @@ weather.getWeatherDesc = function(type) {
         case "CLOUDS":
             return '';
         case "SMOG":
-            return 'На дорогах будет слегка понижена видимость, будьте осторожны';
+            return 'Matomumas keliuose bus siek tiek sumažejes, todel bukite atsargus.';
         case "FOGGY":
-            return 'Водителям рекомендуем включить фары и быть аккуратными на дорогах';
+            return 'Vairuotojams patariama isijungti priekines sviesas ir buti atsargiems keliuose.';
         case "OVERCAST":
             return '';
         case "RAIN":
             return '';
         case "THUNDER":
-            return 'В океане прогнозируется шторм с сильным ветром';
+            return 'Prognozuojama audra su stipriais vejais vandenyne';
         case "CLEARING":
-            return 'Не забывайте зонтик ;)';
+            return 'Neužmirskite skecio';
         case "XMAS":
             return '';
     }
@@ -815,11 +789,11 @@ weather.nextRandomWeatherByType = function(weatherType) {
 
             if (weatherType == 0) {
                 if (_tempNew < 1)
-                    mp.world.weather = 'XMAS';
+                    mp.world.weather = 'EXTRASUNNY';
                 else
                     mp.world.weather = 'CLEAR';
                 if (_tempNew < -10)
-                    weatherList = ["XMAS"];
+                    weatherList = ["EXTRASUNNY"];
             }
             break;
         case 1:
@@ -983,8 +957,8 @@ weather.nextRandomWeatherByType = function(weatherType) {
 
     methods.notifyWithPictureToAll(
         `Life Invader [${weather.getFullRpTime()}]`,
-        "~y~Новости погоды",
-        `Погода: ~y~${weather.getWeatherName(weather.getWeather())}~s~\nТемпература: ~y~${Math.round(_tempNew)}°C\n~s~Ветер: ~y~${methods.parseFloat(_windSpeed * 1.4).toFixed(1)}m/s\n~c~${weather.getWeatherDesc(weather.getWeather())}`,
+        "~y~Oru naujienos",
+        `Orai: ~y~${weather.getWeatherName(weather.getWeather())}~s~\nTemperatura: ~y~${Math.round(_tempNew)}°C\n~s~Vejas: ~y~${methods.parseFloat(_windSpeed * 1.4).toFixed(1)}m/s\n~c~${weather.getWeatherDesc(weather.getWeather())}`,
         "CHAR_TANISHA",
         1
     );
@@ -995,8 +969,8 @@ weather.changeWeather = function(name = "EXTRASUNNY") {
     weather.setWeather(name);
     methods.notifyWithPictureToAll(
         `Life Invader [${weather.getFullRpTime()}]`,
-        "~y~Новости погоды",
-        `Погода: ~y~${weather.getWeatherName(weather.getWeather())}~s~\nТемпература: ~y~${Math.round(_tempNew)}°C\n~s~Ветер: ~y~${methods.parseFloat(_windSpeed * 1.4).toFixed(1)}m/s\n~c~${weather.getWeatherDesc(weather.getWeather())}`,
+        "~y~Oru naujienos",
+        `Orai: ~y~${weather.getWeatherName(weather.getWeather())}~s~\nTemperatura: ~y~${Math.round(_tempNew)}°C\n~s~Vejas: ~y~${methods.parseFloat(_windSpeed * 1.4).toFixed(1)}m/s\n~c~${weather.getWeatherDesc(weather.getWeather())}`,
         "CHAR_TANISHA",
         1
     );

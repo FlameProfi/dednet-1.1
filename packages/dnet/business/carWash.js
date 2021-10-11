@@ -12,7 +12,7 @@ carWash.loadAll = function() {
     carWash.list.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
         methods.createBlip(shopPos, 100, 0, 0.6);
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы воспользоваться", 4, 0, [0, 0, 0, 0]);
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelėkite ~g~Е~s~ norėdami naudotis", 4, 0, [0, 0, 0, 0]);
     });
 };
 
@@ -36,19 +36,19 @@ carWash.checkPosForOpenMenu = function(player) {
             return;
         if (player.vehicle) {
             if (user.getMoney(player) < 100) {
-                player.notify('~r~Необходимо иметь 100$ для того чтобы помыть транспорт');
+                player.notify('~r~Noredami nuplauti transporto priemone, turite tureti 100€');
                 return;
             }
             user.showLoadDisplay(player);
             setTimeout(function () {
 
-                user.removeMoney(player, 99.90, 'Услуги автомойки');
+                user.removeMoney(player, 99.90, 'Automobilių plovimo paslaugos');
                 coffer.addMoney(1, 99);
 
                 vSync.setVehicleDirt(player.vehicle, 0);
 
-                player.notify('~g~Ваш транспорт теперь чист');
-                player.notify('~g~Стоимость услуги:~s~ $99.90');
+                player.notify('~g~Jusu transporto priemone dabar svari');
+                player.notify('~g~Paslaugos kaina:~s~ 99.90€');
 
                 user.achiveDoneDailyById(player, 5);
 
@@ -58,7 +58,7 @@ carWash.checkPosForOpenMenu = function(player) {
             }, 500);
         }
         else
-            player.notify('~r~Необходимо находиться в транспорте');
+            player.notify('~r~Jus turite buti transporto priemoneje');
     }
     catch (e) {
         methods.debug(e);

@@ -122,12 +122,12 @@ canabisWar.startWar = function(zoneId, attack, def, isArmor, count) {
             user.flashBlipByRadius(p, blipOffset + currentZone, true);
     });
 
-    methods.notifyWithPictureToCanabisWar('Аванпост под угрозой', `ВНИМАНИЕ!`, 'Начался захват улицы ~y~#' + zoneId, 'CHAR_DEFAULT', def);
+    methods.notifyWithPictureToCanabisWar('Del gresmes forpostas', `DEMESIO!`, 'Prasidejo teritorijos peremimas ~y~#' + zoneId, 'CHAR_DEFAULT', def);
 
     for (let i = 1; i <= fraction.getCount(); i++) {
         if (def == i) continue;
         if (fraction.get(i, 'is_mafia')) {
-            methods.notifyWithPictureToCanabisWar('Война за улицу', `ВНИМАНИЕ!`, 'Начался захват улицы ~y~#' + zoneId, 'CHAR_DEFAULT', i);
+            methods.notifyWithPictureToCanabisWar('Karas del gatves', `DEMESIO!`, 'Prasidejo teritorijos peremimas ~y~#' + zoneId, 'CHAR_DEFAULT', i);
         }
     }
 };
@@ -140,20 +140,20 @@ canabisWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIn
     let id = zoneId;
 
     if (id == 0) {
-        player.notify('~r~Вы слишком далеко от какой либо территории');
+        player.notify('~r~Esate per toli nuo bet kurios teritorijos');
         return;
     }
 
     if (!canabisWar.get(id, 'canWar')) {
-        player.notify('~r~Захват этой территории сейчас не доступен');
+        player.notify('~r~Užfiksuoti sia teritorija siuo metu negalima');
         return;
     }
     if (canabisWar.get(id, 'cant_war')) {
-        player.notify('~r~Захват этой территории не доступен');
+        player.notify('~r~Užfiksuoti sia teritorija negalima');
         return;
     }
     if (warPool.has(timeIndex.toString())) {
-        player.notify('~r~Данное время занято другими людьми, выберите другое');
+        player.notify('~r~Si laika užima kiti žmones, rinkis kita');
         return;
     }
 
@@ -162,18 +162,18 @@ canabisWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIn
     let idxToHour = [17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 22, 22, 22, 22, 23, 23, 23, 23];
     let dateTime = new Date(); //TODO
     if (dateTime.getHours() + 1 >= idxToHour[timeIndex]) {
-        player.notify('~r~Назначеное время не доступно, попробуйте выбрать на час-два позже');
+        player.notify('~r~Paskirto laiko nera, pabandykite pasirinkti valanda ar dvi veliau');
         return;
     }
 
     if (dateTime.getHours() < 14) {
-        player.notify('~r~Доступно с 14:00');
+        player.notify('~r~Galima isigyti nuo 14:00');
         return;
     }
 
     canabisWar.set(id, 'timestamp', methods.getTimeStamp());
 
-    let gunLabel = ['Любое', 'Пистолеты', 'Дробовики', 'SMG', 'Автоматы'];
+    let gunLabel = ['Bet koks', 'Pistoletai', 'Šautuvai', 'SMG', 'Automatai'];
     let timeLabel = ['17:00', '17:15', '17:30', '17:45', '18:00', '18:15', '18:30', '18:45', '19:00', '19:15', '19:30', '19:45', '20:00', '20:15', '20:30', '20:45', '21:00', '21:15', '21:30', '21:45', '22:00', '22:15', '22:30', '22:45', '23:00'];
 
     let data = {
@@ -185,13 +185,13 @@ canabisWar.addWar = function(player, zoneId, count, armorIndex, gunIndex, timeIn
         gun: gunIndex,
         gunLabel: gunLabel[gunIndex],
         timeLabel: timeLabel[timeIndex],
-        armorLabel: armorIndex === 0 ? 'Разрешено' : 'Запрещено',
+        armorLabel: armorIndex === 0 ? 'Leidžiama' : 'Draudžiama',
     };
 
     warPool.set(timeIndex.toString(), data);
 
-    methods.notifyWithPictureToCanabisWar('Аванпост под угрозой', `ВНИМАНИЕ!`, `Захват ~y~#${zoneId}~s~ начнется в ${timeLabel[timeIndex]} (( ООС МСК ))`, 'CHAR_DEFAULT', ownerId);
-    methods.notifyWithPictureToCanabisWar('Война за улицу', `ВНИМАНИЕ!`, `Захват ~y~#${zoneId}~s~ начнется в ${timeLabel[timeIndex]} (( ООС МСК ))`, 'CHAR_DEFAULT', user.get(player, 'fraction_id2'));
+    methods.notifyWithPictureToCanabisWar('Gresme del teritorijos', `DEMESIO!`, `Fiksuoti ~y~#${zoneId}~s~prasides ${timeLabel[timeIndex]} (( ООС Laikas ))`, 'CHAR_DEFAULT', ownerId);
+    methods.notifyWithPictureToCanabisWar('Karas del teritorijos', `DEMESIO!`, `Fiksuoti ~y~#${zoneId}~s~ prasides ${timeLabel[timeIndex]} (( ООС Laikas ))`, 'CHAR_DEFAULT', user.get(player, 'fraction_id2'));
 };
 
 canabisWar.dropTimer = function(player) {
@@ -208,7 +208,7 @@ canabisWar.dropTimer = function(player) {
     attC = 0;
     warPos = new mp.Vector3(0, 0, 0);
 
-    player.notify('~b~Таймер сброшен');
+    player.notify('~b~Laikmatis atstatytas');
 };
 
 canabisWar.timer = function() {
@@ -248,8 +248,8 @@ canabisWar.timer = function() {
             canabisWar.save(zoneId, ownerId, fractionName);
             canabisWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToCanabisWar('Досрочное завершение', `Аванпост #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentDef);
-            methods.notifyWithPictureToCanabisWar('Досрочное завершение', `Аванпост #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentAttack);
+            methods.notifyWithPictureToCanabisWar('Ankstyvas užbaigimas', `stebejimo postas #${currentZone}`, 'Teritorija kontroliuojama ' + fractionName + '\nSasajos su žmoniu skaiciaus teritorijoje pažeidimu', 'CHAR_DEFAULT', currentDef);
+            methods.notifyWithPictureToCanabisWar('Ankstyvas užbaigimas', `stebejimo postas #${currentZone}`, 'Teritorija kontroliuojama ' + fractionName + '\nSasajos su žmoniu skaiciaus teritorijoje pažeidimu', 'CHAR_DEFAULT', currentAttack);
             canabisWar.changeZoneColor(currentZone, ownerId);
             mp.players.forEachInRange(warPos, 400, p => {
                 if (!user.isLogin(p))
@@ -283,8 +283,8 @@ canabisWar.timer = function() {
             canabisWar.save(zoneId, ownerId, fractionName);
             canabisWar.set(zoneId, 'canWar', false);
 
-            methods.notifyWithPictureToCanabisWar('Досрочное завершение', `Аванпост #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentDef);
-            methods.notifyWithPictureToCanabisWar('Досрочное завершение', `Аванпост #${currentZone}`, 'Территория под контролем ' + fractionName + '\nСвязи с нарушением количества людей в территории', 'CHAR_DEFAULT', currentAttack);
+            methods.notifyWithPictureToCanabisWar('Ankstyvas užbaigimas', `Postas #${currentZone}`, 'Teritorija kontroliuojama ' + fractionName + '\nSasajos su žmoniu skaiciaus teritorijoje pažeidimu', 'CHAR_DEFAULT', currentDef);
+            methods.notifyWithPictureToCanabisWar('Ankstyvas užbaigimas', `Postas #${currentZone}`, 'Teritorija kontroliuojama ' + fractionName + '\nSasajos su žmoniu skaiciaus teritorijoje pažeidimu', 'CHAR_DEFAULT', currentAttack);
 
             canabisWar.changeZoneColor(currentZone, ownerId);
             mp.players.forEachInRange(warPos, 400, p => {
@@ -348,8 +348,8 @@ canabisWar.timer = function() {
                 canabisWar.save(zoneId, ownerId, fractionName);
                 canabisWar.set(zoneId, 'canWar', false);
 
-                methods.notifyWithPictureToCanabisWar('Итоги войны', `Аванпост #${currentZone}`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', currentDef);
-                methods.notifyWithPictureToCanabisWar('Итоги войны', `Аванпост #${currentZone}`, 'Территория под контролем ' + fractionName, 'CHAR_DEFAULT', currentAttack);
+                methods.notifyWithPictureToCanabisWar('Karo rezultatai', `Postas #${currentZone}`, 'Teritorija kontroliuojama ' + fractionName, 'CHAR_DEFAULT', currentDef);
+                methods.notifyWithPictureToCanabisWar('Karo rezultatai', `Postas #${currentZone}`, 'Teritorija kontroliuojama ' + fractionName, 'CHAR_DEFAULT', currentAttack);
 
                 canabisWar.changeZoneColor(currentZone, ownerId);
                 mp.players.forEachInRange(warPos, 400, p => {
@@ -411,12 +411,12 @@ canabisWar.timerMoney = function() {
         if (user.isLogin(p) && user.get(p, 'fraction_id2') > 0) {
             if (moneyToUser.has(user.get(p, 'fraction_id2').toString())) {
                 if (p.getVariable('isAfk') === true) {
-                    p.notify('~r~Зарплату вы не получили, связи с тем, что вы AFK');
+                    p.notify('~r~Jus negavote atlyginimo del to, kad esate AFK');
                 }
                 else {
                     let cMoney = moneyToUser.get(user.get(p, 'fraction_id2').toString());
-                    p.notify(`~g~Вы получили ${methods.cryptoFormat(cMoney)} за ваши захваченные территории`);
-                    user.addCryptoMoney(p, cMoney, 'Прибыль с территорий');
+                    p.notify(`~g~Tu gavai ${methods.cryptoFormat(cMoney)} jusu okupuotoms teritorijoms`);
+                    user.addCryptoMoney(p, cMoney, 'Pelnas iš teritorijų');
                 }
             }
         }
@@ -474,7 +474,7 @@ mp.events.add("playerDeath", (player, reason, killer) => {
             if (!user.isMafia(p) && !user.isAdmin(p))
                 return;
             if (canabisWar.isInZone(p, currentZone)) {
-                p.outputChatBoxNew(`[${chat.getTime()}] !{${chat.clBlue}}${user.getRpName(killer)} (${killer.id}) !{${chat.clWhite}}убил игрока !{${chat.clBlue}}${user.getRpName(player)} (${player.id})`);
+                p.outputChatBoxNew(`[${chat.getTime()}] !{${chat.clBlue}}${user.getRpName(killer)} (${killer.id}) !{${chat.clWhite}}nužudė žaidėją !{${chat.clBlue}}${user.getRpName(player)} (${player.id})`);
             }
         });
     }

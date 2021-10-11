@@ -36,10 +36,10 @@ tax.loadAll = function() {
 };
 
 tax.adLiveInvader = function(text) {
-    mysql.executeQuery(`INSERT INTO rp_inv_ad (title, name, text, phone, editor, timestamp, rp_datetime) VALUES ('Продажа', 'Государство', '${text}', 'gov.sa', 'Государство', '${methods.getTimeStamp()}', '${weather.getRpDateTime()}')`);
+    mysql.executeQuery(`INSERT INTO rp_inv_ad (title, name, text, phone, editor, timestamp, rp_datetime) VALUES ('Parduodama', 'Valstybė', '${text}', 'gov.sa', 'Valstybė', '${methods.getTimeStamp()}', '${weather.getRpDateTime()}')`);
 
     mp.players.forEach(p => {
-        user.sendPhoneNotify(p, 'Life Invader', '~g~Реклама | Продажа', text, 'CHAR_LIFEINVADER');
+        user.sendPhoneNotify(p, 'Life Invader', '~g~Reklama | Parduodama', text, 'CHAR_LIFEINVADER');
     });
 };
 
@@ -61,8 +61,8 @@ tax.sell = function() {
                 if (user.isLogin(p) && user.getId(p) === methods.parseInt(row["user_id"])) {
                     user.set(p, 'stock_id', 0);
                     user.addBankMoney(p, price);
-                    user.sendSmsBankOperation(p, `Зачисление: $${methods.numberFormat(price)}`);
-                    p.notify('~r~Ваш склад был изъят государством за неуплату');
+                    user.sendSmsBankOperation(p, `Registracija: $${methods.numberFormat(price)}`);
+                    p.notify('~r~Valstybe arestavo jusu sandeli del nemokejimo');
                     user.save(p);
                 }
             });
@@ -79,7 +79,7 @@ tax.sell = function() {
         });
 
         if (rows.length > 0)
-            tax.adLiveInvader(`Склады поступили в продажу`);
+            tax.adLiveInvader(`Parduodami sandėliai`);
     });
 
     //=============================
@@ -97,8 +97,8 @@ tax.sell = function() {
                 if (user.isLogin(p) && user.getId(p) == methods.parseInt(row["user_id"])) {
                     user.set(p, 'house_id', 0);
                     user.addBankMoney(p, price);
-                    user.sendSmsBankOperation(p, `Зачисление: $${methods.numberFormat(price)}`);
-                    p.notify('~r~Ваш дом был изъят государством за неуплату');
+                    user.sendSmsBankOperation(p, `Registracija: $${methods.numberFormat(price)}`);
+                    p.notify('~r~Valstybe arestavo jusu busta del nemokejimo.');
                     user.save(p);
                 }
             });
@@ -115,7 +115,7 @@ tax.sell = function() {
         });
 
         if (rows.length > 0)
-            tax.adLiveInvader(`Дома поступили в продажу`);
+            tax.adLiveInvader(`Parduodami namai`);
     });
 
     //=============================
@@ -133,8 +133,8 @@ tax.sell = function() {
                 if (user.isLogin(p) && user.getId(p) == methods.parseInt(row["user_id"])) {
                     user.set(p, 'condo_id', 0);
                     user.addBankMoney(p, price);
-                    user.sendSmsBankOperation(p, `Зачисление: $${methods.numberFormat(price)}`);
-                    p.notify('~r~Ваша квартира была изъята государством за неуплату');
+                    user.sendSmsBankOperation(p, `Registracija: $${methods.numberFormat(price)}`);
+                    p.notify('~r~Valstybe arestavo jusu buta del nemokejimo');
                     user.save(p);
                 }
             });
@@ -151,7 +151,7 @@ tax.sell = function() {
         });
 
         if (rows.length > 0)
-            tax.adLiveInvader(`Квартиры поступили в продажу`);
+            tax.adLiveInvader(`Parduodami butai`);
     });
 
     //=============================
@@ -169,8 +169,8 @@ tax.sell = function() {
                 if (user.isLogin(p) && user.getId(p) == methods.parseInt(row["user_id"])) {
                     user.set(p, 'yacht_id', 0);
                     user.addBankMoney(p, price);
-                    user.sendSmsBankOperation(p, `Зачисление: $${methods.numberFormat(price)}`);
-                    p.notify('~r~Ваша квартира была изъята государством за неуплату');
+                    user.sendSmsBankOperation(p, `Registracija: $${methods.numberFormat(price)}`);
+                    p.notify('~r~Valstybe arestavo jusu jachta del nemokejimo');
                     user.save(p);
                 }
             });
@@ -187,7 +187,7 @@ tax.sell = function() {
         });
 
         if (rows.length > 0)
-            tax.adLiveInvader(`Яхта поступила в продажу`);
+            tax.adLiveInvader(`Parduodamos jachtos`);
     });
 
     //=============================
@@ -205,8 +205,8 @@ tax.sell = function() {
                 if (user.isLogin(p) && user.getId(p) == methods.parseInt(row["user_id"])) {
                     user.set(p, 'business_id', 0);
                     user.addBankMoney(p, price);
-                    user.sendSmsBankOperation(p, `Зачисление: $${methods.numberFormat(price)}`);
-                    p.notify('~r~Ваш бизнес был изъят государством за неуплату');
+                    user.sendSmsBankOperation(p, `Registracija: $${methods.numberFormat(price)}`);
+                    p.notify('~r~Valstybe arestavo jusu versla del nemokejimo.');
                     user.save(p);
                 }
             });
@@ -214,7 +214,7 @@ tax.sell = function() {
             business.updateOwnerInfo(methods.parseInt(row['id']), 0, '');
             mysql.executeQuery("UPDATE users SET money = money + '" + price + "', business_id = '0' WHERE id = '" + methods.parseInt(row["user_id"]) + "'");
 
-            tax.adLiveInvader(`Бизнес ${row["name"]} поступил в продажу`);
+            tax.adLiveInvader(`Verslas ${row["name"]} pradėtas pardavinėti`);
             mysql.executeQuery("UPDATE business SET tax_money = '0' WHERE id = '" + row['id'] + "'");
 
             methods.saveLog('log_sell_inactive',
@@ -294,9 +294,9 @@ tax.sell = function() {
                 mp.players.forEach(function (p) {
                     if (user.isLogin(p) && user.getId(p) == methods.parseInt(row["user_id"])) {
                         user.set(p, 'car_id' + carId, 0);
-                        user.addBankMoney(p, price, `Изъятие ${row["name"]} по налогу`);
-                        user.sendSmsBankOperation(p, `Зачисление: ${methods.moneyFormat(price)}`);
-                        p.notify('~r~Ваш транспорт были изъяты государством за неуплату');
+                        user.addBankMoney(p, price, `Atleidimas ${row["name"]} nuo mokesčių`);
+                        user.sendSmsBankOperation(p, `Registracija: ${methods.moneyFormat(price)}`);
+                        p.notify('~r~Valstybe konfiskavo jusu transporto priemone del nemokejimo.');
                         user.save(p);
                     }
                 });
@@ -315,7 +315,7 @@ tax.sell = function() {
             });
 
             if (rows.length > 0)
-                tax.adLiveInvader(`Новый транспорт поступили в продажу`);
+                tax.adLiveInvader(`Parduodamos naujos transporto priemonės`);
         });
     });
 };
@@ -326,7 +326,7 @@ tax.payTax = function(player, type, sum, score) {
         return;
 
     if (sum < 1) {
-        player.notify('~r~Сумма должна быть больше нуля');
+        player.notify('~r~Suma turi buti didesne už 0');
         return;
     }
 
@@ -350,36 +350,36 @@ tax.payTax = function(player, type, sum, score) {
     mysql.executeQuery("SELECT * FROM " + table + " WHERE tax_score = '" + score + "'", function (err, rows, fields) {
         rows.forEach(row => {
             if (sum > methods.parseInt(row["tax_money"]) * -1) {
-                player.notify(`~r~Сумма оплаты не должна превышать суммы долга (#1)\nВаш долг равен: $${row["tax_money"]}`);
+                player.notify(`~r~Sumoketa suma neturi virsyti moketinos sumos (#1)\nJusu skola lygi: $${row["tax_money"]}`);
                 return;
             }
 
             if (type == 0) {
                 if (user.getCashMoney(player) < sum) {
-                    player.notify(`~r~У вас недостаточно средств`);
+                    player.notify(`~r~Jums nepakanka lesu`);
                     return;
                 }
             }
             else {
                 if (user.getBankMoney(player) < sum) {
-                    player.notify(`~r~У вас недостаточно средств`);
+                    player.notify(`~r~Jums nepakanka lesu`);
                     return;
                 }
             }
 
             if (type == 0)
-                user.removeCashMoney(player, sum, 'Оплата налогов');
+                user.removeCashMoney(player, sum, 'Mokesčių mokėjimas');
             else
-                user.removeBankMoney(player, sum, 'Оплата налогов');
+                user.removeBankMoney(player, sum, 'Mokesčių mokėjimas');
             user.achiveDoneDailyById(player, 14);
 
             mysql.executeQuery("UPDATE " + table + " SET tax_money = '" + (methods.parseInt(row["tax_money"]) + sum) + "' WHERE tax_score = '" + score + "'");
 
-            player.notify(`~g~Счёт ${score} был оплачен на сумму $${sum}`);
+            player.notify(`~g~Saskaita ${score} buvo sumoketa už $${sum}`);
         });
 
         if (rows.length == 0)
-            player.notify('~r~Номер счёта не найден');
+            player.notify('~r~Saskaitos numeris nerastas');
         else
             setTimeout(tax.updateTax, 1000);
     });
@@ -392,21 +392,21 @@ tax.payTaxAll = function(player, type, sum) {
 
     if (type == 0) {
         if (user.getCashMoney(player) < sum) {
-            player.notify(`~r~У вас недостаточно средств`);
+            player.notify(`~r~Jums nepakanka lesu`);
             return;
         }
     }
     else {
         if (user.getBankMoney(player) < sum) {
-            player.notify(`~r~У вас недостаточно средств`);
+            player.notify(`~r~Jums nepakanka lesu`);
             return;
         }
     }
 
     if (type == 0)
-        user.removeCashMoney(player, sum, 'Оплата налогов');
+        user.removeCashMoney(player, sum, 'Mokesčių mokėjimas');
     else
-        user.removeBankMoney(player, sum, 'Оплата налогов');
+        user.removeBankMoney(player, sum, 'Mokesčių mokėjimas');
 
     user.achiveDoneDailyById(player, 14);
 
@@ -419,7 +419,7 @@ tax.payTaxAll = function(player, type, sum) {
     mysql.executeQuery("UPDATE stocks SET tax_money = 0 WHERE user_id = " + uId);
     mysql.executeQuery("UPDATE cars SET tax_money = 0 WHERE user_id = " + uId);
     setTimeout(tax.updateTax, 1000);
-    player.notify(`~g~Вы оплатили все налоги`);
+    player.notify(`~g~Jus sumokejote visus mokescius`);
 };
 
 tax.removeTax = function() {
@@ -433,7 +433,7 @@ tax.removeTax = function() {
     mysql.executeQuery("UPDATE stocks SET tax_money = tax_money - (round((price * '" + _currentTax + "' + '" + _taxMin +  "') / '7', 0)) WHERE user_id > 0");
     mysql.executeQuery("UPDATE cars SET tax_money = tax_money - (round((price * '" + _currentTax + "' + '" + _taxMin +  "') / '7', 0)) WHERE user_id > 0 AND tax_sale = 0");
 
-    methods.notifyWithPictureToAll('~y~Оплата налогов', 'Новости правительства', 'Не забудьте оплатить налог за ваше имущество и транспорт в здании правительства', 'CHAR_FLOYD');
+    methods.notifyWithPictureToAll('~y~Mokesciu mokejimas', 'Vyriausybes naujienos', 'Nepamirskite vyriausybes pastate sumoketi nekilnojamojo turto ir transporto priemoniu mokesciu', 'CHAR_FLOYD');
 
     setTimeout(tax.sell, 5000);
     setTimeout(tax.updateTax, 10000);

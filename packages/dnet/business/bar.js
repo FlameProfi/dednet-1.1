@@ -37,13 +37,13 @@ bar.loadAll = function() {
                 methods.createBlip(shopPos, 121, 0, 0.6);
                 break;
             case 45:
-                methods.createBlip(shopPos, 614, 0, 0.6, 'Клуб');
+                methods.createBlip(shopPos, 614, 0, 0.6, 'Klubas');
                 break;
             case 0:
-                methods.createBlip(new mp.Vector3(4891.2421875, -4925.5546875, 5.227933406829834), 614, 0, 0.6, 'Клуб');
+                methods.createBlip(new mp.Vector3(4891.2421875, -4925.5546875, 5.227933406829834), 614, 0, 0.6, 'Klubas');
                 break;
             case 48:
-                methods.createBlip(shopPos, 102, 0, 0.6, 'Сomedy Сlub');
+                methods.createBlip(shopPos, 102, 0, 0.6, 'Komedijos klubas');
                 break;
             /*case 49:
                 methods.createBlip(new mp.Vector3(4.723007, 220.3487, 106.7251), 614, 0, 0.6, 'Клуб');
@@ -55,18 +55,18 @@ bar.loadAll = function() {
                 methods.createBlip(new mp.Vector3(-1173.9403076171875, -1153.419189453125, 4.657954216003418), 614, 0, 0.6, 'Клуб');
                 break;*/
             case 144:
-                methods.createBlip(new mp.Vector3(-170.16810607910156, 294.8281555175781, 92.76211547851562), 93, 0, 0.6, 'Ресторан');
+                methods.createBlip(new mp.Vector3(-170.16810607910156, 294.8281555175781, 92.76211547851562), 93, 0, 0.6, 'Restoranas');
                 break;
             default:
                 if (item[3] != 0)
                     methods.createBlip(shopPos, 93, 0, 0.6);
                 break;
         }
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню бара");
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ Noredami atidaryti meniu");
     });
     bar.listFree.forEach(function (item) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню бара");
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ Noredami atidaryti meniu");
     });
 };
 

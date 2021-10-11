@@ -18,8 +18,8 @@ let blipCenter = null;
 let emsList = {
     small: [
         {
-            title: 'Упал вертолёт',
-            desc: 'Срочно, всем сотрудникам EMS, упал вертолет в районе Дель-Перро. Координаты у вас в телефоне.',
+            title: 'Nukrito sraigtasparnis',
+            desc: 'Skubiai, visi EMS darbuotojai, sraigtasparnis nukrito Del Perro vietovėje. Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(-1176.001, -649.4301, 21.94),
@@ -111,8 +111,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа на Пиллбокс-Хилл. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai visiems greitosios medicinos pagalbos darbuotojams, Pillbox Hill įvyko avarija. Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(-41.03588, -936.4863, 28.2),
@@ -205,8 +205,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа на Строуберри. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai, visi greitosios medicinos pagalbos darbuotojai, Strawberry įvyko avarija. Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(158.1577, -1399.097, 28.15),
@@ -295,8 +295,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа в Центральном Вайнвуде. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai, visi EMS darbuotojai, Vinewood Central įvyko autoavarija. Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(361.2756, 148.5948, 101.92),
@@ -384,8 +384,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа на Рокфорд-Хиллз. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai, visi EMS darbuotojai, Rockford Hills įvyko autoavarija. Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(-796.1234, -75.70213, 36.67),
@@ -478,8 +478,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа на Дель-Перро. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai, visi greitosios medicinos pagalbos darbuotojai, Del Perro įvyko avarija.  Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(-1288.761, -928.6729, 10.22),
@@ -571,8 +571,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа в Ла-Меса. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai, visi greitosios medicinos pagalbos darbuotojai, La Mesoje įvyko automobilio avarija.  Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(776.9846, -998.8997, 24.99),
@@ -671,8 +671,8 @@ let emsList = {
             ]
         },
         {
-            title: 'Автокатастрофа',
-            desc: 'Срочно, всем сотрудникам EMS, случилась автокатастрофа в Восточном Вайнвуде. Координаты у вас в телефоне.',
+            title: 'Autokatastrofa',
+            desc: 'Skubiai, visi EMS darbuotojai, West Vinewood įvyko automobilio avarija.  Koordinatės yra jūsų telefone.',
             moneyToUser: 8000,
             moneyToFraction: 400000,
             pos: new mp.Vector3(1019.292, -190.638, 69.01),
@@ -791,7 +791,7 @@ ems.createSmall = function (id = 0) {
 
         dispatcher.sendPos(emsList.small[id].title, emsList.small[id].desc, emsList.small[id].pos);
         try {
-            blipCenter = methods.createBlip(emsList.small[id].pos, 436, 1, 0.8, 'Авария');
+            blipCenter = methods.createBlip(emsList.small[id].pos, 436, 1, 0.8, 'Avarija');
         }
         catch (e) {
             
@@ -819,7 +819,7 @@ ems.removeObject = function (id) {
                 if (user.isEms(p)) {
                     user.achiveDoneAllById(p, 7);
                     user.addMoney(p, emsList.small[currentIndex].moneyToUser);
-                    user.sendSmsBankOperation(p, `Зачисление премии ${methods.moneyFormat(emsList.small[currentIndex].moneyToUser)}`);
+                    user.sendSmsBankOperation(p, `Priedo registravimas ${methods.moneyFormat(emsList.small[currentIndex].moneyToUser)}`);
                 }
             });
 
@@ -843,22 +843,22 @@ ems.attachObject = function (player, id) {
             if (vInfo.display_name === 'Flatbed') {
 
                 if (v.getVariable('emsTruck')) {
-                    player.notify('~r~Транспорт уже загружен');
+                    player.notify('~r~Transportas jau pakrautas');
                     return;
                 }
 
                 v.addAttachment(`ems_${obj.getVariable('emsType').split('|')[1]}`, false);
                 v.setVariable('emsTruck', obj.getVariable('emsType').split('|')[1]);
-                player.notify('~g~Вы совершили погрузку на транспорт');
+                player.notify('~g~Pakrovete krovini i transporto priemone');
 
                 ems.removeObject(id);
             }
             else {
-                player.notify('~r~Транспорт должен быть именно Flatbed')
+                player.notify('~r~Transportas turi buti Flatbed')
             }
         }
         else {
-            player.notify('~r~Рядом с вами нет транспорта')
+            player.notify('~r~Netoli jusu nera transporto')
         }
     }
     catch (e) {
@@ -873,7 +873,7 @@ ems.vehicleUnload = function (player) {
             return;
 
         if (methods.distanceToPos(player.position, new mp.Vector3(2406.57275390625, 3106.375732421875, 47.19036102294922)) > 30) {
-            player.notify('~g~Разгрузить можно только в специальном месте, маркер был поставлен в GPS');
+            player.notify('~g~Iskrauti galima tik specialioje vietoje, žymeklis irasytas i GPS');
             user.setWaypoint(player, 2406.57275390625, 3106.375732421875);
             return;
         }
@@ -882,12 +882,12 @@ ems.vehicleUnload = function (player) {
         if (vehicles.exists(v)) {
             v.addAttachment(`ems_${v.getVariable('emsTruck')}`, true);
             v.setVariable('emsTruck', undefined);
-            player.notify('~g~Вы разгрузили транспорт. Вам была выдана премия в $1000');
+            player.notify('~g~Iskrovete transporta. Gavote 1000€ premija');
             user.addRep(player, 10);
-            user.addMoney(player, 1000, 'Премия EMS');
+            user.addMoney(player, 1000, 'Premija EMS');
         }
         else {
-            player.notify('~r~Рядом с вами нет транспорта')
+            player.notify('~r~Netoli jusu nera transporto')
         }
     }
     catch (e) {

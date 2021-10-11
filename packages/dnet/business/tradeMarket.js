@@ -122,7 +122,7 @@ tradeMarket.loadAll = function() {
     tradeMarket.listBeach.forEach(function (item, idx) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
         let tradePos = new mp.Vector3(item[3], item[4], item[5]);
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню", 0.8, -1, [33, 150, 243, 0], 0.3);
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ noredami atidaryti meniu", 0.8, -1, [33, 150, 243, 0], 0.3);
 
         let data = {};
         data.marker = mp.markers.new(1, tradePos, 0.8,
@@ -146,7 +146,7 @@ tradeMarket.loadAll = function() {
     tradeMarket.listBlack.forEach(function (item, idx) {
         let shopPos = new mp.Vector3(item[0], item[1], item[2]);
         let tradePos = new mp.Vector3(item[3], item[4], item[5]);
-        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Нажмите ~g~Е~s~ чтобы открыть меню", 0.8, -1, [33, 150, 243, 0], 0.3);
+        methods.createCp(shopPos.x, shopPos.y, shopPos.z, "Spustelekite ~g~Е~s~ noredami atidaryti meniu", 0.8, -1, [33, 150, 243, 0], 0.3);
 
         let data = {};
         data.marker = mp.markers.new(1, tradePos, 0.8,
